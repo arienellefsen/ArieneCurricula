@@ -1,0 +1,82 @@
+/* larger screens (devices and browsers)  */
+@mixin desktop-large {
+  @media only screen and (min-width: map-get($breakpoints, 'desktop-lrg')){
+      @content;
+  }
+}
+/* desktop screens (devices and browsers)  */
+@mixin desktop {
+  @media only screen and (min-width: map-get($breakpoints, 'desktop')){
+      @content;
+  }
+}
+/* Tablet Portrait Size to Standard 960 (devices and browsers) */
+@mixin tablet {
+    @media only screen and (min-width: map-get($breakpoints, 'min-tablet')) and (max-width: map-get($breakpoints, 'max-tablet')){
+      @content;
+  }
+}
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@mixin phoneland {
+  @media only screen and (min-width: map-get($breakpoints, 'min-phone')) and (max-width: map-get($breakpoints, 'max-phone')){
+      @content;
+  }
+}
+/* Mobile */
+@mixin phone {
+  @media only screen and (max-width: map-get($breakpoints, 'phone')){
+      @content;
+  }
+}
+@mixin clearfix{
+  *zoom:1;
+  &:before,
+  &:after{
+    content: ' ';
+    display: table;
+  }
+  &:after{
+    clear: both;
+  }
+}
+@mixin border-box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+@mixin border-radius($border-radius-amount) {
+  border-radius: $border-radius-amount;
+}
+@mixin bg-mixin($bgimage, $bgheight: 100vh, $bgposition: center center){
+  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.6)), url($bgimage);
+  background-repeat: no-repeat;
+  background-position: $bgposition;
+  background-size: cover;
+  height: $bgheight;
+}
+@mixin button($bg-color, $hover-coler, $color) {
+  @include border-radius($border-radius-amount)
+  display: inline-block;
+  background-color: $bg-color;
+  color: $color;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: $btn-font-size;
+  transition: all .3s ease;
+  font-weight: bold;
+  padding: 10px 30px;
+  &:hover{
+    background-color: black;
+  }
+}
+@mixin grid-images($qty, $margin) {
+  width: ((100% - (($qty - 1) * $margin)) / $qty);
+  &:nth-child(n) {
+    margin-right: $margin;
+    margin-bottom: $margin;
+  }
+  &:nth-child(#{$qty}n + 1) {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}

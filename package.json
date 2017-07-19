@@ -1,32 +1,35 @@
 {
-    "name": "curricula",
-    "version": "0.1.0",
-    "description": "App Curricula",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/arienellefsen/ArieneCurricula.git"
-    },
-    "author": "Ariene, Mark, Michael",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/arienellefsen/ArieneCurricula/issues"
-    },
-    "homepage": "https://github.com/arienellefsen/ArieneCurricula#readme",
-    "dependencies": {
-        "body-parser": "^1.17.1",
-        "express": "^4.15.2",
-        "express-handlebars": "^3.0.0",
-        "method-override": "^2.3.8",
-        "mysql": "^2.13.0",
-        "sequelize": "^3.30.4"
-    },
-    "devDependencies": {
-        "chai": "^3.5.0",
-        "mocha": "^3.3.0",
-        "nodemon": "^1.11.0"
-    }
+  "name": "curricula",
+  "version": "0.1.0",
+  "description": "App Curricula",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arienellefsen/ArieneCurricula.git"
+  },
+  "author": "Ariene, Mark, Michael",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arienellefsen/ArieneCurricula/issues"
+  },
+  "homepage": "https://github.com/arienellefsen/ArieneCurricula#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "method-override": "^2.3.8",
+    "mysql": "^2.13.0",
+    "sequelize": "^3.30.4"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "mocha": "^3.3.0",
+    "nodemon": "^1.11.0"
+  }
 }

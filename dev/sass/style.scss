@@ -1,0 +1,23 @@
+@import url(https://fonts.googleapis.com/css?family=Bitter:400,700|Open+Sans:400,600,700);
+@import 'variables';
+@import 'mixins';
+@import 'header';
+@import 'footer';
+@import 'form';
+html,
+body {
+    height: 100%;
+    padding: 0;
+}
+
+#wrap {
+    min-height: 80%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -30px;
+    padding: 0 0 30px;
+}
+
+h1 {
+    color: red;
+}

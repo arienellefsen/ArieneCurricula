@@ -12,14 +12,14 @@ module.exports = function(app) {
             });
     });
 
-    // POST route for saving a new post
-    app.post("/api/posts", function(req, res) {
-        console.log(req.body);
-        Burger.create(req.body).then(function(dbPost) {
+    // // POST route for saving a new post
+    // app.post("/api/posts", function(req, res) {
+    //     console.log(req.body);
+    //     Burger.create(req.body).then(function(dbPost) {
 
-            res.redirect("/");
-        });
-    });
+    //         res.redirect("/");
+    //     });
+    // });
 
     app.post("/api/posts/:id", function(req, res) {
         var idData = req.params.id;

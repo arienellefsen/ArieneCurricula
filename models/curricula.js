@@ -8,10 +8,8 @@ module.exports = function(sequelize, DataTypes) {
         },
         curricula_name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [1]
-            }
+            allowNull: true,
+            defaultValue: 'title'
         },
         category: {
             type: DataTypes.STRING,
@@ -37,9 +35,37 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: 'None.'
         },
+        link0: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'None.'
+        },
 
+        link1: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'None.'
+        },
+        link2: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'None.'
+        },
+        link3: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'None.'
+        },
+        link4: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'None.'
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'progress'
+        },
     });
-
-
     return Curricula;
 };

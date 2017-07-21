@@ -30,12 +30,6 @@
 
     $('#create-form').submit(function(event) {
 
-        if (title == '') {
-            //error = 1;
-            alert('Comment cannot be empty.');
-            return false;
-
-        }
 
         // Stop form from submitting normally
         event.preventDefault();

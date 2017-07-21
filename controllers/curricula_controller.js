@@ -2,9 +2,9 @@ var Curricula = require("../models").Curricula;
 
 module.exports = function(app, passport) {
 
-    app.get('/', function(req,res) {
-        res.render('landingpage');
-    })
+    app.get("/", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/index.html"));
+    });
 
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
@@ -28,6 +28,12 @@ module.exports = function(app, passport) {
     // POST route for saving a new post
     app.post("/api/posts", function(req, res) {
         console.log(req.body);
+
+        var idData = req.params.id;
+
+        console.log('id' + idData);
+
+
         Curricula.create(req.body).then(function(dbPost) {
             res.redirect("/");
         });

@@ -10,12 +10,20 @@ var methodOverride = require('method-override');
 var path = require('path');
 var passport = require('passport');
 var session = require('express-session');
+var flash    = require('connect-flash');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+
 
 
 // Sets up the Express App
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
+var sess = {
+	secret: 'curriculaarecool',
+	cookie: {}
+}; //session secret, maxage is 10s (need it longer)
 
 // Requiring our models for syncing
 //var db = require("./models/burger.js");
@@ -28,6 +36,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(cookieParser());
 app.use(bodyParser());
+app.use(flash());
 
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -37,7 +46,7 @@ app.use(express.static("public"));
 
 //Passport
 // =============================================================
-app.use(session({ secret: "Ilovecurriculumapp" })); //session secret
+app.use(session(sess)); 
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 require('./config/passport')(passport); // pass passport for configuration

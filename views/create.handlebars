@@ -11,24 +11,24 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="container-title card-2">
-                    <form id="create-form" action="/api/posts" method="POST">
-                        <textarea rows='4' cols='50' class='field-title' id="curricula_name" placeholder="Click here to add a Title"></textarea>
+                    <form id="create-form" method="POST" name="create-links">
+                        <textarea rows='4' cols='50' class='field-title' id="curricula_name" placeholder="Click here to add a Title" required></textarea>
                 </div>
             </div>
             <div class="col-sm-7">
                 <div class="form-curriculum card-2">
                     <div id="fields-form">
+                       <span >Status:</span> <div id="field-status">In Progress</div>
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-1">
                 <div class="button-container card-2">
-                    <button type="submit" class="btn-form" id="save">
-                      
+                    <button class="btn-form" id="save">
                         <i class="fa fa-file icon-form" aria-hidden="true"></i>
                         <br> Save Links</button>
-                    <button type="submit" class="btn-form" id="publish">
+                    <button class="btn-form" id="publish">
                         <i class="fa fa-thumbs-up icon-form" aria-hidden="true"></i>
                         <br> Publish Links</button>
 

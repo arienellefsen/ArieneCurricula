@@ -2,15 +2,15 @@ var Burger = require("../models").Burger;
 
 module.exports = function(app) {
 
-    app.get("/", function(req, res) {
-        Burger.findAll({})
-            .then(function(result) {
-                var dbRecordsObject = {
-                    burgers: result
-                };
-                res.render('index', dbRecordsObject);
-            });
-    });
+    // app.get("/", function(req, res) {
+    //     Burger.findAll({})
+    //         .then(function(result) {
+    //             var dbRecordsObject = {
+    //                 burgers: result
+    //             };
+    //             res.render('index', dbRecordsObject);
+    //         });
+    // });
 
     // // POST route for saving a new post
     // app.post("/api/posts", function(req, res) {

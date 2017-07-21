@@ -20,16 +20,6 @@
     };
 
     function save() {
-        console.log(title);
-        $('input[name=status]').val('save');
-        $('#field-status').text('Saved');
-    };
-    $("#save").on("click", save);
-    $("#publish").on("click", publish);
-
-
-    $('#create-form').submit(function(event) {
-
 
         // Stop form from submitting normally
         event.preventDefault();
@@ -58,6 +48,23 @@
             console.log(data);
             // here we will handle errors and validation messages
         });
+
+
+        console.log(title);
+        $('input[name=status]').val('save');
+        $('#field-status').text('Saved');
+    };
+
+
+    //Call save function
+    $("#save").on("click", save);
+    $("#publish").on("click", publish);
+
+
+    $('#create-form').submit(function(event) {
+
+
+
         // stop the form from submitting the normal way and refreshing the page
     });
 

@@ -139,6 +139,12 @@ input[type="text"].link {
   border: none;
   padding-left: 10px; }
 
+.alert-msg {
+  color: red; }
+
+.save-msg {
+  color: green; }
+
 html,
 body {
   height: 100%;

@@ -125,3 +125,11 @@
                                 border: none;
                                 padding-left: 10px;
                             }
+                            
+                            .alert-msg {
+                                color: $alert;
+                            }
+                            
+                            .save-msg {
+                                color: $saved;
+                            }

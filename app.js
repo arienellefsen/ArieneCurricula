@@ -16,7 +16,6 @@ var PORT = process.env.PORT || 8080;
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 
-
 // Requiring our models for syncing
 //var db = require("./models/burger.js");
 var db = require("./models");

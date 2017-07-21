@@ -19,15 +19,27 @@ module.exports = function(app) {
     // POST route for saving a new post
     app.post("/api/posts", function(req, res) {
         console.log(req.body);
-
-        var idData = req.params.id;
-
-        console.log('id' + idData);
-
-
         Curricula.create(req.body).then(function(dbPost) {
+            //res.redirect("/");
+            res.json(dbPost);
+        });
+    });
+
+    app.post("/api/posts/:id", function(req, res) {
+        var idData = req.params.id;
+        Curricula.update({
+            status: 'update'
+        }, {
+            where: {
+                id: {
+                    $eq: idData
+                }
+            }
+        }).then(function(data) {
             res.redirect("/");
         });
     });
+
+
 
 };

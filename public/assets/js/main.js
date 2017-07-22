@@ -4,39 +4,63 @@
     function addFields() {
 
         for (var i = 0; i < 5; i++) {
-            var fieldLink = "<input type='text' name='link' placeholder='Add a link' class='link'><br > ",
+            var fieldLink = "<input type='text' name='link' placeholder='Add a link' class='link'><br > ";
+            var detailLink = "<input type='text' name='link-description' placeholder='Add link description' class='descritpion'><br >",
                 idLink = 'link' + count;
             var fields = $(fieldLink).attr("name", idLink).appendTo($("#fields-form"));
+            var description = $(detailLink).attr("link-desc", idLink).appendTo($("#fields-form"));
             count++;
         }
     };
 
+    //1 - Create a function to check what fields has been populated
+    //2 - Create a object with the populated fields
+    //3 - Passe the object to ajax call
+
+
+    //1 function checkFields
+
+    function checkFields() {
+
+        console.log('check fields');
+
+    }
+
+
     addFields();
 
     function publish() {
-        $('input[name=status]').val('publish');
+        $('input[name=status]').val(true);
         $('#field-status').text('Published');
+        checkFields();
     };
 
     function save() {
         var title = $('#curricula_name').val();
-
         if (title == '') {
             event.preventDefault();
             $('#field-status').text('Please provide a title').addClass('alert-msg');
         } else {
             $('#field-status').text('Saved').addClass('save-msg');
             $('#save').text('Update');
-
             // there are many ways to get this data using jQuery (you can use the class or id also)
             var formDataCreate = {
-                'curricula_name': $('#curricula_name').val(),
-                'link0': $('input[name=link0]').val(),
-                'link1': $('input[name=link1]').val(),
-                'link2': $('input[name=link2]').val(),
-                'link3': $('input[name=link3]').val(),
-                'link4': $('input[name=link4]').val(),
-                'status': $('input[name=status]').val()
+                curricula: {
+                    'curricula_name': $('#curricula_name').val(),
+                    'status': $('input[name=status]').val()
+                },
+                curriculaDetails: {
+                    // 'step_url': $('input[name=link0]').val(),
+                    // 'step_url': $('input[name=link1]').val(),
+                    // 'step_url': $('input[name=link2]').val(),
+                    // 'step_url': $('input[name=link3]').val(),
+                    // 'step_url': $('input[name=link4]').val()
+
+                    step1: {
+                        'step_url': $('input[name=link0]').val(),
+                        'step_number': 1
+                    }
+                }
             };
             // process the form
             $.ajax({
@@ -95,7 +119,6 @@
         // Stop form from submitting normally
         event.preventDefault();
     };
-
 
     //Call save function
     $("#save").on("click", save);

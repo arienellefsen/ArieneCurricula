@@ -17,14 +17,8 @@
     //2 - Create a object with the populated fields
     //3 - Passe the object to ajax call
 
-
     //1 function checkFields
 
-    function checkFields() {
-
-        console.log('check fields');
-
-    }
 
 
     addFields();
@@ -32,36 +26,57 @@
     function publish() {
         $('input[name=status]').val(true);
         $('#field-status').text('Published');
-        checkFields();
+
     };
+    var obj = {};
+    var countField = 0;
+
 
     function save() {
         var title = $('#curricula_name').val();
+        var field1 = $('input[name=link0]').val();
+        var form = $("#create-form");
+
+
         if (title == '') {
             event.preventDefault();
             $('#field-status').text('Please provide a title').addClass('alert-msg');
+        }
+        if (field1 == '') {
+            event.preventDefault();
+            $('#field-status').text('Please provide a field').addClass('alert-msg');
         } else {
             $('#field-status').text('Saved').addClass('save-msg');
             $('#save').text('Update');
+
+
+
+            for (var i = 0; i < 5; i++) {
+
+                var fieldForm = $('input[name=link' + i + ']').val();
+                //console.log(fieldForm);
+                if (fieldForm != '') {
+                    // obj['step1'].step_url = fieldForm;
+                    //obj['step1'].step_url = 'link1';
+                    obj['step' + countField] = {
+                        step_url: fieldForm,
+                        step_number: countField
+                    };
+
+                    console.log(obj);
+                    countField++;
+                }
+            }
+
             // there are many ways to get this data using jQuery (you can use the class or id also)
             var formDataCreate = {
                 curricula: {
                     'curricula_name': $('#curricula_name').val(),
                     'status': $('input[name=status]').val()
                 },
-                curriculaDetails: {
-                    // 'step_url': $('input[name=link0]').val(),
-                    // 'step_url': $('input[name=link1]').val(),
-                    // 'step_url': $('input[name=link2]').val(),
-                    // 'step_url': $('input[name=link3]').val(),
-                    // 'step_url': $('input[name=link4]').val()
-
-                    step1: {
-                        'step_url': $('input[name=link0]').val(),
-                        'step_number': 1
-                    }
-                }
+                curriculaDetails: obj
             };
+            console.log(formDataCreate);
             // process the form
             $.ajax({
                 type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
@@ -125,12 +140,6 @@
     $("#publish").on("click", publish);
     $("#edit").on("click", update);
 
-    $('#create-form').submit(function(event) {
-
-
-
-        // stop the form from submitting the normal way and refreshing the page
-    });
 
     //ajax call to submit form
 

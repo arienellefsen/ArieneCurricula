@@ -50,7 +50,9 @@ module.exports = function(app, passport) {
     app.post("/api/posts", function(req, res) {
         console.log(req.body);
         var curricula = req.body.curricula;
-        var curriculaDetails = req.body.curriculaDetails.step1;
+        var curriculaDetails = req.body.curriculaDetails;
+
+
 
         if (curricula && curriculaDetails) {
 
@@ -58,23 +60,25 @@ module.exports = function(app, passport) {
                 //res.redirect("/");
                 //res.json(dbPost);
 
-                curriculaDetails.CurriculaId = dbPost.id;
+
+                //curriculaDetails.CurriculaId = dbPost.id;
 
                 console.log(curriculaDetails);
 
-                CurriculaDetails.create(curriculaDetails).then(function(dbPost) {
-                        //res.redirect("/");
-                        res.json(dbPost);
-                    })
-                    .catch(function(err) {
-                        // print the error details
-                        console.log(err, curriculaDetails);
-                    });
+                Object.keys(curriculaDetails).forEach(function(item) {
+                    curriculaDetails[item].CurriculaId = dbPost.id;
+                    CurriculaDetails.create(curriculaDetails[item]).then(function(dbPost) {
+                            //res.redirect("/");
+                            console.log(dbPost);
+                        })
+                        .catch(function(err) {
+                            // print the error details
+                            console.log(err);
+                        });
+                });
+
             });
         }
-
-
-
 
     });
 

@@ -46,6 +46,13 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/userview', function(req, res) {
+        res.render('userview.handlebars', {
+            user: req.user //Get the user out of session and pass to the template
+        });
+    });
+
+
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');

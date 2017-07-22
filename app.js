@@ -8,10 +8,27 @@ var router = express.Router();
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var path = require('path');
-var passport = require('passport');
-var session = require('express-session');
+require('./config/passport');
+var session = require('express-session'); //session middleware
 var flash    = require('connect-flash');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var MySQLStore = require('express-mysql-session')(session); //mysql store for session information
+ 
+var options = { //Options to be passed to the session store
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '',
+    database: 'curricula_project',
+    schema: {
+        tableName: 'sessions',
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data'
+        }
+    }
+
+};
 
 // Sets up the Express App
 // =============================================================
@@ -31,19 +48,36 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(flash());
 
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 // Static directory
-app.use(express.static("public"));
 
 //Passport
 // =============================================================
-// app.use(session(sess)); 
+app.use(session({
+    secret: 'curriculasecret',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
+
+var sessionStore = new MySQLStore(options);
+ 
+app.use(session({
+    secret: 'curriculasecret',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(express.static("public"));
+
+
 require('./config/passport.js')(passport); // pass passport for configuration
 
 require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport

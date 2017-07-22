@@ -1,27 +1,18 @@
 var Curricula = require("../models").Curricula;
 
+var User = require("../models").User;
+
 module.exports = function(app, passport) {
 
     app.get("/", function(req, res) {
         Curricula.findAll({}).then(function(curricula) {
-            console.log(curricula);
-
             res.render('landingpage', { curriculaInstance: curricula });
         });
 
     });
 
-    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: '/create',
-            failureRedirect: '/'
-        })
-    );
-
     app.get("/create", function(req, res) {
-        //res.send('test page');
+        
         var test = {
             name: 'Curricula'
         };
@@ -51,7 +42,7 @@ module.exports = function(app, passport) {
     });
 
 
-    app.post("/api/posts/:id", function(req, res) {
+    app.post("/api/posts", isLoggedIn, function(req, res) {
         var idData = req.params.id;
         Curricula.update({
             status: 'update'
@@ -66,16 +57,16 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/profile', isLoggedIn, function(req, res) {
+    app.get('/profile/:id', isLoggedIn, function(req, res) {
         res.render('profile.handlebars', {
             user: req.user //Get the user out of session and pass to the template
         });
     });
 
     app.get('/userview', function(req, res) {
-        res.render('userview.handlebars', {
-            user: req.user //Get the user out of session and pass to the template
-        });
+        //var user = passport.findAll(req.params.id);
+
+        res.render('userview.handlebars');
     });
 
 
@@ -83,6 +74,17 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+
+    app.get('/user/signup', function(req, res) {
+        res.render('usersignup.handlebars');
+    })
+
+    app.post('/user/signup', passport.authenticate('local.signup', {
+        successRedirect: '/userview',
+        failureRedirect: '/user/signup',
+        failureFlash: true
+    
+    }));
 
     app.all('*', function(req, res, next) {
         res.send("Error 404");

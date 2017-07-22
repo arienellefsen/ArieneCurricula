@@ -1,22 +1,56 @@
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-var User		   = require('../models/user');
-
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var User            = require("../models").User;
 var configAuth     = require('./auth');
 
 
 module.exports = function(passport) {
 
-	passport.serializeUser(function(user, done) {
-		done(null, user.id);
+	passport.serializeUser(function(user, done) { //How passport will store the user in the session
+    		done(null, user.username);
 	});
 
-	passport.deserializeUser(function(id, done) {
-		User.findById(id, function(err, user) {
-			done(err, user);
-		});
+	passport.deserializeUser(function(user, done) {
+        User.findOne({where: {username: user.username} } )
+        .then(function(data) {
+            console.log("Deserialize success!");
+            done(null,user);
+        })
+        .catch(function(err) {
+            console.log("Deserialize failure!");
+            done(err,null);
+        });
 	});
 
+    passport.use('local.signup', new LocalStrategy({
+        usernameField : 'username',
+        password: 'password',
+        passReqToCallback: true
+    }, function(req, username, password, done) {
+        User.findOne({where:{username: username}})
+        .then(function(data) {
+            if (User.username) {
+                return done(null, false, {message: "Username already exists"});
+            }
+            var newUser = {
+                user_email: "example@noemail.com",
+                password: password,
+                user_type: "user",
+                username: username
+            }
+            User.create(newUser)
+            .then(function(data) {
+                return done(null, newUser);
+            })
+            .catch(function(err) {
+                return done(err,null);
+            });
+        }).catch(function(err) {
+            console.log("Failed to find user or create user");
+            return done(err, null);
+        });
+    }));
+/*
     passport.use(new GoogleStrategy({
 
         clientID        : configAuth.googleAuth.clientID,
@@ -65,6 +99,6 @@ module.exports = function(passport) {
         });
 
     }));
-
+*/
 };
 

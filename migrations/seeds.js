@@ -5,6 +5,7 @@ module.exports = function (db) {
   db.User.create({
     user_email: 'testPerson1@gmail.com', 
     password: 'password1',
+    username: "testPerson1",
     user_type: 'user'
   }).then(() => {
     console.log('Seeded user testPerson1@gmail.com');
@@ -13,6 +14,7 @@ module.exports = function (db) {
   db.User.create({
     user_email: 'testPerson2@gmail.com', 
     password: 'password2',
+    username: "testPerson2",
     user_type: 'author' // Is an author
   }).then(() => {
     console.log('Seeded user testPerson2@gmail.com');
@@ -21,6 +23,7 @@ module.exports = function (db) {
   db.User.create({
     user_email: 'testPerson3@gmail.com', 
     password: 'password3',
+    username: "testPerson3",
     user_type: 'user'
   }).then(() => {
     console.log('Seeded user testPerson3@gmail.com');

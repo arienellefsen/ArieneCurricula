@@ -3,12 +3,12 @@ var Curricula = require("../models").Curricula;
 module.exports = function(app, passport) {
 
     app.get("/", function(req, res) {
-        Curricula.findAll({}).then(function (curricula) {
+        Curricula.findAll({}).then(function(curricula) {
             console.log(curricula);
-            
-            res.render('landingpage', {curriculaInstance: curricula});
+
+            res.render('landingpage', { curriculaInstance: curricula });
         });
-        
+
     });
 
     app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -36,6 +36,20 @@ module.exports = function(app, passport) {
             res.json(dbPost);
         });
     });
+
+    // Get rotue for retrieving a single post
+    app.get("/curricula/:id", function(req, res) {
+        Curricula.findOne({
+            where: {
+                id: req.params.id
+            }
+        }).then(function(dbPost) {
+            console.log(dbPost);
+            res.json(dbPost);
+            //res.send('found!');
+        });
+    });
+
 
     app.post("/api/posts/:id", function(req, res) {
         var idData = req.params.id;

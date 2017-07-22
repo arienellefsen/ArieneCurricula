@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         CurriculaDetails.belongsTo(models.Curricula);
         CurriculaDetails.belongsTo(models.User, {
-          as: 'author_id'
+          as: 'author'
         })
       }
     }

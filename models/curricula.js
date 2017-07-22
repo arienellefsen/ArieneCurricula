@@ -51,7 +51,7 @@ module.exports = function(sequelize, DataTypes) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
         Curricula.belongsTo(models.User, {
-          as: 'author_id'
+          as: 'author'
         })
       }
     }

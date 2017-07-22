@@ -13,22 +13,12 @@ var session = require('express-session');
 var flash    = require('connect-flash');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-
-
-
 // Sets up the Express App
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
-<<<<<<< HEAD
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
-=======
-var sess = {
-	secret: 'curriculaarecool',
-	cookie: {}
-}; //session secret, maxage is 10s (need it longer)
->>>>>>> 742c7eb2b4222389d007e32ae144ea20639b5ded
 
 // Requiring our models for syncing
 //var db = require("./models/burger.js");
@@ -51,10 +41,10 @@ app.use(express.static("public"));
 
 //Passport
 // =============================================================
-app.use(session(sess)); 
+// app.use(session(sess)); 
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport.js')(passport); // pass passport for configuration
 
 require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport
 

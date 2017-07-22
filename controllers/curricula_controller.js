@@ -3,7 +3,12 @@ var Curricula = require("../models").Curricula;
 module.exports = function(app, passport) {
 
     app.get("/", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/index.html"));
+        Curricula.findAll({}).then(function (curricula) {
+            console.log(curricula);
+            
+            res.render('landingpage', {curriculaInstance: curricula});
+        });
+        
     });
 
     app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -14,7 +19,6 @@ module.exports = function(app, passport) {
             failureRedirect: '/'
         })
     );
-
 
     app.get("/create", function(req, res) {
         //res.send('test page');
@@ -48,19 +52,11 @@ module.exports = function(app, passport) {
         });
     });
 
-
-    <<
-    <<
-    << < HEAD
-
-        ===
-        ===
-        =
-        app.get('/profile', isLoggedIn, function(req, res) {
-            res.render('profile.handlebars', {
-                user: req.user //Get the user out of session and pass to the template
-            });
+    app.get('/profile', isLoggedIn, function(req, res) {
+        res.render('profile.handlebars', {
+            user: req.user //Get the user out of session and pass to the template
         });
+    });
 
     app.get('/logout', function(req, res) {
         req.logout();
@@ -70,8 +66,6 @@ module.exports = function(app, passport) {
     app.all('*', function(req, res, next) {
         res.send("Error 404");
     });
-
-
 };
 
 function isLoggedIn(req, res, next) {
@@ -80,7 +74,5 @@ function isLoggedIn(req, res, next) {
         return next();
 
     //If they aren't authenticated, return to homepage
-    res.redirect('/'); >>>
-    >>>
-    > 742 c7eb2b4222389d007e32ae144ea20639b5ded
+    res.redirect('/');
 };

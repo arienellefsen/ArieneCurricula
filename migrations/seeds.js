@@ -32,7 +32,7 @@ module.exports = function (db) {
     votes: 10,
     description: 'Learn to program with the language of the internet.',
     submited_status: false,
-    author_id: 2
+    authorId: 2
   }).then(() => {
     console.log('Seeded curricula on learning Javascript');
   });
@@ -45,7 +45,7 @@ module.exports = function (db) {
     votes: 90,
     description: 'Learn to cook steaks perfectly every time.',
     submited_status: true,
-    author_id: 2
+    authorId: 2
   }).then(() => {
     console.log('Seeded curricula on learning to cook streak');
   });
@@ -55,7 +55,7 @@ module.exports = function (db) {
     step_type: "text",
     step_content: "Read the book Eloquent Javascript.",
     step_url: null,
-    author_id: 2,
+    authorId: 2,
     curricula_id: 1
   }).then(() => {
     console.log('Seeded JS step 1');
@@ -66,7 +66,7 @@ module.exports = function (db) {
     step_type: "text",
     step_content: "Try the practice problems in the book.",
     step_url: null,
-    author_id: 2,
+    authorId: 2,
     curricula_id: 1
   }).then(() => {
     console.log('Seeded JS step 2');
@@ -77,7 +77,7 @@ module.exports = function (db) {
     step_type: "text",
     step_content: "Build a todo list.",
     step_url: null,
-    author_id: 2,
+    authorId: 2,
     curricula_id: 1
   }).then(() => {
     console.log('Seeded JS step 3');
@@ -88,7 +88,7 @@ module.exports = function (db) {
     step_type: "text",
     step_content: "Watch some you-tube videos",
     step_url: null,
-    author_id: 2,
+    authorId: 2,
     curricula_id: 1
   }).then(() => {
     console.log('Seeded JS step 4');
@@ -99,7 +99,7 @@ module.exports = function (db) {
     step_type: "text",
     step_content: "Watch this video on cuts of meat",
     step_url: null,
-    author_id: 2,
+    authorId: 2,
     curricula_id: 2
   }).then(() => {
     console.log('Seeded Steak step 1');
@@ -110,7 +110,7 @@ module.exports = function (db) {
     step_type: "text",
     step_content: "Watch this video on how to cook a steak",
     step_url: "https://youtu.be/AmC9SmCBUj4",
-    author_id: 2,
+    authorId: 2,
     curricula_id: 2
   }).then(() => {
     console.log('Seeded Steak step 2');
@@ -121,7 +121,7 @@ module.exports = function (db) {
     step_type: "text",
     step_content: "Practice, Practice, Practice...",
     step_url: null,
-    author_id: 2,
+    authorId: 2,
     curricula_id: 2
   }).then(() => {
     console.log('Seeded Steak step 3');

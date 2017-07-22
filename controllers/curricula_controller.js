@@ -14,17 +14,19 @@ module.exports = function(app, passport) {
 
     // Get rotue for retrieving a single post
     app.get("/curricula/:id", function(req, res) {
-        Curricula.findOne({
-            where: {
-                id: req.params.id
-            }
-        }).then(function(dbPost) {
-            console.log(dbPost);
-            //res.json(dbPost);
-            //res.send('found!');
-            console.log(dbPost);
-            res.render('detailscurricula', { curriculaDetails: dbPost });
+        var curricId = req.params.id;
+        var compiledCurriculaObj = {};
 
+        CurriculaDetails.findAll({
+            where: {
+                CurriculaId: curricId
+            }
+        }).then(function(curriculaDetailsData) {
+            Curricula.findById(curricId).then(function(curriculaData){
+                compiledCurriculaObj.curricula = curriculaData;
+                compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
+                res.render('detailscurricula', compiledCurriculaObj);
+            });
         });
     });
 

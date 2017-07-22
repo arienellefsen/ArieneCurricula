@@ -256,7 +256,7 @@ module.exports = function (db) {
     step_content: "This video will familiarize you with absolute basics",
     step_url: 'https://youtu.be/nQXD5Mhv5Q8',
     authorId: 2,
-    CurriculaId: 4
+    CurriculaId: 5
   }).then(() => {
     console.log('Seeded Econ step 1');
   });
@@ -267,7 +267,7 @@ module.exports = function (db) {
     step_content: "This non-typical economics explanation on the economy",
     step_url: "https://youtu.be/PHe0bXAIuk0",
     authorId: 2,
-    CurriculaId: 4
+    CurriculaId: 5
   }).then(() => {
     console.log('Seeded Econ step 2');
   });

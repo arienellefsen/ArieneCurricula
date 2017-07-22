@@ -1,24 +1,18 @@
 <div class="container">
+    <div class="row curriculaMeta">
+        <h3> {{curricula.curricula_name}} </h3>
+        <h4> Category: {{curricula.category}} > {{curricula.sub_category}} </h4>
+        <p> Votes: {{curricula.votes}}</p>
+    </div>
     <div class="row">
-
-{{#each curriculaDetails}}
-            {{#if this.submited_status}}
+        {{#each curriculaDetails}}
             <div class="col-xs-12 col-sm-12 col-lg-12">
-               <h2> {{curricula_name}} </h2>  
-           </div>
-
-
-        <div class="col-xs-4 col-sm-4 col-lg-4">
-               <p> Author: {{authorId}}</p>  
-        </div>
-
-
-        <div class="col-xs-8 col-sm-8 col-lg-8">
-             <p> Description: {{description}} </p>  
-        </div>
-               
-            {{/if}}
+                <h4>  Step: {{this.step_number}} </h4>
+                <p>  {{this.step_content}} </p>
+                {{#if this.step_url}}
+                    <p>  Link: <a href="{{this.step_url}}" target="_blank">{{this.step_url}}</a> </p> 
+                {{/if}}
+            </div>
         {{/each}}
-        
     </div>
 </div>

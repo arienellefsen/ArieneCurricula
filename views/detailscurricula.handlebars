@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+
+{{#each curriculaDetails}}
+            {{#if this.submited_status}}
+            <div class="col-xs-12 col-sm-12 col-lg-12">
+               <h2> {{curricula_name}} </h2>  
+           </div>
+
+
+        <div class="col-xs-4 col-sm-4 col-lg-4">
+               <p> Author: {{authorId}}</p>  
+        </div>
+
+
+        <div class="col-xs-8 col-sm-8 col-lg-8">
+             <p> Description: {{description}} </p>  
+        </div>
+               
+            {{/if}}
+        {{/each}}
+        
+    </div>
+</div>

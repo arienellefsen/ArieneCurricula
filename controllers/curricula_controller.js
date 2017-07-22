@@ -51,13 +51,38 @@ module.exports = function(app, passport) {
     // POST route for saving a new post
     app.post("/api/posts", function(req, res) {
         console.log(req.body);
-        Curricula.create(req.body).then(function(dbPost) {
-            //res.redirect("/");
-            res.json(dbPost);
-        });
+        var curricula = req.body.curricula;
+        var curriculaDetails = req.body.curriculaDetails;
+
+
+
+        if (curricula && curriculaDetails) {
+
+            Curricula.create(curricula).then(function(dbPost) {
+                //res.redirect("/");
+                //res.json(dbPost);
+
+
+                //curriculaDetails.CurriculaId = dbPost.id;
+
+                console.log(curriculaDetails);
+
+                Object.keys(curriculaDetails).forEach(function(item) {
+                    curriculaDetails[item].CurriculaId = dbPost.id;
+                    CurriculaDetails.create(curriculaDetails[item]).then(function(dbPost) {
+                            //res.redirect("/");
+                            console.log(dbPost);
+                        })
+                        .catch(function(err) {
+                            // print the error details
+                            console.log(err);
+                        });
+                });
+
+            });
+        }
+
     });
-
-
 
 
 

@@ -120,7 +120,7 @@ module.exports = function (db) {
     step_content: "Read the book Eloquent Javascript.",
     step_url: null,
     authorId: 2,
-    curriculaId: 1
+    CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 1');
   });
@@ -131,7 +131,7 @@ module.exports = function (db) {
     step_content: "Try the practice problems in the book.",
     step_url: null,
     authorId: 2,
-    curriculaId: 1
+    CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 2');
   });
@@ -142,7 +142,7 @@ module.exports = function (db) {
     step_content: "Build a todo list.",
     step_url: null,
     authorId: 2,
-    curriculaId: 1
+    CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 3');
   });
@@ -153,7 +153,7 @@ module.exports = function (db) {
     step_content: "Watch some you-tube videos",
     step_url: null,
     authorId: 2,
-    curriculaId: 1
+    CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 4');
   });
@@ -165,7 +165,7 @@ module.exports = function (db) {
     step_content: "Watch this video on how to bake cupcakes",
     step_url: "https://youtu.be/AmC9SmCBUj4",
     authorId: 2,
-    curriculaId: 2
+    CurriculaId: 2
   }).then(() => {
     console.log('Seeded Cupcake step 1');
   });
@@ -176,7 +176,7 @@ module.exports = function (db) {
     step_content: "Practice, Practice, and taste test...",
     step_url: null,
     authorId: 2,
-    curriculaId: 2
+    CurriculaId: 2
   }).then(() => {
     console.log('Seeded Cupcake step 2');
   });
@@ -188,7 +188,7 @@ module.exports = function (db) {
     step_content: "Read the book 'Learn Python the hard way.",
     step_url: "",
     authorId: 2,
-    curriculaId: 3
+    CurriculaId: 3
   }).then(() => {
     console.log('Seeded Python step 1');
   });
@@ -200,7 +200,7 @@ module.exports = function (db) {
     step_content: "Watch this on algorithms thinking",
     step_url: 'https://youtu.be/HtSuA80QTyo?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
     authorId: 2,
-    curriculaId: 4
+    CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 1');
   });
@@ -211,7 +211,7 @@ module.exports = function (db) {
     step_content: "Sorting, insert sort, merge sort",
     step_url: "https://youtu.be/Kg4bqzAqRBM?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb",
     authorId: 2,
-    curriculaId: 4
+    CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 2');
   });
@@ -222,7 +222,7 @@ module.exports = function (db) {
     step_content: "Heaps and Heap Sort",
     step_url: 'https://youtu.be/B7hVxCmfPtM?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
     authorId: 2,
-    curriculaId: 4
+    CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 3');
   });
@@ -233,7 +233,7 @@ module.exports = function (db) {
     step_content: "Binary search trees",
     step_url: 'https://youtu.be/9Jry5-82I68?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
     authorId: 2,
-    curriculaId: 4
+    CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 4');
   });
@@ -244,7 +244,7 @@ module.exports = function (db) {
     step_content: "Hashing and chaining",
     step_url: 'https://youtu.be/0M_kIqhwbFo?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
     authorId: 2,
-    curriculaId: 4
+    CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 5');
   });
@@ -256,7 +256,7 @@ module.exports = function (db) {
     step_content: "This video will familiarize you with absolute basics",
     step_url: 'https://youtu.be/nQXD5Mhv5Q8',
     authorId: 2,
-    curriculaId: 4
+    CurriculaId: 4
   }).then(() => {
     console.log('Seeded Econ step 1');
   });
@@ -267,7 +267,7 @@ module.exports = function (db) {
     step_content: "This non-typical economics explanation on the economy",
     step_url: "https://youtu.be/PHe0bXAIuk0",
     authorId: 2,
-    curriculaId: 4
+    CurriculaId: 4
   }).then(() => {
     console.log('Seeded Econ step 2');
   });
@@ -279,7 +279,7 @@ module.exports = function (db) {
     step_content: "Watch this video on cuts of meat",
     step_url: null,
     authorId: 2,
-    curriculaId: 6
+    CurriculaId: 6
   }).then(() => {
     console.log('Seeded Steak step 1');
   });
@@ -290,7 +290,7 @@ module.exports = function (db) {
     step_content: "Watch this video on how to cook a steak",
     step_url: "https://youtu.be/AmC9SmCBUj4",
     authorId: 2,
-    curriculaId: 6
+    CurriculaId: 6
   }).then(() => {
     console.log('Seeded Steak step 2');
   });
@@ -301,7 +301,7 @@ module.exports = function (db) {
     step_content: "Practice, Practice, Practice...",
     step_url: null,
     authorId: 2,
-    curriculaId: 6
+    CurriculaId: 6
   }).then(() => {
     console.log('Seeded Steak step 3');
   });

@@ -8,10 +8,11 @@ var router = express.Router();
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var path = require('path');
-require('./config/passport');
 var session = require('express-session'); //session middleware
 var flash    = require('connect-flash');
 var MySQLStore = require('express-mysql-session')(session); //mysql store for session information
+var passport = require('passport');
+
  
 var options = { //Options to be passed to the session store
     host: 'localhost',
@@ -30,15 +31,15 @@ var options = { //Options to be passed to the session store
 
 };
 
+var sessionStore = new MySQLStore(options);
+
+
 // Sets up the Express App
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 
 // Requiring our models for syncing
-//var db = require("./models/burger.js");
 var db = require("./models");
 
 // Sets up the Express app to handle data parsing
@@ -48,7 +49,6 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(cookieParser());
 app.use(bodyParser());
-
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -66,21 +66,20 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 
-var sessionStore = new MySQLStore(options);
  
-app.use(session({
-    secret: 'curriculasecret',
-    store: sessionStore,
-    resave: false,
-    saveUninitialized: false
-}));
-
 app.use(express.static("public"));
 
 
 require('./config/passport.js')(passport); // pass passport for configuration
 
 require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport
+
+
+app.use(function(req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    next();
+});
+
 
 
 // Routes

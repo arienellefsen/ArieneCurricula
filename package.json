@@ -27,12 +27,12 @@
     "mysql": "^2.13.0",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
-    "passport-local": "^1.0.0",
     "sequelize": "^3.30.4"
   },
   "devDependencies": {
     "browser-sync": "^2.18.12",
     "chai": "^3.5.0",
+    "csurf": "^1.9.0",
     "eslint": "^4.2.0",
     "express-mysql-session": "^1.2.1",
     "gulp": "^3.9.1",
@@ -40,6 +40,7 @@
     "mocha": "^3.3.0",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
-    "passport-google-oauth": "^1.0.0"
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0"
   }
 }

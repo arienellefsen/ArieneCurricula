@@ -11,7 +11,7 @@ module.exports = function(app, passport) {
 
     });
 
-    app.get("/create", function(req, res) {
+    app.get("/create", isLoggedIn, function(req, res) {
         
         var test = {
             name: 'Curricula'
@@ -20,7 +20,7 @@ module.exports = function(app, passport) {
     });
 
     // POST route for saving a new post
-    app.post("/api/posts", function(req, res) {
+    app.post("/api/posts", isLoggedIn, function(req, res) {
         console.log(req.body);
         Curricula.create(req.body).then(function(dbPost) {
             //res.redirect("/");
@@ -63,7 +63,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/userview', function(req, res) {
+    app.get('/userview', isLoggedIn, function(req, res) {
         //var user = passport.findAll(req.params.id);
 
         res.render('userview.handlebars');
@@ -76,26 +76,47 @@ module.exports = function(app, passport) {
     });
 
     app.get('/user/signup', function(req, res) {
-        res.render('usersignup.handlebars');
+        var messages = req.flash('error',)
+        res.render('usersignup.handlebars', {messages: messages, hasErrors: messages.len > 0});
     })
 
     app.post('/user/signup', passport.authenticate('local.signup', {
-        successRedirect: '/userview',
+        successRedirect: '/user/signin',
         failureRedirect: '/user/signup',
         failureFlash: true
     
     }));
 
+    app.get('/user/signin', function(req, res) {
+        var messages = req.flash('error',)
+        res.render('usersignin.handlebars', {messages: messages, hasErrors: messages.len > 0});
+
+    });
+
+    app.post('/user/signin', passport.authenticate('local.signin', {
+        successRedirect: '/userview',
+        failureRedirect: '/user/signin',
+        failureFlash: true
+    
+    }));
+
+    app.get('/user/logout', function(req,res, next) {
+        req.logout();
+        res.redirect('/');
+    })
+
+
     app.all('*', function(req, res, next) {
         res.send("Error 404");
     });
+
+    function isLoggedIn(req, res, next) {
+        if (req.isAuthenticated())
+            return next();
+
+        //If they aren't authenticated, return to homepage
+        res.redirect('/');
+    };
+
 };
 
-function isLoggedIn(req, res, next) {
-
-    if (req.isAuthenticated())
-        return next();
-
-    //If they aren't authenticated, return to homepage
-    res.redirect('/');
-};

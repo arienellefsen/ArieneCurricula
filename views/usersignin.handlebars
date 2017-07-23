@@ -1,7 +1,7 @@
 
 <div class="col-sm-6 col-sm-offset-3">
 
-    <h1><span class="fa fa-sign-in"></span> Signup</h1>
+    <h1><span class="fa fa-sign-in"></span> Sign In</h1>
 
     <!-- show any messages that come back with authentication -->
     {{#if hasErrors}}
@@ -12,8 +12,8 @@
         </div>
     {{/if}}
 
-    <!-- LOGIN FORM -->
-    <form action="/user/signup" method="POST">
+    <!-- SIGNIN FORM -->
+    <form action="/user/signin" method="POST">
         <div class="form-group">
             <label>Username</label>
             <input type="text" class="form-control" name="username">
@@ -28,7 +28,7 @@
 
     <hr>
 
-    <p>Already have an account? <a href="/user/signin">Login</a></p>
+    <p>Don't have an account? <a href="/user/signup">Sign Up</a></p>
     <p>Or go <a href="/">home</a>.</p>
 
 </div>

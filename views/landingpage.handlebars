@@ -8,13 +8,24 @@
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-lg-6">
-            <p> Login or Register with: 
+        {{# if login}}
+            <p> Create Curricula: 
                 <span> 
-                    <a href="/user/signup" class="btn btn-danger">
-                        <span class="fa fa-google-plus"></span> Google
+                    <a href="/create" class="btn btn-danger">
+                        <span class="fa"></span> Create
                     </a> 
                 </span>
             </p>
+
+        {{else}}
+            <p> Login or Register: 
+                <span> 
+                    <a href="/user/signin" class="btn btn-danger">
+                        <span class="fa"></span> Sign In
+                    </a> 
+                </span>
+            </p>
+        {{/if}}
         </div>
     </div>
     

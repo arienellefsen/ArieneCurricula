@@ -7,17 +7,15 @@ var configAuth     = require('./auth');
 module.exports = function(passport) {
 
 	passport.serializeUser(function(user, done) { //How passport will store the user in the session
-    		done(null, user.username);
+        	done(null, user);
 	});
 
 	passport.deserializeUser(function(user, done) {
         User.findOne({where: {username: user.username} } )
         .then(function(data) {
-            console.log("Deserialize success!");
             done(null,user);
         })
         .catch(function(err) {
-            console.log("Deserialize failure!");
             done(err,null);
         });
 	});
@@ -29,7 +27,15 @@ module.exports = function(passport) {
     }, function(req, username, password, done) {
         User.findOne({where:{username: username}})
         .then(function(data) {
-            if (User.username) {
+            data = data; //This I do not understand, why do I have to initialize this??? Question for Keith
+            if(!data) {
+                console.log("A new record!");
+            }
+            console.log(data);
+            if(data) {
+                console.log("data username " + data.dataValues.username);
+            }
+            if (data && username === data.dataValues.username) { //If data exists AND the username equals what we have
                 return done(null, false, {message: "Username already exists"});
             }
             var newUser = {
@@ -50,55 +56,29 @@ module.exports = function(passport) {
             return done(err, null);
         });
     }));
-/*
-    passport.use(new GoogleStrategy({
 
-        clientID        : configAuth.googleAuth.clientID,
-        clientSecret    : configAuth.googleAuth.clientSecret,
-        callbackURL     : configAuth.googleAuth.callbackURL
-
-    },
-    function(req, email, password, done) {
-
-        // asynchronous
-        // User.findOne wont fire unless data is sent back
-        process.nextTick(function() {
-
-        // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
-        User.findOne({ 'google.id' : profile.id }, function(err, user) {
-            // if there are any errors, return the error
-            if (err)
-                return done(err);
-
-            // check to see if theres already a user with that email
-            if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
-
-                // if there is no user with that email
-                // create the user
-                var newUser            = new User();
-
-                // set the user's local credentials
-                newUser.google.id    = profile.id;
-                newUser.google.token = token;
-                newUser.google.name  = profile.displayName;
-                newUser.google.email = profile.emails[0].value; // pull the first email
-
-                // save the user
-                newUser.save(function(err) {
-                    if (err)
-                        throw err;
-                    return done(null, newUser);
-                });
+    passport.use('local.signin', new LocalStrategy({
+        usernameField : 'username',
+        password: 'password',
+        passReqToCallback: true
+    }, function(req, username, password, done) {
+        User.findOne({where:{username: username}})
+        .then(function(data) {
+            data = data; //This I do not understand, why do I have to initialize this??? Question for Keith
+            if(!data) {
+                return done(null, false, {message: "User not found"});
             }
+            if (data && password !== data.dataValues.password) { //If data exists AND the password does not equal
+                return done(null, false, {message: "Invalid password"});
+            }
+            return done(null, true, {username: data.dataValues.username, usertype: data.dataValues.user_type});
 
-        });    
-
+        }).catch(function(err) {
+            console.log("Failed to find user or create user");
+            return done(err, null);
         });
 
     }));
-*/
+
 };
 

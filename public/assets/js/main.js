@@ -1,4 +1,5 @@
 (function() {
+
     var count = 0;
 
     function addFields() {

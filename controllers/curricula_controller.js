@@ -117,6 +117,17 @@ module.exports = function(app, passport) {
     });
 
 
+    app.get("/test", function(req, res) {
+        Curricula.findAll({})
+            .then(function(result) {
+                var dbCurricula = {
+                    showCurricula: result
+                };
+                res.render('test', dbCurricula);
+                //res.send('hello');
+            });
+    });
+
     // POST route for saving a new post
     app.post("/api/posts", function(req, res) {
         console.log(req.body);

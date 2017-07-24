@@ -1,135 +1,29 @@
-                            #fields-form {
-                                border: 1px dashed $border-dashed;
-                                height: 452px;
-                                margin-left: 50px;
-                                margin-right: 50px;
-                                margin-bottom: 50px;
-                                padding-top: 28px;
-                                padding-left: 28px;
-                            }
-                            
-                            .form-curriculum {
-                                height: 100%;
-                                background: $background-white;
-                                width: 90%;
-                                margin-left: 49px;
-                                margin-top: 20px;
-                                height: 1050px;
-                                padding-top: 50px;
-                                border-top-left-radius: 1em;
-                                border-top-right-radius: 1em;
-                                border-bottom-right-radius: 1em;
-                                border-bottom-left-radius: 1em;
-                                position: relative;
-                                left: -80px;
-                                z-index: 1000;
-                            }
-                            
-                            .add-link,
-                            .save-form,
-                            .publish-form {
-                                margin-top: 10px;
-                                border-radius: 0px;
-                                height: 80px;
-                                width: 120px;
-                                background: #000;
-                            }
-                            
-                            .button-container {
-                                margin-top: 69px;
-                                height: 350px;
-                                width: 140px;
-                                background: $background-white;
-                                padding-left: 0px;
-                                padding-top: 36px;
-                                position: relative;
-                                right: 130px;
-                                z-index: 10;
-                            }
-                            
-                            .container-title {
-                                background: -moz-linear-gradient(-45deg, rgba(96, 116, 162, 0.98) 5%, rgba(96, 116, 162, 0.98) 23%, rgba(89, 84, 126, 0.97) 66%, rgba(86, 54, 97, 0.97) 100%);
-                                /* FF3.6-15 */
-                                background: -webkit-linear-gradient(-45deg, rgba(96, 116, 162, 0.98) 5%, rgba(96, 116, 162, 0.98) 23%, rgba(89, 84, 126, 0.97) 66%, rgba(86, 54, 97, 0.97) 100%);
-                                /* Chrome10-25,Safari5.1-6 */
-                                background: linear-gradient(135deg, rgba(96, 116, 162, 0.98) 5%, rgba(96, 116, 162, 0.98) 23%, rgba(89, 84, 126, 0.97) 66%, rgba(86, 54, 97, 0.97) 100%);
-                                /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-                                height: 452px;
-                                margin-top: 69px;
-                                position: relative;
-                                padding-left: 50px;
-                                padding-top: 5px;
-                                border-top-left-radius: 1em;
-                                border-top-right-radius: 0em;
-                                border-bottom-right-radius: 0em;
-                                border-bottom-left-radius: 1em;
-                                textarea {
-                                    font-size: 24px;
-                                    padding: 10px;
-                                    color: $white;
-                                    text-shadow: 0px 0px 0px $white;
-                                    -webkit-text-fill-color: transparent;
-                                    background: none;
-                                    text-align: left;
-                                    padding-top: 40px;
-                                    text-transform: uppercase;
-                                    border: none;
-                                    outline: none;
-                                    line-height: 40px;
-                                    width: 240px;
-                                }
-                            }
-                            
-                            .card-2 {
-                                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-                            }
-                            
-                            .icon-form {
-                                font-size: 24px;
-                                text-align: center;
-                            }
-                            
-                            .btn-form {
-                                background: $white;
-                                color: $accent-color;
-                                border: none;
-                                padding-left: 35px;
-                                text-align: center;
-                                height: 90px;
-                                &:hover,
-                                &:active,
-                                &:focus {
-                                    background-color: $white;
-                                    color: $blue;
-                                    outline: none;
-                                    border: none;
-                                }
-                            }
-                            
-                            .remove {
-                                display: block;
-                                margin-top: 10px;
-                                margin-bottom: 10px;
-                                background: none;
-                                outline: none;
-                                border: none;
-                                color: $pink;
-                            }
-                            
-                            input[type="text"].link {
-                                margin-bottom: 10px;
-                                height: 50px;
-                                width: 94%;
-                                background-color: $input-background;
-                                outline: none;
-                                border: none;
-                                padding-left: 10px;
-                            }
-                            
-                            .alert-msg {
-                                color: $alert;
-                            }
-                            
-                            .save-msg {
-                                color: $saved;
-                            }
+                    #fields-form {
+                        border: 1px dashed $border-dashed;
+                        height: 452px;
+                        margin-left: 50px;
+                        margin-right: 50px;
+                        margin-bottom: 50px;
+                        padding-top: 28px;
+                        padding-left: 28px;
+                    }
+                    
+                    //title form
+                    section.title-form {
+                        text-align: center;
+                        padding-top: 40px;
+                        border: 3px solid red;
+                    }
+                    
+                    .field-title {
+                        color: green;
+                        font-size: 40px;
+                        border: 0px;
+                        outline: none;
+                        text-align: center;
+                        margin-bottom: 10px;
+                    }
+                    
+                    h3 {
+                        color: red;
+                    }

@@ -5,25 +5,37 @@ module.exports = function (db) {
   db.User.create({
     user_email: 'testPerson1@gmail.com', 
     password: 'password1',
-    user_type: 'user'
+    user_type: 'user',
+    username:'testP1',
+    votes_cast: '1,4'
   }).then(() => {
     console.log('Seeded user testPerson1@gmail.com');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.User.create({
     user_email: 'testPerson2@gmail.com', 
     password: 'password2',
-    user_type: 'author' // Is an author
+    user_type: 'author', // Is an author
+    username:'testP2',
+    votes_cast: '2,3'
   }).then(() => {
     console.log('Seeded user testPerson2@gmail.com');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.User.create({
     user_email: 'testPerson3@gmail.com', 
     password: 'password3',
-    user_type: 'user'
+    user_type: 'user',
+    username:'testP3',
+    votes_cast: '1,5,3'
   }).then(() => {
     console.log('Seeded user testPerson3@gmail.com');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // Create Curricula
@@ -39,6 +51,8 @@ module.exports = function (db) {
     authorId: 2
   }).then(() => {
     console.log('Seeded curricula on learning Javascript');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // ID2
@@ -53,6 +67,8 @@ module.exports = function (db) {
     authorId: 2
   }).then(() => {
     console.log('Seeded curricula on cupcakes');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // ID3
@@ -67,12 +83,14 @@ module.exports = function (db) {
     authorId: 2
   }).then(() => {
     console.log('Seeded curricula on Python');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // ID4
   db.Curricula.create({
     curricula_name: 'The 5 Most Important Algorithms',
-    category: 'Computer Science',
+    category: 'Programming',
     sub_category: 'Algorithm',
     search_tags: 'programming code computer science algorithm',
     votes: 27,
@@ -81,6 +99,8 @@ module.exports = function (db) {
     authorId: 2
   }).then(() => {
     console.log('Seeded curricula on Algorithms');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // ID5
@@ -95,6 +115,8 @@ module.exports = function (db) {
     authorId: 2
   }).then(() => {
     console.log('Seeded curricula on Economics');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // ID6
@@ -109,6 +131,8 @@ module.exports = function (db) {
     authorId: 2
   }).then(() => {
     console.log('Seeded curricula on learning to cook streak');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // Add the curricula details for each curricula
@@ -123,6 +147,8 @@ module.exports = function (db) {
     CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 1');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -134,6 +160,8 @@ module.exports = function (db) {
     CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 2');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -145,6 +173,8 @@ module.exports = function (db) {
     CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 3');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -156,6 +186,8 @@ module.exports = function (db) {
     CurriculaId: 1
   }).then(() => {
     console.log('Seeded JS step 4');
+  }).catch(function (err){
+    console.log(err);
   });
 
 // Cupcakes Cur#2 details
@@ -168,6 +200,8 @@ module.exports = function (db) {
     CurriculaId: 2
   }).then(() => {
     console.log('Seeded Cupcake step 1');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -179,6 +213,8 @@ module.exports = function (db) {
     CurriculaId: 2
   }).then(() => {
     console.log('Seeded Cupcake step 2');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // Python Cur#3 details
@@ -191,6 +227,8 @@ module.exports = function (db) {
     CurriculaId: 3
   }).then(() => {
     console.log('Seeded Python step 1');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // Algorithms Cur#4 Details
@@ -203,6 +241,8 @@ module.exports = function (db) {
     CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 1');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -214,6 +254,8 @@ module.exports = function (db) {
     CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 2');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -225,6 +267,8 @@ module.exports = function (db) {
     CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 3');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -236,6 +280,8 @@ module.exports = function (db) {
     CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 4');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -247,6 +293,8 @@ module.exports = function (db) {
     CurriculaId: 4
   }).then(() => {
     console.log('Seeded Algo step 5');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // Economics Cur#5 Details
@@ -259,6 +307,8 @@ module.exports = function (db) {
     CurriculaId: 5
   }).then(() => {
     console.log('Seeded Econ step 1');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -270,6 +320,8 @@ module.exports = function (db) {
     CurriculaId: 5
   }).then(() => {
     console.log('Seeded Econ step 2');
+  }).catch(function (err){
+    console.log(err);
   });
 
   // Steak Cur#6 Details
@@ -282,6 +334,8 @@ module.exports = function (db) {
     CurriculaId: 6
   }).then(() => {
     console.log('Seeded Steak step 1');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -293,6 +347,8 @@ module.exports = function (db) {
     CurriculaId: 6
   }).then(() => {
     console.log('Seeded Steak step 2');
+  }).catch(function (err){
+    console.log(err);
   });
 
   db.CurriculaDetails.create({
@@ -304,5 +360,7 @@ module.exports = function (db) {
     CurriculaId: 6
   }).then(() => {
     console.log('Seeded Steak step 3');
+  }).catch(function (err){
+    console.log(err);
   });
 }

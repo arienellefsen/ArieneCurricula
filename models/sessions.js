@@ -1,31 +1,12 @@
 module.exports = function(sequelize, DataTypes) {
-  var SessionStore = sequelize.define("SessionStore", { //This is where I get lost
+  var Session = sequelize.define('Session', {
     sid: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false
-    },
-    username: {
       type: DataTypes.STRING,
-      allowNull: false
+      primaryKey: true
     },
-    votes_cast: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: '[]'
-    },
-    user_type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'user'
-    },
-    expires: {
-      type: Sequelize.DATE
-    },
-    data: {
-      type: Sequelize.STRING(50000)
-    }
+    userId: DataTypes.STRING,
+    expires: DataTypes.DATE,
+    data: DataTypes.STRING(50000)
   });
 
 //These lines below I'm not entirely sure are correctly placed?
@@ -38,9 +19,9 @@ module.exports = function(sequelize, DataTypes) {
     };
   }
  
-  var store = new SessionStore({
+  var store = new Session({
     db: sequelize,
-    table: 'SessionStore',
+    table: 'Session',
     extendDefaultFields: extendDefaultFields
   });
 

@@ -52,23 +52,14 @@ app.use(bodyParser());
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-// Static directory
 
 //Passport
 // =============================================================
-app.use(session({
-    secret: 'curriculasecret',
-    store: new SequelizeStore({
-        db: db.sequelize //Vannucci: Hey mark, should this be lowercase instance of sequelize or the uppercase?
-    }),
-    resave: false,
-    saveUninitialized: false
-}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 
- 
+ // Static directory
 app.use(express.static("public"));
 
 require('./config/passport.js')(passport); // pass passport for configuration
@@ -77,6 +68,14 @@ app.use(function(req, res, next) {
     res.locals.login = req.isAuthenticated();
     next();
 });
+
+app.use(session({
+    secret: 'curriculasecret',
+    store: new SequelizeStore({
+        db: db.sequelize //Vannucci: Hey mark, should this be lowercase instance of sequelize or the uppercase?
+    }),
+}));
+
 
 // Routes
 // =============================================================

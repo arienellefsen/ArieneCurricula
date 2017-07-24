@@ -10,37 +10,14 @@ var methodOverride = require('method-override');
 var path = require('path');
 var session = require('express-session'); //session middleware
 var flash    = require('connect-flash');
-var MySQLStore = require('express-mysql-session')(session); //mysql store for session information
 var passport = require('passport');
 var db = require("./models");
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
-
-
-
- 
-var options = { //Options to be passed to the session store
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database: 'curricula_project',
-    schema: {
-        tableName: 'sessions',
-        columnNames: {
-            session_id: 'session_id',
-            expires: 'expires',
-            data: 'data'
-        }
-    }
-
-};
 
 // Sets up the Express App
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
-
-// Requiring our models for syncing
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -53,28 +30,35 @@ app.use(bodyParser());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+app.use(session({
+  secret: 'curriculasecret',
+  store: new SequelizeStore({
+    db: db.sequelize
+  }),
+  resave: false,
+  saveUninitialized: false
+}));
+
+
 //Passport
 // =============================================================
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 
+app.use(function(req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+});
+
+
  // Static directory
 app.use(express.static("public"));
 
 require('./config/passport.js')(passport); // pass passport for configuration
 
-app.use(function(req, res, next) {
-    res.locals.login = req.isAuthenticated();
-    next();
-});
 
-app.use(session({
-    secret: 'curriculasecret',
-    store: new SequelizeStore({
-        db: db.sequelize //Vannucci: Hey mark, should this be lowercase instance of sequelize or the uppercase?
-    }),
-}));
 
 
 // Routes

@@ -27,11 +27,10 @@ module.exports = function(passport) {
     }, function(req, username, password, done) {
         User.findOne({where:{username: username}})
         .then(function(data) {
-            data = data; //This I do not understand, why do I have to initialize this??? Question for Keith
+            data = data; //This I do not understand, why do I have to write this??? Question for Keith
             if(!data) {
                 console.log("A new record!");
             }
-            console.log(data);
             if(data) {
                 console.log("data username " + data.dataValues.username);
             }
@@ -63,15 +62,15 @@ module.exports = function(passport) {
         passReqToCallback: true
     }, function(req, username, password, done) {
         User.findOne({where:{username: username}})
-        .then(function(data) {
-            data = data; //This I do not understand, why do I have to initialize this??? Question for Keith
-            if(!data) {
+        .then(function(user) {
+            user = user; //This I do not understand, why do I have to initialize this??? Question for Keith
+            if(!user) {
                 return done(null, false, {message: "User not found"});
             }
-            if (data && password !== data.dataValues.password) { //If data exists AND the password does not equal
+            if (user && password !== user.dataValues.password) { //If data exists AND the password does not equal
                 return done(null, false, {message: "Invalid password"});
             }
-            return done(null, true, {username: data.dataValues.username, usertype: data.dataValues.user_type});
+            return done(null, true, user);
 
         }).catch(function(err) {
             console.log("Failed to find user or create user");

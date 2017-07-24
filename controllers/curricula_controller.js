@@ -4,7 +4,6 @@ var User = require('../models').User;
 var helpers = require('../helpers/helpers.js');
 var Sequelize = require('sequelize');
 
-var User = require("../models").User;
 
 module.exports = function(app, passport) {
 
@@ -149,9 +148,7 @@ module.exports = function(app, passport) {
     });
 
     app.get('/userview', isLoggedIn, function(req, res) {
-        var username;
-
-        res.render('userview.handlebars', {username: });
+        res.render('userview.handlebars');
     });
 
 
@@ -166,7 +163,7 @@ module.exports = function(app, passport) {
     })
 
     app.post('/user/signup', passport.authenticate('local.signup', {
-        successRedirect: '/user/signin',
+        successRedirect: '/userview',
         failureRedirect: '/user/signup',
         failureFlash: true
     

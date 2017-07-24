@@ -19,10 +19,10 @@ module.exports = function(app, passport) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             console.log(rangeToShow);
             res.render('landingpage', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
     // Get route for retrieving a single post
@@ -36,14 +36,14 @@ module.exports = function(app, passport) {
                 CurriculaId: curricId
             }
         }).then(function(curriculaDetailsData) {
-            Curricula.findById(curricId).then(function(curriculaData){
+            Curricula.findById(curricId).then(function(curriculaData) {
                 Curricula.findAll({
                     where: {
                         submited_status: {
                             $eq: true
                         }
                     }
-                }).then(function(allCurr){
+                }).then(function(allCurr) {
                     compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
                     compiledCurriculaObj.curricula = curriculaData;
                     compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
@@ -64,8 +64,8 @@ module.exports = function(app, passport) {
                 }
             }
         };
-        
-        if (curCat.slice(0,3) === 'su_') {
+
+        if (curCat.slice(0, 3) === 'su_') {
             catObj.where = {
                 sub_category: {
                     $eq: curCat.slice(3)
@@ -78,10 +78,10 @@ module.exports = function(app, passport) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             console.log(rangeToShow);
             res.render('category', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
     app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -93,13 +93,29 @@ module.exports = function(app, passport) {
         })
     );
 
-    //Create Curricula using form
+    // //Create Curricula using form
+    // app.get("/create", function(req, res) {
+    //     Curricula.findAll({})
+    //         .then(function(result) {
+    //             var showCurricula = {
+    //                 curricula: result
+    //             };
+    //         });
+    //     res.render('create', showCurricula);
+    // });
+
+
     app.get("/create", function(req, res) {
-        var test = {
-            name: 'Curricula'
-        };
-        res.render('create', test);
+        Curricula.findAll({})
+            .then(function(result) {
+                var dbCurricula = {
+                    showCurricula: result
+                };
+                res.render('create', dbCurricula);
+                //res.send('hello');
+            });
     });
+
 
     // POST route for saving a new post
     app.post("/api/posts", function(req, res) {
@@ -107,19 +123,10 @@ module.exports = function(app, passport) {
         var curricula = req.body.curricula;
         var curriculaDetails = req.body.curriculaDetails;
 
-
-
         if (curricula && curriculaDetails) {
 
             Curricula.create(curricula).then(function(dbPost) {
-                //res.redirect("/");
-                //res.json(dbPost);
-
-
-                //curriculaDetails.CurriculaId = dbPost.id;
-
                 console.log(curriculaDetails);
-
                 Object.keys(curriculaDetails).forEach(function(item) {
                     curriculaDetails[item].CurriculaId = dbPost.id;
                     CurriculaDetails.create(curriculaDetails[item]).then(function(dbPost) {
@@ -133,8 +140,6 @@ module.exports = function(app, passport) {
             });
         }
     });
-
-
 
 
     app.post("/api/posts/:id", function(req, res) {

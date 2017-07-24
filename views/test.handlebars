@@ -1,0 +1,15 @@
+ <table class="table table-striped table-bordered">
+               
+          Category:  <select>
+                {{#each showCurricula}}
+                    <option value="{{this.category}}">{{this.category}}</option>  
+                {{/each}}
+                    <option value="add">Add New Category</option>  
+            </select>
+
+ Sub Category:  <select>
+                {{#each showCurricula}}
+                    <option value="{{this.sub_category}}">{{this.sub_category}}</option>  
+                {{/each}}
+                    <option value="add">Add New SubCategory</option>  
+            </select>

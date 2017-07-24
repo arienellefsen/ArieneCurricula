@@ -1,8 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="page-header header_site">
-            <h1 class="logo">{{name}}</h1>
+              
         </div>
+       
     </div>
 </div>
 
@@ -12,7 +13,8 @@
             <div class="col-sm-4">
                 <div class="container-title card-2">
                     <form id="create-form" method="POST" name="create-links">
-                        <textarea rows='4' cols='50' class='field-title' id="curricula_name" placeholder="Click here to add a Title" required></textarea>
+                        <input type="text" name="curricula_name" class='field-title' id="curricula_name" value="" placeholder="Click here to add a Title" required>
+                         <textarea rows='4' cols='50' class='field-description' id="curricula_description" placeholder="Click here to add a description" required></textarea>
                 </div>
             </div>
             <div class="col-sm-7">
@@ -20,21 +22,44 @@
                     <div id="fields-form">
                        <span >Status:</span> <div id="field-status">In Progress</div>
                     </div>
+<section id="category">
+    Category:  <select id="category-curricula">
+                {{#each showCurricula}}
+                    <option value="{{this.category}}">{{this.category}}</option>  
+                {{/each}}
+                    <option value="add">Add New Category</option>  
+            </select>
+
+ Sub Category:  <select id="sub-category">
+                {{#each showCurricula}}
+                    <option value="{{this.sub_category}}">{{this.sub_category}}</option>  
+                {{/each}}
+                    <option value="add">Add New SubCategory</option>  
+            </select>
+
+    </section>
+
+<section id="tags">
+Tags:
+        <input type="text" name="curricula_tags" class='field-tags' id="curricula_tag" value="" placeholder="Click here to add a Tags" required>
+
+
+    </section>
+
+
                 </div>
+
+
+
             </div>
 
             <div class="col-sm-1">
                 <div class="button-container card-2">
                     <button class="btn-form" id="save">
                         <i class="fa fa-file icon-form" aria-hidden="true"></i>
-                        <br> Save Links</button>
-                    <button class="btn-form" id="publish">
-                        <i class="fa fa-thumbs-up icon-form" aria-hidden="true"></i>
-                        <br> Publish Links</button>
-
-                        <button class="btn-form" id="edit">
-                        <i class="fa fa-thumbs-up icon-form" aria-hidden="true"></i>
-                        <br> Edit Links</button>
+                        <br> Save Links
+                    </button>
+                   
 
                 <input type="hidden" name="status" value="" id="status">
                   

@@ -8,7 +8,7 @@
             var detailLink = "<input type='text' name='link-description' placeholder='Add link description' class='descritpion'><br >",
                 idLink = 'link' + count;
             var fields = $(fieldLink).attr("name", idLink).appendTo($("#fields-form"));
-            var description = $(detailLink).attr("link-desc", idLink).appendTo($("#fields-form"));
+            var description = $(detailLink).attr("name", 'desc' + idLink).appendTo($("#fields-form"));
             count++;
         }
     };
@@ -36,6 +36,8 @@
         var title = $('#curricula_name').val();
         var field1 = $('input[name=link0]').val();
         var form = $("#create-form");
+        var statusForm = $('input[name=status]').val();
+        statusForm = true;
 
 
         if (title == '') {
@@ -49,18 +51,18 @@
             $('#field-status').text('Saved').addClass('save-msg');
             $('#save').text('Update');
 
-
-
             for (var i = 0; i < 5; i++) {
-
                 var fieldForm = $('input[name=link' + i + ']').val();
+                var descField = $('input[name=desclink' + i + ']').val();
                 //console.log(fieldForm);
                 if (fieldForm != '') {
                     // obj['step1'].step_url = fieldForm;
                     //obj['step1'].step_url = 'link1';
                     obj['step' + countField] = {
                         step_url: fieldForm,
-                        step_number: countField
+                        step_number: countField,
+                        step_content: descField
+
                     };
 
                     console.log(obj);
@@ -72,7 +74,11 @@
             var formDataCreate = {
                 curricula: {
                     'curricula_name': $('#curricula_name').val(),
-                    'status': $('input[name=status]').val()
+                    'submited_status': statusForm,
+                    'description': $('#curricula_description').val(),
+                    'category': $('#category-curricula').val(),
+                    'sub_category': $('#sub-category').val(),
+                    'search_tags': $('#curricula_tag').val()
                 },
                 curriculaDetails: obj
             };

@@ -10,13 +10,13 @@ var methodOverride = require('method-override');
 var path = require('path');
 var passport = require('passport');
 var session = require('express-session');
-var flash    = require('connect-flash');
+var flash = require('connect-flash');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3000;
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 
@@ -46,7 +46,7 @@ app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 require('./config/passport.js')(passport); // pass passport for configuration
 
-require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport
+require('./controllers/curricula_controller.js')(app, passport); //load in our routes and pass the app and passport
 
 
 // Routes

@@ -5,14 +5,9 @@ module.exports = function (db) {
   db.User.create({
     user_email: 'testPerson1@gmail.com', 
     password: 'password1',
-<<<<<<< HEAD
-    username: "testPerson1",
-    user_type: 'user'
-=======
     user_type: 'user',
     username:'testP1',
     votes_cast: '1,4'
->>>>>>> 9602ce6d44edd0b5930d54849efcfe87bc86c9b6
   }).then(() => {
     console.log('Seeded user testPerson1@gmail.com');
   }).catch(function (err){
@@ -22,14 +17,9 @@ module.exports = function (db) {
   db.User.create({
     user_email: 'testPerson2@gmail.com', 
     password: 'password2',
-<<<<<<< HEAD
-    username: "testPerson2",
-    user_type: 'author' // Is an author
-=======
     user_type: 'author', // Is an author
     username:'testP2',
     votes_cast: '2,3'
->>>>>>> 9602ce6d44edd0b5930d54849efcfe87bc86c9b6
   }).then(() => {
     console.log('Seeded user testPerson2@gmail.com');
   }).catch(function (err){
@@ -39,14 +29,9 @@ module.exports = function (db) {
   db.User.create({
     user_email: 'testPerson3@gmail.com', 
     password: 'password3',
-<<<<<<< HEAD
-    username: "testPerson3",
-    user_type: 'user'
-=======
     user_type: 'user',
     username:'testP3',
     votes_cast: '1,5,3'
->>>>>>> 9602ce6d44edd0b5930d54849efcfe87bc86c9b6
   }).then(() => {
     console.log('Seeded user testPerson3@gmail.com');
   }).catch(function (err){

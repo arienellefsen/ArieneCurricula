@@ -10,10 +10,6 @@ module.exports = function(app, passport) {
 
     // Get the landing page content
     app.get("/", function(req, res) {
-<<<<<<< HEAD
-        Curricula.findAll({}).then(function(curricula) {
-            res.render('landingpage', { curriculaInstance: curricula });
-=======
         var rangeToShow;
         Curricula.findAll({
             where: {
@@ -56,7 +52,6 @@ module.exports = function(app, passport) {
                     res.render('detailscurricula', compiledCurriculaObj);
                 });
             });
->>>>>>> 9602ce6d44edd0b5930d54849efcfe87bc86c9b6
         });
     });
 
@@ -91,22 +86,7 @@ module.exports = function(app, passport) {
         });    
     });
 
-<<<<<<< HEAD
-    app.get("/create", isLoggedIn, function(req, res) {
-        
-=======
-    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: '/create',
-            failureRedirect: '/'
-        })
-    );
-
-    //Create Curricula using form
-    app.get("/create", function(req, res) {
->>>>>>> 9602ce6d44edd0b5930d54849efcfe87bc86c9b6
+    app.get("/create", isLoggedIn, function(req, res) { //Vannucci: Removed googleAuth functions
         var test = {
             name: 'Curricula'
         };
@@ -147,13 +127,7 @@ module.exports = function(app, passport) {
     });
 
 
-<<<<<<< HEAD
-    app.post("/api/posts", isLoggedIn, function(req, res) {
-=======
-
-
-    app.post("/api/posts/:id", function(req, res) {
->>>>>>> 9602ce6d44edd0b5930d54849efcfe87bc86c9b6
+    app.post("/api/posts/:id", isLoggedIn, function(req, res) { //Vannucci: Added 'isLoggedIn'
         var idData = req.params.id;
         Curricula.update({
             status: 'update'

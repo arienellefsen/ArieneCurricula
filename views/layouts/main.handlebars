@@ -26,14 +26,24 @@
                 </div>
             </div>
             <div class="col-xs-4 col-sm-4 col-lg-4">
-                    <a href="/login" class="btn btn-danger">Login</a>
-                    <a href="/register" class="btn btn-danger">Register</a>
-                    <a href="/create" class="btn btn-primary">+Create</a>
-                    {{!--<span> 
-                        <a href="/auth/google" class="btn btn-danger">
-                            <span class="fa fa-google-plus"></span> Google
+                {{# if login}}
+                        <a href="/create" class="btn btn-primary">+Create</a> 
+                        <a href="/userview" class="btn btn-danger">
+                            <span class="fa"></span> Profile
                         </a> 
-                    </span>--}}
+                        <a href="/user/logout" class="btn btn-danger">
+                            <span class="logout"></span> Logout
+                        </a>
+
+                {{else}}
+                        <a href="/user/signin" class="btn btn-danger">
+                            <span class="fa"></span> Log In
+                        </a> 
+                        <a href="/user/signup" class="btn btn-danger">
+                            <span class="fa"></span> Sign Up
+                        </a> 
+
+                {{/if}}
                 </p>
             </div>
         </div>

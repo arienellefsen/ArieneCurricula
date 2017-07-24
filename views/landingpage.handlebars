@@ -1,6 +1,5 @@
 
 <div class="container">
-<<<<<<< HEAD
     <!-- Login Area -->
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-lg-6">
@@ -9,31 +8,9 @@
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-lg-6">
-        {{# if login}}
-                <a href="/create" class="btn btn-danger">
-                    <span class="fa"></span> New
-                </a> 
-                <a href="/userview" class="btn btn-danger">
-                    <span class="fa"></span> Profile
-                </a> 
-                <a href="/user/logout" class="btn btn-danger">
-                    <span class="logout"></span> Logout
-                </a>
-
-        {{else}}
-                <a href="/user/signin" class="btn btn-danger">
-                    <span class="fa"></span> Log In
-                </a> 
-                <a href="/user/signup" class="btn btn-danger">
-                    <span class="fa"></span> Sign Up
-                </a> 
-
-        {{/if}}
         </div>
     </div>
-    
-=======
->>>>>>> 9602ce6d44edd0b5930d54849efcfe87bc86c9b6
+  
     <div class="row" id="landing-content">
         {{#each curriculaInstance}}
             {{#if this.submited_status}}

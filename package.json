@@ -32,6 +32,7 @@
   "devDependencies": {
     "browser-sync": "^2.18.12",
     "chai": "^3.5.0",
+    "connect-session-sequelize": "^4.1.0",
     "csurf": "^1.9.0",
     "eslint": "^4.2.0",
     "express-mysql-session": "^1.2.1",

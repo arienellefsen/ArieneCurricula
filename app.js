@@ -12,6 +12,10 @@ var session = require('express-session'); //session middleware
 var flash    = require('connect-flash');
 var MySQLStore = require('express-mysql-session')(session); //mysql store for session information
 var passport = require('passport');
+var db = require("./models");
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+
 
  
 var options = { //Options to be passed to the session store
@@ -31,16 +35,12 @@ var options = { //Options to be passed to the session store
 
 };
 
-var sessionStore = new MySQLStore(options);
-
-
 // Sets up the Express App
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
-var db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -58,7 +58,9 @@ app.set("view engine", "handlebars");
 // =============================================================
 app.use(session({
     secret: 'curriculasecret',
-    store: sessionStore,
+    store: new SequelizeStore({
+        db: db.sequelize //Vannucci: Hey mark, should this be lowercase instance of sequelize or the uppercase?
+    }),
     resave: false,
     saveUninitialized: false
 }));

@@ -149,9 +149,9 @@ module.exports = function(app, passport) {
     });
 
     app.get('/userview', isLoggedIn, function(req, res) {
-        //var user = passport.findAll(req.params.id);
+        var username;
 
-        res.render('userview.handlebars');
+        res.render('userview.handlebars', {username: });
     });
 
 

@@ -9,6 +9,10 @@ module.exports = function(sequelize, DataTypes) {
     user_email: {
       type: DataTypes.STRING,
       allowNull: false
+    },    
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     username: {
       type: DataTypes.STRING,
@@ -17,6 +21,11 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    votes_cast: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: '[]'
     },
     user_type: {
       type: DataTypes.STRING,

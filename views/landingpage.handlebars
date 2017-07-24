@@ -9,22 +9,24 @@
         </div>
         <div class="col-xs-6 col-sm-6 col-lg-6">
         {{# if login}}
-            <p> Create Curricula: 
-                <span> 
-                    <a href="/create" class="btn btn-danger">
-                        <span class="fa"></span> Create
-                    </a> 
-                </span>
-            </p>
+                <a href="/create" class="btn btn-danger">
+                    <span class="fa"></span> New
+                </a> 
+                <a href="/userview" class="btn btn-danger">
+                    <span class="fa"></span> Profile
+                </a> 
+                <a href="/user/logout" class="btn btn-danger">
+                    <span class="logout"></span> Logout
+                </a>
 
         {{else}}
-            <p> Login or Register: 
-                <span> 
-                    <a href="/user/signin" class="btn btn-danger">
-                        <span class="fa"></span> Sign In
-                    </a> 
-                </span>
-            </p>
+                <a href="/user/signin" class="btn btn-danger">
+                    <span class="fa"></span> Log In
+                </a> 
+                <a href="/user/signup" class="btn btn-danger">
+                    <span class="fa"></span> Sign Up
+                </a> 
+
         {{/if}}
         </div>
     </div>

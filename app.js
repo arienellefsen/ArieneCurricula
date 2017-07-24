@@ -1,4 +1,4 @@
-// *** Dependencies
+    // *** Dependencies
 // =============================================================
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -69,23 +69,17 @@ app.use(passport.session()); //persistent login sessions
  
 app.use(express.static("public"));
 
-
 require('./config/passport.js')(passport); // pass passport for configuration
-
-require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport
-
 
 app.use(function(req, res, next) {
     res.locals.login = req.isAuthenticated();
     next();
 });
 
-
-
 // Routes
 // =============================================================
-//require("./controllers/burgers_controller.js")(app);
-//require("./controllers/curricula_controller.js")(app);
+require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport
+
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================

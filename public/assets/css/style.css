@@ -11,7 +11,9 @@
 .logo {
   font-size: 20px;
   color: #fff;
-  padding-top: 20px; }
+  padding-top: 20px;
+  width: 80%;
+  height: 100%; }
 
 .page-header {
   margin: 0 0 20px; }
@@ -130,6 +132,39 @@ button.search {
   .header-form h1 {
     font-size: 30px !important;
     margin-bottom: 2px; }
+
+/* Absolute Center Spinner */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+/* Transparent Overlay */
+.loading:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); }
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0; }
 
 .card-home {
   margin-bottom: 30px; }

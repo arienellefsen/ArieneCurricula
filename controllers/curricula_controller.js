@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
         });
     });
 
-     // Get route for search
+    // Get route for search
     app.get("/search", function(req, res) {
         var rawSearch = req.query.q;
         if (typeof rawSearch === 'string' && rawSearch.length >= 1) {
@@ -75,9 +75,9 @@ module.exports = function(app, passport) {
                     if (Object.keys(rangeToShow.display).length === 0) {
                         console.log('here')
                         rangeToShow.flag = false;
-                    } 
+                    }
                     res.render('searchresults', { curriculaInstance: rangeToShow });
-                    
+
                 });
             } else {
                 console.log('Invalid Search Terms Were sent - no search results after cleaning.')
@@ -130,15 +130,43 @@ module.exports = function(app, passport) {
     );
 
     app.get("/create", function(req, res) {
-        var CurricuCateg = {};
-
         Curricula.findAll({})
             .then(function(result) {
-                CurricuCateg.allCurricula = helpers.getUniqueCategories(result);
-                CurricuCateg.curricula = helpers.getUniqueCategories(result);
-                //console.log(dbCurricula);
-                res.render('createCurricula', CurricuCateg);
+                var dbCurricula = {
+                    showCurricula: result
+                };
+                console.log(dbCurricula);
+                res.render('createCurricula', dbCurricula);
+                //res.send('hello');
             });
+    });
+
+    // Get route for retrieving a single post
+    app.get("/create", function(req, res) {
+        var curricId = req.params.id;
+        var compiledCurriculaObj = {};
+        var similarList = {}
+
+        CurriculaDetails.findAll({
+            where: {
+                CurriculaId: curricId
+            }
+        }).then(function(curriculaDetailsData) {
+            Curricula.findById(curricId).then(function(curriculaData) {
+                Curricula.findAll({
+                    where: {
+                        submited_status: {
+                            $eq: true
+                        }
+                    }
+                }).then(function(allCurr) {
+                    compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
+                    compiledCurriculaObj.curricula = curriculaData;
+                    compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
+                    res.render('createCurricula', compiledCurriculaObj);
+                });
+            });
+        });
     });
 
 

@@ -1,0 +1,34 @@
+
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1><span class="fa"></span>Log In To Your Account</h1>
+
+    <!-- show any messages that come back with authentication -->
+    {{#if hasErrors}}
+        <div class="alert alert-danger">
+            {{# each messages}}
+                <p>{{this}}</p>
+            {{/each}}
+        </div>
+    {{/if}}
+
+    <!-- SIGNIN FORM -->
+    <form action="/user/signin" method="POST">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <button type="submit" class="btn btn-warning btn-lg">Login</button>
+    </form>
+
+    <hr>
+
+    <p>Don't have an account? <a href="/user/signup">Sign Up</a></p>
+    <p>Or go <a href="/">home</a>.</p>
+
+</div>

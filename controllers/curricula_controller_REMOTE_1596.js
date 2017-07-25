@@ -120,6 +120,15 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/create',
+            failureRedirect: '/'
+        })
+    );
+
     app.get("/create", function(req, res) {
         Curricula.findAll({})
             .then(function(result) {
@@ -164,7 +173,7 @@ module.exports = function(app, passport) {
 
 
     // POST route for saving a new post
-    app.post("/api/posts", isLoggedIn, function(req, res) {
+    app.post("/api/posts", function(req, res) {
         console.log(req.body);
         var curricula = req.body.curricula;
         var curriculaDetails = req.body.curriculaDetails;
@@ -197,7 +206,9 @@ module.exports = function(app, passport) {
     });
 
 
-    app.post("/api/posts/:id", isLoggedIn, function(req, res) { //Vannucci: Added 'isLoggedIn'
+
+
+    app.post("/api/posts/:id", function(req, res) {
         var idData = req.params.id;
         Curricula.update({
             status: 'update'
@@ -212,64 +223,27 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/profile/:id', isLoggedIn, function(req, res) {
+    app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile.handlebars', {
             user: req.user //Get the user out of session and pass to the template
         });
     });
-
-    app.get('/userview', isLoggedIn, function(req, res) {
-        var username = req.session.passport.user.username;
-
-
-        res.render('userview.handlebars', {username: username});
-    });
-
 
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
     });
 
-    app.get('/user/signup', function(req, res) {
-        res.render('usersignup.handlebars');
-    })
-
-    app.post('/user/signup', passport.authenticate('local.signup', {
-        successRedirect: '/userview',
-        failureRedirect: '/user/signup',
-        failureFlash: true
-    
-    }));
-
-    app.get('/user/signin', function(req, res) {
-        res.render('usersignin.handlebars');
-
-    });
-
-    app.post('/user/signin', passport.authenticate('local.signin', {
-        successRedirect: '/userview',
-        failureRedirect: '/user/signin',
-        failureFlash: true
-    
-    }));
-
-    app.get('/user/logout', function(req,res, next) {
-        req.logout();
-        res.redirect('/');
-    })
-
-
     app.all('*', function(req, res, next) {
         res.send("Error 404");
     });
+};
 
-    function isLoggedIn(req, res, next) {
-        if (req.isAuthenticated())
-            return next();
+function isLoggedIn(req, res, next) {
 
-        //If they aren't authenticated, return to homepage
-        res.redirect('/');
-    };
+    if (req.isAuthenticated())
+        return next();
 
+    //If they aren't authenticated, return to homepage
+    res.redirect('/');
 };

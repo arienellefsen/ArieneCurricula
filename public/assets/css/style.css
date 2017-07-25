@@ -145,6 +145,9 @@ input[type="text"].link {
 .save-msg {
   color: green; }
 
+#vote {
+  display: none; }
+
 html,
 body {
   height: 100%;

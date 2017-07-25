@@ -33,9 +33,10 @@ app.use(cookieParser());
 app.use(bodyParser());
 app.use(flash());
 
-
+// Setup Handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
 // Static directory
 app.use(express.static("public"));
 

@@ -1,8 +1,9 @@
 <div class="container">
     <div class="row curriculaMeta">
-        <h3> {{curricula.curricula_name}} </h3>
+        <h3 id="currId" curTag="{{curricula.id}}"> {{curricula.curricula_name}} </h3>
         <h4> Category: <a href="/category/{{curricula.category}}">{{curricula.category}}</a> > <a href="/category/su_{{curricula.sub_category}}">{{curricula.sub_category}}</a> </h4>
         <p> Votes: {{curricula.votes}}</p>
+        <p> Curricula Id: {{curricula.id}}</p>
     </div>
     <div class="row">
         <!-- Holds the details for the clicked curricula -->
@@ -16,9 +17,8 @@
                     {{/if}}
                 </div>
             {{/each}}
-            {{!--{{#if User}}--}}
-            <button class="btn btn-success">Yay Curricula!</button> 
-            {{!--{{/if}}--}}
+            <button class="btn btn-success" id="vote" status="vote">Yay Curricula!</button> 
+            <p class="alert-msg"></p>
         </div>
         
         <!-- Holds related curricula -->
@@ -36,3 +36,5 @@
         </div>
     </div>
 </div>
+
+<script src="../assets/js/details.js"></script>

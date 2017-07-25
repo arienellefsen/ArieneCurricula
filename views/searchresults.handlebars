@@ -1,0 +1,31 @@
+
+{{!--console.log(this.curriculaInstance);--}}
+<div class="container">
+    <div class="row" id="landing-content">
+        {{#if curriculaInstance.flag}}
+            {{#each curriculaInstance.display}}
+                {{#if this.submited_status}}
+                <div class="col-xs-12 col-sm-3 col-lg-3">
+                    <div class="thumbnail" id="cur{{this.id}}">
+                        <a href="curricula/{{this.id}}">
+                            <img src="./assets/img/default_curriculum.png" alt="{{this.curricula_name}}"> 
+                        </a>
+                        <div class="caption"> 
+                            <p> {{this.curricula_name}} </p>  
+                            <p> {{this.description}} </p>
+                            <p> Votes: {{this.votes}} </p>
+                            <p> Author: {{this.authorId}} </p>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+            {{/each}}
+        {{/if}}
+        {{#unless curriculaInstance.flag}}
+            <h4>Sorry, no results to display!</h4>
+            <p>You can try different search terms or <a href="/">go back.</a></p>
+        {{/unless}}
+    </div>
+</div>
+
+

@@ -18,17 +18,14 @@
 
     addFields();
 
-    function publish() {
-        $('input[name=status]').val(true);
-        $('#field-status').text('Published');
 
-    };
     var obj = {};
     var countField = 0;
 
     function save() {
         var title = $('#curricula_name').val();
         var field1 = $('input[name=link0]').val();
+        var desc = $('#curricula_description').text();
         var form = $("#create-form");
         var statusForm = $('input[name=status]').val();
         statusForm = true;
@@ -36,13 +33,29 @@
 
         if (title == '') {
             event.preventDefault();
-            $('#field-status').text('Please provide a title').addClass('alert-msg');
+            $('#curricula_name').attr("placeholder", "Title field id required!").addClass('alert-msg');
+        } else {
+            $('#curricula_name').attr("placeholder", "Title field id required!").removeClass('alert-msg');
+
         }
+
+
+        if (!$('#curricula_description').val()) {
+            $('#curricula_description').attr("placeholder", "Title field id required!").addClass('alert-msg');
+        } else {
+            $('#curricula_description').attr("placeholder", "Title field id required!").removeClass('alert-msg');
+
+        }
+
         if (field1 == '') {
             event.preventDefault();
-            $('#field-status').text('Please provide a field').addClass('alert-msg');
+            $('input[name=link0]').attr("placeholder", "Step 1 link id required!").addClass('alert-msg')
+
+            //$('#field-status').text('Please provide a field').addClass('alert-msg');
         } else {
-            $('#field-status').text('Published').addClass('save-msg');
+            $('input[name=link0]').attr("placeholder", "Step 1 link id required!").removeClass('alert-msg');
+
+            // $('#field-status').text('Published').addClass('save-msg');
             $('#save').text('Update');
 
             for (var i = 0; i < 5; i++) {
@@ -74,23 +87,28 @@
                 curriculaDetails: obj
             };
             // process the form
+            $('#field-status').text('Published');
 
             $.ajax({
                 type: 'POST',
                 beforeSend: function() {
                     $('.loading').show();
-
                 },
                 url: '/api/posts',
                 data: formDataCreate,
+                complete: function() {
+                    console.log('complete');
+
+                },
                 success: function(data) {
+
+                    alert('yes!');
                     // $('.loading').hide();
-
-
+                    console.log('sucess');
                 }
 
             });
-            $('.loading').delay(3000).fadeOut('slow');
+            $('.loading').delay(1000).fadeOut('slow');
 
 
         }

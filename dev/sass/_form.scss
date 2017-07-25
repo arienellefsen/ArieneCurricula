@@ -154,3 +154,11 @@
                     background-color: transparent;
                     border: 0;
                 }
+                
+                .alert-msg {
+                    border: 1px solid red;
+                }
+                
+                #dialog {
+                    display: none;
+                }

@@ -166,6 +166,12 @@ button.search {
   background-color: transparent;
   border: 0; }
 
+.alert-msg {
+  border: 1px solid red; }
+
+#dialog {
+  display: none; }
+
 .card-home {
   margin-bottom: 30px; }
   .card-home .card-title {

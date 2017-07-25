@@ -18,10 +18,10 @@ module.exports = function(app, passport) {
         }).then(function(curricula) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             res.render('landingpage', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
     // Get route for retrieving a single post
@@ -35,14 +35,14 @@ module.exports = function(app, passport) {
                 CurriculaId: curricId
             }
         }).then(function(curriculaDetailsData) {
-            Curricula.findById(curricId).then(function(curriculaData){
+            Curricula.findById(curricId).then(function(curriculaData) {
                 Curricula.findAll({
                     where: {
                         submited_status: {
                             $eq: true
                         }
                     }
-                }).then(function(allCurr){
+                }).then(function(allCurr) {
                     compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
                     compiledCurriculaObj.curricula = curriculaData;
                     compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
@@ -100,8 +100,8 @@ module.exports = function(app, passport) {
                 }
             }
         };
-        
-        if (curCat.slice(0,3) === 'su_') {
+
+        if (curCat.slice(0, 3) === 'su_') {
             catObj.where = {
                 sub_category: {
                     $eq: curCat.slice(3)
@@ -114,10 +114,10 @@ module.exports = function(app, passport) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             console.log(rangeToShow);
             res.render('category', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
     app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -129,13 +129,20 @@ module.exports = function(app, passport) {
         })
     );
 
-    //Create Curricula using form
     app.get("/create", function(req, res) {
-        var test = {
-            name: 'Curricula'
-        };
-        res.render('create', test);
+        var CurricuCateg = {};
+
+        Curricula.findAll({})
+            .then(function(result) {
+                CurricuCateg.allCurricula = helpers.getUniqueCategories(result);
+                CurricuCateg.curricula = helpers.getUniqueCategories(result);
+                //console.log(dbCurricula);
+                res.render('createCurricula', CurricuCateg);
+            });
     });
+
+
+
 
     // POST route for saving a new post
     app.post("/api/posts", function(req, res) {

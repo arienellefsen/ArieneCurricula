@@ -17,7 +17,6 @@ module.exports = function(app, passport) {
             }
         }).then(function(curricula) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
-            console.log(rangeToShow);
             res.render('landingpage', { curriculaInstance: rangeToShow });
         }).catch(function (err) {
             res.send('Ooops something happened... Please come back later.')
@@ -51,6 +50,43 @@ module.exports = function(app, passport) {
                 });
             });
         });
+    });
+
+     // Get route for search
+    app.get("/search", function(req, res) {
+        var rawSearch = req.query.q;
+        if (typeof rawSearch === 'string' && rawSearch.length >= 1) {
+            var searchTerms = helpers.cleanString(rawSearch).split(" ");
+            var searchResults = {};
+            if (searchTerms.length > 0) {
+                Curricula.findAll({
+                    where: {
+                        submited_status: {
+                            $eq: true
+                        }
+                    }
+                }).then(function(curricula) {
+                    searchResults = helpers.search(curricula, searchTerms);
+                    rangeToShow = {
+                        flag: true,
+                        display: helpers.limiter(searchResults, 0, 9)
+                    }
+                    console.log(rangeToShow.display)
+                    if (Object.keys(rangeToShow.display).length === 0) {
+                        console.log('here')
+                        rangeToShow.flag = false;
+                    } 
+                    res.render('searchresults', { curriculaInstance: rangeToShow });
+                    
+                });
+            } else {
+                console.log('Invalid Search Terms Were sent - no search results after cleaning.')
+                res.json('Invalid Search Terms', {});
+            }
+        } else {
+            console.log('req.query is either not a string or doesn\'t exist');
+            res.json('Invalid Search Terms', {});
+        }
     });
 
     // Get route to display posts in category

@@ -11,8 +11,8 @@ var path = require('path');
 var session = require('express-session'); //session middleware
 var flash    = require('connect-flash');
 var passport = require('passport');
-var db = require("./models");
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
+var db = require("./models"); //Silly git hack
+var SequelizeStore = require('connect-session-sequelize')(session.Store); //Silly git hack
 
 // Sets up the Express App
 // =============================================================

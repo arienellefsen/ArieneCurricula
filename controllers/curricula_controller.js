@@ -158,8 +158,7 @@ module.exports = function(app, passport) {
     });
 
     app.get('/user/signup', function(req, res) {
-        var messages = req.flash('error',)
-        res.render('usersignup.handlebars', {messages: messages, hasErrors: messages.len > 0});
+        res.render('usersignup.handlebars');
     })
 
     app.post('/user/signup', passport.authenticate('local.signup', {
@@ -170,8 +169,7 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/user/signin', function(req, res) {
-        var messages = req.flash('error',)
-        res.render('usersignin.handlebars', {messages: messages, hasErrors: messages.len > 0});
+        res.render('usersignin.handlebars');
 
     });
 

@@ -18,6 +18,7 @@ function getRelatedByCategory(obj, categoryToMatch, excludeId) {
 // derived from the database object of curricula
 function getUniqueCategories(obj) {
   var arrOfUniqueCategories = [];
+  var uniqCatObj = {};
   var thisCategory;
   if (typeof obj === 'object') {
     Object.keys(obj).forEach(function (item) {
@@ -28,10 +29,14 @@ function getUniqueCategories(obj) {
     });
   }
 
+  arrOfUniqueCategories.forEach(function (item) {
+    uniqCatObj['category' + i] = item;
+  });
+
   if (arrOfUniqueCategories.length === 0) {
     return null;
   } 
-  return arrOfUniqueCategories;
+  return uniqCatObj;
 }
 
 // Accepts an object of query results and returns the results

@@ -220,7 +220,7 @@ module.exports = function(app, passport) {
 
     app.get('/userview', isLoggedIn, function(req, res) {
         var username = req.session.passport.user.username;
-
+        var userId = req.session.passport.user.id;
 
         res.render('userview.handlebars', {username: username});
     });

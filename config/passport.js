@@ -43,8 +43,10 @@ module.exports = function(passport) {
                 user_type: "user",
                 username: username
             }
+
             User.create(newUser)
             .then(function(data) {
+                newUser.id = data.id;
                 return done(null, newUser);
             })
             .catch(function(err) {

@@ -4,7 +4,6 @@ var User = require('../models').User;
 var helpers = require('../helpers/helpers.js');
 var Sequelize = require('sequelize');
 
-
 module.exports = function(app, passport) {
 
     // Get the landing page content
@@ -19,10 +18,10 @@ module.exports = function(app, passport) {
         }).then(function(curricula) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             res.render('landingpage', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
     // Get route for retrieving a single post
@@ -36,14 +35,14 @@ module.exports = function(app, passport) {
                 CurriculaId: curricId
             }
         }).then(function(curriculaDetailsData) {
-            Curricula.findById(curricId).then(function(curriculaData){
+            Curricula.findById(curricId).then(function(curriculaData) {
                 Curricula.findAll({
                     where: {
                         submited_status: {
                             $eq: true
                         }
                     }
-                }).then(function(allCurr){
+                }).then(function(allCurr) {
                     compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
                     compiledCurriculaObj.curricula = curriculaData;
                     compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
@@ -53,7 +52,7 @@ module.exports = function(app, passport) {
         });
     });
 
-     // Get route for search
+    // Get route for search
     app.get("/search", function(req, res) {
         var rawSearch = req.query.q;
         if (typeof rawSearch === 'string' && rawSearch.length >= 1) {
@@ -76,9 +75,9 @@ module.exports = function(app, passport) {
                     if (Object.keys(rangeToShow.display).length === 0) {
                         console.log('here')
                         rangeToShow.flag = false;
-                    } 
+                    }
                     res.render('searchresults', { curriculaInstance: rangeToShow });
-                    
+
                 });
             } else {
                 console.log('Invalid Search Terms Were sent - no search results after cleaning.')
@@ -101,8 +100,8 @@ module.exports = function(app, passport) {
                 }
             }
         };
-        
-        if (curCat.slice(0,3) === 'su_') {
+
+        if (curCat.slice(0, 3) === 'su_') {
             catObj.where = {
                 sub_category: {
                     $eq: curCat.slice(3)
@@ -115,18 +114,54 @@ module.exports = function(app, passport) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             console.log(rangeToShow);
             res.render('category', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
-    app.get("/create", isLoggedIn, function(req, res) { //Vannucci: Removed googleAuth functions
-        var test = {
-            name: 'Curricula'
-        };
-        res.render('create', test);
+    app.get("/create", function(req, res) {
+        Curricula.findAll({})
+            .then(function(result) {
+                var dbCurricula = {
+                    showCurricula: result
+                };
+                console.log(dbCurricula);
+                res.render('createCurricula', dbCurricula);
+                //res.send('hello');
+            });
     });
+
+    // Get route for retrieving a single post
+    app.get("/create", function(req, res) {
+        var curricId = req.params.id;
+        var compiledCurriculaObj = {};
+        var similarList = {}
+
+        CurriculaDetails.findAll({
+            where: {
+                CurriculaId: curricId
+            }
+        }).then(function(curriculaDetailsData) {
+            Curricula.findById(curricId).then(function(curriculaData) {
+                Curricula.findAll({
+                    where: {
+                        submited_status: {
+                            $eq: true
+                        }
+                    }
+                }).then(function(allCurr) {
+                    compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
+                    compiledCurriculaObj.curricula = curriculaData;
+                    compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
+                    res.render('createCurricula', compiledCurriculaObj);
+                });
+            });
+        });
+    });
+
+
+
 
     // POST route for saving a new post
     app.post("/api/posts", isLoggedIn, function(req, res) {
@@ -238,4 +273,3 @@ module.exports = function(app, passport) {
     };
 
 };
-

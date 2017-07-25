@@ -11,8 +11,6 @@ var path = require('path');
 var session = require('express-session'); //session middleware
 var flash    = require('connect-flash');
 var passport = require('passport');
-var db = require("./models");
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // Sets up the Express App
 // =============================================================
@@ -59,14 +57,11 @@ app.use(express.static("public"));
 
 require('./config/passport.js')(passport); // pass passport for configuration
 
-
-
+require('./controllers/curricula_controller.js')(app, passport); //load in our routes and pass the app and passport
 
 // Routes
 // =============================================================
 require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport
-
-
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
 db.sequelize.sync({ force: true }).then(function() {

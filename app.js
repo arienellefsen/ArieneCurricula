@@ -49,6 +49,7 @@ app.use(passport.session()); //persistent login sessions
 app.use(function(req, res, next) {
     res.locals.login = req.isAuthenticated();
     res.locals.session = req.session;
+    res.locals.loggedInUsername = req.username;
     next();
 });
 

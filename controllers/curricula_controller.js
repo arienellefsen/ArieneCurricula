@@ -184,7 +184,10 @@ module.exports = function(app, passport) {
     });
 
     app.get('/userview', isLoggedIn, function(req, res) {
-        res.render('userview.handlebars');
+        var username = req.session.passport.user.username;
+
+
+        res.render('userview.handlebars', {username: username});
     });
 
 

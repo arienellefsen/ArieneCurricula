@@ -29,8 +29,10 @@ function getUniqueCategories(obj) {
     });
   }
 
-  arrOfUniqueCategories.forEach(function (item) {
-    uniqCatObj['category' + i] = item;
+  arrOfUniqueCategories.forEach(function (item,i) {
+    uniqCatObj['category' + i] = {
+      items: item
+    }
   });
 
   if (arrOfUniqueCategories.length === 0) {

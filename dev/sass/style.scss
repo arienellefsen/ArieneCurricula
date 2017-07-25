@@ -4,17 +4,14 @@
 @import 'header';
 @import 'footer';
 @import 'form';
+@import 'home';
+@import 'details';
 html,
 body {
     height: 100%;
     padding: 0;
-    background: -webkit-linear-gradient(rgba(204, 211, 229, 0.98) 5%, rgba(204, 211, 229, 0.98) 22%, rgba(177, 188, 215, 0.97) 66%, rgba(157, 172, 205, 0.97) 100%);
-    background: -moz-linear-gradient(rgba(204, 211, 229, 0.98) 5%, rgba(204, 211, 229, 0.98) 22%, rgba(177, 188, 215, 0.97) 66%, rgba(157, 172, 205, 0.97) 100%);
-    background: -o-linear-gradient(rgba(204, 211, 229, 0.98) 5%, rgba(204, 211, 229, 0.98) 22%, rgba(177, 188, 215, 0.97) 66%, rgba(157, 172, 205, 0.97) 100%);
-    background: linear-gradient(rgba(204, 211, 229, 0.98) 5%, rgba(204, 211, 229, 0.98) 22%, rgba(177, 188, 215, 0.97) 66%, rgba(157, 172, 205, 0.97) 100%);
-    /* FF3.6-15 */
-    /* Chrome10-25,Safari5.1-6 */
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: #c5cee2;
+    font-family: 'Lato', sans-serif;
 }
 
 #wrap {
@@ -23,8 +20,4 @@ body {
     height: 100%;
     margin: 0 auto -30px;
     padding: 0 0 30px;
-}
-
-h1 {
-    color: red;
 }

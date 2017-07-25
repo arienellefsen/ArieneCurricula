@@ -8,11 +8,18 @@ var router = express.Router();
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var path = require('path');
+<<<<<<< HEAD
 var session = require('express-session'); //session middleware
 var flash    = require('connect-flash');
 var passport = require('passport');
-var db = require("./models"); //Silly git hack
-var SequelizeStore = require('connect-session-sequelize')(session.Store); //Silly git hack
+var db = require("./models");
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
+=======
+var passport = require('passport');
+var session = require('express-session');
+var flash = require('connect-flash');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+>>>>>>> 2ceec6fc0ed9e218477d767a8cd58f5ab7c1eef7
 
 // Sets up the Express App
 // =============================================================
@@ -59,11 +66,18 @@ app.use(express.static("public"));
 
 require('./config/passport.js')(passport); // pass passport for configuration
 
+<<<<<<< HEAD
+
+=======
 require('./controllers/curricula_controller.js')(app, passport); //load in our routes and pass the app and passport
+>>>>>>> 2ceec6fc0ed9e218477d767a8cd58f5ab7c1eef7
+
 
 // Routes
 // =============================================================
 require('./controllers/curricula_controller.js')(app,passport); //load in our routes and pass the app and passport
+
+
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
 db.sequelize.sync({ force: true }).then(function() {

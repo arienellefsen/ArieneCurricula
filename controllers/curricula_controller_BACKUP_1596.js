@@ -4,6 +4,7 @@ var User = require('../models').User;
 var helpers = require('../helpers/helpers.js');
 var Sequelize = require('sequelize');
 
+
 module.exports = function(app, passport) {
 
     // Get the landing page content
@@ -120,6 +121,22 @@ module.exports = function(app, passport) {
         });
     });
 
+<<<<<<< HEAD
+    app.get("/create", isLoggedIn, function(req, res) { //Vannucci: Removed googleAuth functions
+        var test = {
+            name: 'Curricula'
+        };
+        res.render('create', test);
+=======
+    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/create',
+            failureRedirect: '/'
+        })
+    );
+
     app.get("/create", function(req, res) {
         Curricula.findAll({})
             .then(function(result) {
@@ -130,6 +147,7 @@ module.exports = function(app, passport) {
                 res.render('createCurricula', dbCurricula);
                 //res.send('hello');
             });
+>>>>>>> 2ceec6fc0ed9e218477d767a8cd58f5ab7c1eef7
     });
 
     // Get route for retrieving a single post
@@ -273,3 +291,4 @@ module.exports = function(app, passport) {
     };
 
 };
+

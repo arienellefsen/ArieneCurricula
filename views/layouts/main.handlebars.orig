@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='UTF-8'>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"> 
+	<link rel='stylesheet' type='text/css' href='/assets/css/style.css'> 
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i,900,900i" rel="stylesheet">
+	<title>Curricula</title>
+</head>
+<body>
+    <!-- Login Area -->
+    <div class="container">
+        <div class="row page-header">
+            <div class="col-xs-3 col-sm-3 col-lg-3">
+                <div class="page-header header_site">
+                    <a href="/">
+                    <img src="/assets/img/logo.png" alt="{{this.curricula_name}}" class="logo">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xs-5 col-sm-5 col-lg-5">
+                <div class="input-group search-section">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn search" id="searchBtn">Search</button>
+                    </div>
+                    <input type="text" class="form-control" id="searchBar">
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-4">
+<<<<<<< HEAD
+                {{# if login}}
+                        <a href="/create" class="btn btn-primary">+Create</a> 
+                        <a href="/userview" class="btn btn-secondary">Profile</a> 
+                        <a href="/" class="btn btn-secondary">Home</a>
+                        <a href="/user/logout" class="btn btn-secondary">Logout</a>
+
+
+                {{else}}
+                        <a href="/user/signin" class="btn btn-danger">
+                            <span class="fa"></span> Log In
+=======
+                    <a href="/login" class="btn-header"><i class="fa fa-user icon-header" aria-hidden="true"></i>
+Login</a>
+                    <a href="/register" class="btn-header"><i class="fa fa-user-plus icon-header" aria-hidden="true"></i>
+Register</a>
+                    <a href="/create" class="btn-header"><i class="fa fa-plus icon-header" aria-hidden="true"></i>
+Create</a>
+                    {{!--<span> 
+                        <a href="/auth/google" class="btn btn-danger">
+                            <span class="fa fa-google-plus"></span> Google
+>>>>>>> 2ceec6fc0ed9e218477d767a8cd58f5ab7c1eef7
+                        </a> 
+                        <a href="/user/signup" class="btn btn-danger">
+                            <span class="fa"></span> Sign Up
+                        </a> 
+
+                {{/if}}
+                </p>
+            </div>
+        </div>
+    
+	{{{body}}}
+    
+    </div><!--.container-->
+
+    <footer>
+    <div class="container">
+      <div class="row">
+                      <div class="col-xs-3 col-sm-3 col-md-12">
+
+        <h3>Copyright © 2017 - Curricula</h3> 
+        </div>
+        </div>
+         </div>
+    </footer>
+</body>
+<!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/search.js"></script>
+</html>

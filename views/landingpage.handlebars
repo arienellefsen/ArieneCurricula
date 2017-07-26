@@ -15,8 +15,8 @@
         {{#each curriculaInstance}}
             {{#if this.submited_status}}
             <div class="col-xs-12 col-sm-3 col-lg-3 card-home">
-                <div class="card card-2">
-                      <a href="curricula/{{this.id}}">
+                <div class="card card-2 lazy">
+                      <a data-original="curricula/{{this.id}}">
                     <div class="card-title">{{this.curricula_name}}</div>
                       </a>
                 <div class="thumbnail" id="cur{{this.id}}">  

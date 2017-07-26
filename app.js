@@ -24,11 +24,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-app.use(cookieParser());
+app.use(cookieParser('curriculasecret'));
 app.use(bodyParser());
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
 
 app.use(session({
   secret: 'curriculasecret',

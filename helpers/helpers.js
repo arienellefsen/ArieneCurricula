@@ -17,29 +17,24 @@ function getRelatedByCategory(obj, categoryToMatch, excludeId) {
 // This function returns an array of unique categories
 // derived from the database object of curricula
 function getUniqueCategories(obj) {
-    var arrOfUniqueCategories = [];
-    var uniqCatObj = {};
-    var thisCategory;
-    if (typeof obj === 'object') {
-        Object.keys(obj).forEach(function(item) {
-            thisCategory = obj[item].category;
-            if (arrOfUniqueCategories.indexOf(thisCategory) === -1) {
-                arrOfUniqueCategories.push(thisCategory)
-            }
+  var arrOfUniqueCategories = [];
+  var uniqCatObjs = [];
+  var thisCategory;
+  if (typeof obj === 'object') {
+    Object.keys(obj).forEach(function (item) {
+      thisCategory = obj[item].category;
+      if (arrOfUniqueCategories.indexOf(thisCategory) === -1) {
+        arrOfUniqueCategories.push(thisCategory)
+        uniqCatObjs.push({
+          cat: thisCategory
         });
-    }
-
-    arrOfUniqueCategories.forEach(function(item, i) {
-        // Convert to Object
-        uniqCatObj['category' + i] = {
-            items: item
-        }
+      }
     });
 
-    if (arrOfUniqueCategories.length === 0) {
-        return null;
-    }
-    return uniqCatObj;
+  if (arrOfUniqueCategories.length === 0) {
+    return null;
+  } 
+  return uniqCatObjs;
 }
 
 // Accepts an object of query results and returns the results
@@ -166,8 +161,48 @@ function search(obj, arrOfTerms) {
     return resultObj;
 }
 
+// Creates an object of category>subcategory relationships
+// Output would look something like the following:
+// {
+//  cat1: [subCat, subCat2],
+//  cat2: [subCat3, subCat4]
+// }
+function makeCategoryObject(curriculaObject) {
+  var catArr = [];
+  var subCatArr = [];
+  var catObj = {};
+  var curCat = "";
+  var curSubCat = "";
+
+  // Iterate each category
+  Object.keys(curriculaObject).forEach(function(item) {
+    curCat = curriculaObject[item].category
+    // If the category hasn't been seen already (or is unique)
+    if (catArr.indexOf(curCat) === -1){
+      catArr.push(curCat); // Add it to the seen list
+      Object.keys(curriculaObject).forEach(function(item2) { // Iterate all the sub_categories
+        curSubCat = curriculaObject[item2].sub_category;
+        // If the subcategory hasn't been seen yet and the category is 
+        // equal to the current category being iterated then
+        if (subCatArr.indexOf(curSubCat) === -1 && curriculaObject[item2].category === curCat){ 
+          subCatArr.push(curSubCat); // Add the subcategory to the array that will be aligned to the category
+        }
+      });
+      catObj[curCat] = subCatArr; // Add the subcategories mapped to that parent category to the cat Object
+      subCatArr = []; // Reset the subcategory array
+    }
+  });
+
+  // If there are no categories to map return null
+  if (Object.keys(catObj).length = 0){
+    return null;
+  }
+  return catObj;
+}
+
 exports.getRelatedByCategory = getRelatedByCategory;
 exports.getUniqueCategories = getUniqueCategories;
 exports.limiter = limiter;
 exports.cleanString = cleanString;
 exports.search = search;
+exports.makeCategoryObject = makeCategoryObject;

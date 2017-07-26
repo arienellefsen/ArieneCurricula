@@ -36,19 +36,19 @@
                 <section id="category">
                     Category:
                     <select id="category-curricula">
-                        {{#each showCurricula}}
-                        <option value="{{this.category}}">{{this.category}}</option>
-                        {{/each}}
                         <option value="add">Add New Category</option>
+                        {{#each showCurricula}}
+                        <option value="{{cat}}">{{cat}}</option>
+                        {{/each}}
                     </select>
                 </section>
 
                 <section id="subcat">
                     Sub Category:
                     <select id="sub-category">
-                        {{#each showCurricula}}
+                        {{!--{{#each showCurricula}}
                         <option value="{{this.sub_category}}">{{this.sub_category}}</option>
-                        {{/each}}
+                        {{/each}}--}}
                         <option value="add">Add New SubCategory</option>
                     </select>
                 </section>
@@ -57,7 +57,7 @@
  <section id="tags">
                 <div class="title-step">3: Add Tags:</div>
 
-                    <input type="text" name="curricula_tags" class='field-tags' id="curricula_tag" value="" placeholder="Click here to add a Tags, separated by commans" required>
+                    <input type="text" name="curricula_tags" class='field-tags' id="curricula_tag" value="" placeholder="Click here to add a Tags, separated by commas" required>
 
                 <input type="hidden" name="status" value="" id="status">
 

@@ -190,10 +190,8 @@ module.exports = function(app, passport, sessionMW) {
     app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res) {
         var userId = req.session.passport.user.id;
         var currId = req.params.curId;
-        console.log('####### userid: ', userId)
-        console.log('####### currid: ', currId)
-        if (userId !== 'undefined' && currId !== 'undefined') {
-            User.findById(userId).then(function(userData) {
+        if (userId !== 'undefined' && currId !== 'undefined'){
+            User.findById(userId).then(function(userData){
                 var votesArr = userData.votes_cast.split(',');
                 var voted = votesArr.indexOf(currId);
                 if (voted > -1) {
@@ -215,47 +213,27 @@ module.exports = function(app, passport, sessionMW) {
             failureRedirect: '/'
         })
     );
-    app.get("/create", isLoggedIn, function(req, res) {
-        Curricula.findAll({})
-            .then(function(result) {
-                var dbCurricula = {
-                    showCurricula: result
-                };
-                console.log(dbCurricula);
-                res.render('createCurricula', dbCurricula);
-                //res.send('hello');
-            });
-    });
 
-    // Get route for retrieving a single post
-    app.get("/create", function(req, res) {
-        var curricId = req.params.id;
-        var compiledCurriculaObj = {};
-        var similarList = {}
-        CurriculaDetails.findAll({
-            where: {
-                CurriculaId: curricId
-            }
-        }).then(function(curriculaDetailsData) {
-            Curricula.findById(curricId).then(function(curriculaData) {
-                Curricula.findAll({
-                    where: {
-                        submited_status: {
-                            $eq: true
-                        }
-                    }
-                }).then(function(allCurr) {
-                    compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
-                    compiledCurriculaObj.curricula = curriculaData;
-                    compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
-                    res.render('createCurricula', compiledCurriculaObj);
-                });
-            });
+    // Runs when user goes to the create view
+    app.get("/create", isLoggedIn, function(req, res) {
+        Curricula.findAll({}).then(function(result) {
+            var dbCurricula = {
+                showCurricula: helpers.getUniqueCategories(result)
+            };
+            res.render('createCurricula', dbCurricula);
         });
     });
 
-
-
+    // Responds to front-end API call for a JSON object 
+    // of the category>subcatgory mapping
+    app.get("/api/cats",  function(req, res) {
+        Curricula.findAll({
+            attributes: ['category', 'sub_category']
+        }).then(function(curData) {
+            console.log(helpers.makeCategoryObject(curData));
+            res.json(helpers.makeCategoryObject(curData));
+        });
+    });
 
     // POST route for saving a new post
     app.post("/api/posts", isLoggedIn, function(req, res) {

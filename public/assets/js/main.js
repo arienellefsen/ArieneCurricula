@@ -1,5 +1,10 @@
 (function() {
 
+    //alert("username = " + localStorage.getItem("author"));
+    var author = localStorage.getItem("Author");
+    var authorId = localStorage.getItem("id-Author");
+    //var user = document.getElementById("#username").value;
+    //console.log('name: ' + user);
     var count = 0;
 
     $('.loading').hide();
@@ -68,7 +73,8 @@
                     obj['step' + countField] = {
                         step_url: fieldForm,
                         step_number: countField,
-                        step_content: descField
+                        step_content: descField,
+                        authorId: authorId
                     };
                     countField++;
                 }
@@ -82,7 +88,8 @@
                     'description': $('#curricula_description').val(),
                     'category': $('#category-curricula').val(),
                     'sub_category': $('#sub-category').val(),
-                    'search_tags': $('#curricula_tag').val()
+                    'search_tags': $('#curricula_tag').val(),
+                    'authorId': authorId
                 },
                 curriculaDetails: obj
             };

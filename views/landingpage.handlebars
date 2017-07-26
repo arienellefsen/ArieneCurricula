@@ -9,22 +9,22 @@
                       <a href="curricula/{{this.id}}">
                     <div class="card-title">{{this.curricula_name}}</div>
                       </a>
-                <div class="thumbnail" id="cur{{this.id}}">  
-                        {{!--<img src="./assets/img/default_curriculum.png" alt="{{this.curricula_name}}"> --}}
-                    
-                    <div class="caption"> 
+
+<div class="caption"> 
                         <p> {{this.description}} </p>
                         <p> <i class="fa fa-certificate icon-home" aria-hidden="true"></i>
 Votes: {{this.votes}} </p>
                         <p> <i class="fa fa-user-circle-o icon-home" aria-hidden="true"></i>
 Author: {{this.authorId}} </p>
                     </div>
+
+
+                      </div>
                 </div>
-                </div>
-            </div>
             {{/if}}
         {{/each}}
     </div>
 </div>
+
 
 

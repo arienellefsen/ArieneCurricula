@@ -37,13 +37,13 @@ module.exports = function(app, passport, sessionMW) {
                         submited_status: {
                             $eq: true
                         }
-                    }                   
-                }).then(function(allCurr){
+                    }
+                }).then(function(allCurr) {
                     CurriculaDetails.findAll({
                         where: {
                             CurriculaId: curricId
                         }
-                    }).then(function(curriculaDetailsData){
+                    }).then(function(curriculaDetailsData) {
                         compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
                         compiledCurriculaObj.curricula = curriculaData;
                         compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
@@ -56,7 +56,7 @@ module.exports = function(app, passport, sessionMW) {
         });
     });
 
-     // Get route for search results
+    // Get route for search results
     app.get("/search", function(req, res) {
         var rawSearch = req.query.q;
         if (typeof rawSearch === 'string' && rawSearch.length >= 1) {
@@ -122,15 +122,15 @@ module.exports = function(app, passport, sessionMW) {
     });
 
     // Adding a vote to a curricula and user history
-    app.post('/api/vote/:id/:userid', isLoggedIn, function (req, res) {
+    app.post('/api/vote/:id/:userid', isLoggedIn, function(req, res) {
         var curriculaId = req.params.id;
         var userId = req.session.passport.user.id;
         var voteHistory = '';
 
         // First Increment the vote in the curricula table
-        Curricula.findById(curriculaId).then(function(curricData){
-            return curricData.increment('votes', {by:1});
-        }).then(function(curricData){
+        Curricula.findById(curriculaId).then(function(curricData) {
+            return curricData.increment('votes', { by: 1 });
+        }).then(function(curricData) {
             // Second Get the User's vote history
             User.findById(userId).then(function(userData) {
                 voteHistory = userData.votes_cast + ',' + curriculaId; //Add the curricula to the vote history
@@ -150,15 +150,15 @@ module.exports = function(app, passport, sessionMW) {
     });
 
     // Removing a vote to a curricula and user history
-    app.post('/api/unvote/:id/:userid', isLoggedIn, function (req, res) {
+    app.post('/api/unvote/:id/:userid', isLoggedIn, function(req, res) {
         var curriculaId = req.params.id;
         var userId = req.session.passport.user.id;
         var voteHistory = '';
 
         // First decrement the vote in the curricula table
-        Curricula.findById(curriculaId).then(function(curricData){
-            return curricData.increment('votes', {by:-1});
-        }).then(function(curricData){
+        Curricula.findById(curriculaId).then(function(curricData) {
+            return curricData.increment('votes', { by: -1 });
+        }).then(function(curricData) {
             // Second Get the User's vote history
             User.findById(userId).then(function(userData) {
                 voteHistory = userData.votes_cast; // Capture vote history
@@ -166,9 +166,9 @@ module.exports = function(app, passport, sessionMW) {
                 index = votArr.indexOf(curriculaId); // Find index of the vote in arr
                 // If the curricula was found in vote history, remove it
                 if (index > -1) {
-                    votArr.splice(index,1);
+                    votArr.splice(index, 1);
                 }
-                
+
                 // Turn vote history back into a comma-separated string
                 voteHistory = votArr.join(',');
 
@@ -187,7 +187,7 @@ module.exports = function(app, passport, sessionMW) {
         });
     })
 
-    app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res){
+    app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res) {
         var userId = req.session.passport.user.id;
         var currId = req.params.curId;
         if (userId !== 'undefined' && currId !== 'undefined'){
@@ -195,9 +195,9 @@ module.exports = function(app, passport, sessionMW) {
                 var votesArr = userData.votes_cast.split(',');
                 var voted = votesArr.indexOf(currId);
                 if (voted > -1) {
-                    res.json({status: true})
+                    res.json({ status: true })
                 } else {
-                    res.json({status: false})
+                    res.json({ status: false })
                 }
             });
         } else {
@@ -240,19 +240,10 @@ module.exports = function(app, passport, sessionMW) {
         console.log(req.body);
         var curricula = req.body.curricula;
         var curriculaDetails = req.body.curriculaDetails;
-
-
+        var username = req.session.passport.user.username;
 
         if (curricula && curriculaDetails) {
-
             Curricula.create(curricula).then(function(dbPost) {
-                //res.redirect("/");
-                //res.json(dbPost);
-
-
-                //curriculaDetails.CurriculaId = dbPost.id;
-
-                console.log(curriculaDetails);
 
                 Object.keys(curriculaDetails).forEach(function(item) {
                     curriculaDetails[item].CurriculaId = dbPost.id;
@@ -291,10 +282,13 @@ module.exports = function(app, passport, sessionMW) {
     });
 
     app.get('/userview', isLoggedIn, function(req, res) {
-        var username = req.session.passport.user.username;
-        var userId = req.session.passport.user.id;
 
-        res.render('userview.handlebars', {username: username});
+        var userObj = {
+            username: req.session.passport.user.username,
+            userId: req.session.passport.user.id
+        };
+        res.render('userview.handlebars', userObj);
+
     });
 
 
@@ -311,7 +305,7 @@ module.exports = function(app, passport, sessionMW) {
         successRedirect: '/userview',
         failureRedirect: '/user/signup',
         failureFlash: true
-    
+
     }));
 
     app.get('/user/signin', function(req, res) {
@@ -323,10 +317,10 @@ module.exports = function(app, passport, sessionMW) {
         successRedirect: '/userview',
         failureRedirect: '/user/signin',
         failureFlash: true
-    
+
     }));
 
-    app.get('/user/logout', function(req,res, next) {
+    app.get('/user/logout', function(req, res, next) {
         req.logout();
         res.redirect('/');
     })

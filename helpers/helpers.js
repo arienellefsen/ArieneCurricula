@@ -30,6 +30,7 @@ function getUniqueCategories(obj) {
         });
       }
     });
+  }
 
   if (arrOfUniqueCategories.length === 0) {
     return null;

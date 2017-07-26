@@ -24,35 +24,39 @@ module.exports = function(app, passport, sessionMW) {
         });
     });
 
-    // Get route for retrieving a single post
+    // Shows the details for a selected curricula 
     app.get("/curricula/:id", function(req, res) {
         var curricId = req.params.id;
         var compiledCurriculaObj = {};
+        var userId = req.body.userId;
         var similarList = {}
-
-        CurriculaDetails.findAll({
-            where: {
-                CurriculaId: curricId
-            }
-        }).then(function(curriculaDetailsData) {
-            Curricula.findById(curricId).then(function(curriculaData) {
+        Curricula.findById(curricId).then(function(curriculaData) {
+            if (curriculaData.submited_status) {
                 Curricula.findAll({
                     where: {
                         submited_status: {
                             $eq: true
                         }
-                    }
-                }).then(function(allCurr) {
-                    compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
-                    compiledCurriculaObj.curricula = curriculaData;
-                    compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
-                    res.render('detailscurricula', compiledCurriculaObj);
-                });
-            });
+                    }                   
+                }).then(function(allCurr){
+                    CurriculaDetails.findAll({
+                        where: {
+                            CurriculaId: curricId
+                        }
+                    }).then(function(curriculaDetailsData){
+                        compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
+                        compiledCurriculaObj.curricula = curriculaData;
+                        compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
+                        res.render('detailscurricula', compiledCurriculaObj);
+                    });
+                })
+            } else {
+                res.send("Error 404");
+            }
         });
     });
 
-    // Get route for search
+     // Get route for search results
     app.get("/search", function(req, res) {
         var rawSearch = req.query.q;
         if (typeof rawSearch === 'string' && rawSearch.length >= 1) {
@@ -71,9 +75,7 @@ module.exports = function(app, passport, sessionMW) {
                         flag: true,
                         display: helpers.limiter(searchResults, 0, 9)
                     }
-                    console.log(rangeToShow.display)
                     if (Object.keys(rangeToShow.display).length === 0) {
-                        console.log('here')
                         rangeToShow.flag = false;
                     }
                     res.render('searchresults', { curriculaInstance: rangeToShow });
@@ -112,7 +114,6 @@ module.exports = function(app, passport, sessionMW) {
 
         Curricula.findAll(catObj).then(function(curricula) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
-            console.log(rangeToShow);
             res.render('category', { curriculaInstance: rangeToShow });
         }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
@@ -120,6 +121,98 @@ module.exports = function(app, passport, sessionMW) {
         });
     });
 
+    // Adding a vote to a curricula and user history
+    app.post('/api/vote/:id/:userid', isLoggedIn, function (req, res) {
+        var curriculaId = req.params.id;
+        var userId = req.session.passport.user.username;
+        var voteHistory = '';
+
+        // First Increment the vote in the curricula table
+        Curricula.findById(curriculaId).then(function(curricData){
+            return curricData.increment('votes', {by:1});
+        }).then(function(curricData){
+            // Second Get the User's vote history
+            User.findById(userId).then(function(userData) {
+                voteHistory = userData.votes_cast + ',' + curriculaId; //Add the curricula to the vote history
+                // Third, update the vote history in the user table
+                User.update({
+                    votes_cast: voteHistory
+                }, {
+                    where: {
+                        id: {
+                            $eq: userId
+                        }
+                    }
+                });
+            });
+            res.redirect('/curricula/' + curriculaId);
+        });
+    });
+
+    // Removing a vote to a curricula and user history
+    app.post('/api/unvote/:id/:userid', isLoggedIn, function (req, res) {
+        var curriculaId = req.params.id;
+        var userId = req.session.passport.user.id;
+        var voteHistory = '';
+
+        // First decrement the vote in the curricula table
+        Curricula.findById(curriculaId).then(function(curricData){
+            return curricData.increment('votes', {by:-1});
+        }).then(function(curricData){
+            // Second Get the User's vote history
+            User.findById(userId).then(function(userData) {
+                voteHistory = userData.votes_cast; // Capture vote history
+                votArr = voteHistory.split(","); // Turn it into an array
+                index = votArr.indexOf(curriculaId); // Find index of the vote in arr
+                // If the curricula was found in vote history, remove it
+                if (index > -1) {
+                    votArr.splice(index,1);
+                }
+                
+                // Turn vote history back into a comma-separated string
+                voteHistory = votArr.join(',');
+
+                // Third, update the vote history in the user table
+                User.update({
+                    votes_cast: voteHistory
+                }, {
+                    where: {
+                        id: {
+                            $eq: userId
+                        }
+                    }
+                });
+            });
+            res.redirect('/curricula/' + curriculaId);
+        });
+    })
+
+    app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res){
+        var userId = req.session.passport.user.id;
+        var currId = req.params.curId;
+        if (userId.length >= 1 && currId.length >= 1){
+            User.findById(userId).then(function(userData){
+                var votesArr = userData.votes_cast.split(',');
+                var voted = votesArr.indexOf(currId);
+                if (voted > -1) {
+                    res.json({status: true})
+                } else {
+                    res.json({status: false})
+                }
+            });
+        } else {
+            res.json(false)
+        }
+    })
+
+    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/create',
+            failureRedirect: '/'
+        })
+    );
     app.get("/create", function(req, res) {
         Curricula.findAll({})
             .then(function(result) {

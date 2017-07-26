@@ -14,26 +14,25 @@
                         <p>  Link: <a href="{{this.step_url}}" target="_blank">{{this.step_url}}</a> </p> 
                     {{/if}}
             {{/each}}
+            <button class="btn btn-success" id="vote" status="vote">Yay Curricula!</button> 
+            <p class="alert-msg"></p>
         </div>
 
  <!-- Holds related curricula -->
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
             <div class="card card-2" >
                 <div class="side-bar-title">{{curricula.category}} related:</div>
-            <div class="related">
-                {{#each allCurricula}}
-                    <a href="/curricula/{{this.id}}" class="realted-link">
-                        <h4 class="">{{this.curricula_name}}</h4>
-                        <p class="list-group-item-text">{{this.description}}</p>
-                    </a>
-                {{/each}}
+                <div class="related">
+                    {{#each allCurricula}}
+                        <a href="/curricula/{{this.id}}" class="realted-link">
+                            <h4 class="">{{this.curricula_name}}</h4>
+                            <p class="list-group-item-text">{{this.description}}</p>
+                        </a>
+                    {{/each}}
+                </div>
             </div>
         </div>
-
-</div>
     </div>
-
 </div>
 
-
-    
+<script src="../assets/js/details.js"></script>

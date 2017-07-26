@@ -1,0 +1,81 @@
+<section class="form-status card-2">
+<div class="loading">
+
+<img src="./assets/img/25.gif" alt="{{this.curricula_name}}">
+
+</div>
+<div class="container">
+<div id="dialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+ 
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-12">
+                <div class="header-form">
+                <h1>Create a Curricula</h1>
+                <div id="field-status">Status: In Progress</div>
+                </div>
+                 </div>
+                  </div>
+</section>
+
+<form class="form-horizontal card card-2" id="create-form" method="POST" name="create-links">
+    <div class="container">
+        <div class="row">
+           
+                <div class="col-xs-12 col-sm-6">
+               
+                <div class="title-step">1: Add a Title and Description:</div>
+                <input type="text" name="curricula_name" class='field-title' id="curricula_name" value="" placeholder="Add a title for your curricula" required>
+                <br>
+                <textarea rows='4' cols='50' class='field-description12' id="curricula_description" placeholder="Add a description for you curricula" required></textarea>
+
+
+<div class="title-step">2: Choose category and SubCategory:</div>
+
+                <section id="category">
+                    Category:
+                    <select id="category-curricula">
+                        {{#each showCurricula}}
+                        <option value="{{this.category}}">{{this.category}}</option>
+                        {{/each}}
+                        <option value="add">Add New Category</option>
+                    </select>
+                </section>
+
+                <section id="subcat">
+                    Sub Category:
+                    <select id="sub-category">
+                        {{#each showCurricula}}
+                        <option value="{{this.sub_category}}">{{this.sub_category}}</option>
+                        {{/each}}
+                        <option value="add">Add New SubCategory</option>
+                    </select>
+                </section>
+
+
+ <section id="tags">
+                <div class="title-step">3: Add Tags:</div>
+
+                    <input type="text" name="curricula_tags" class='field-tags' id="curricula_tag" value="" placeholder="Click here to add a Tags, separated by commans" required>
+
+                <input type="hidden" name="status" value="" id="status">
+
+                </section>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+           
+                <div class="title-step">4: Add Steps:</div>
+
+                <div id="fields-form">
+                </div>
+                <br>
+               
+                <button class="btn-form save" id="save">Publish</button>
+            </div>
+
+         </div>
+    </div>
+</form>

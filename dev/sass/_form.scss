@@ -91,10 +91,6 @@
                     color: $white;
                 }
                 
-                .search-section {
-                    padding-top: 20px;
-                }
-                
                 .icon-header {
                     color: $white;
                     padding-top: 20px;
@@ -161,4 +157,21 @@
                 
                 #dialog {
                     display: none;
+                }
+                
+                h1.user {
+                    font-size: 25px;
+                    color: $blue;
+                    padding-left: 16px;
+                    margin-bottom: 40px;
+                    padding-top: 10px;
+                }
+                
+                .profile-pic {
+                    margin-top: -53px;
+                    padding: 16px;
+                }
+                
+                p.user-profile-text {
+                    margin-top: 10px;
                 }

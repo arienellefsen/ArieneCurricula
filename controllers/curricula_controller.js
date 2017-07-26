@@ -18,10 +18,10 @@ module.exports = function(app, passport) {
         }).then(function(curricula) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             res.render('landingpage', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
     // Shows the details for a selected curricula 
@@ -77,9 +77,9 @@ module.exports = function(app, passport) {
                     }
                     if (Object.keys(rangeToShow.display).length === 0) {
                         rangeToShow.flag = false;
-                    } 
+                    }
                     res.render('searchresults', { curriculaInstance: rangeToShow });
-                    
+
                 });
             } else {
                 console.log('Invalid Search Terms Were sent - no search results after cleaning.')
@@ -102,8 +102,8 @@ module.exports = function(app, passport) {
                 }
             }
         };
-        
-        if (curCat.slice(0,3) === 'su_') {
+
+        if (curCat.slice(0, 3) === 'su_') {
             catObj.where = {
                 sub_category: {
                     $eq: curCat.slice(3)
@@ -115,16 +115,16 @@ module.exports = function(app, passport) {
         Curricula.findAll(catObj).then(function(curricula) {
             rangeToShow = helpers.limiter(curricula, 0, 9);
             res.render('category', { curriculaInstance: rangeToShow });
-        }).catch(function (err) {
+        }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
-        });    
+        });
     });
 
     // Adding a vote to a curricula and user history
-    app.post('/api/vote/:id/:userid', function (req, res) {
+    app.post('/api/vote/:id/:userid', isLoggedIn, function (req, res) {
         var curriculaId = req.params.id;
-        var userId = req.params.userid;
+        var userId = req.session.passport.user.username;
         var voteHistory = '';
 
         // First Increment the vote in the curricula table
@@ -150,9 +150,9 @@ module.exports = function(app, passport) {
     });
 
     // Removing a vote to a curricula and user history
-    app.post('/api/unvote/:id/:userid', function (req, res) {
+    app.post('/api/unvote/:id/:userid', isLoggedIn, function (req, res) {
         var curriculaId = req.params.id;
-        var userId = req.params.userid;
+        var userId = req.session.passport.user.id;
         var voteHistory = '';
 
         // First decrement the vote in the curricula table
@@ -187,8 +187,8 @@ module.exports = function(app, passport) {
         });
     })
 
-    app.get('/checkvote/:user/:curId', function(req, res){
-        var userId = req.params.user;
+    app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res){
+        var userId = req.session.passport.user.id;
         var currId = req.params.curId;
         if (userId.length >= 1 && currId.length >= 1){
             User.findById(userId).then(function(userData){
@@ -213,17 +213,51 @@ module.exports = function(app, passport) {
             failureRedirect: '/'
         })
     );
-
-    //Create Curricula using form
     app.get("/create", function(req, res) {
-        var test = {
-            name: 'Curricula'
-        };
-        res.render('create', test);
+        Curricula.findAll({})
+            .then(function(result) {
+                var dbCurricula = {
+                    showCurricula: result
+                };
+                console.log(dbCurricula);
+                res.render('createCurricula', dbCurricula);
+                //res.send('hello');
+            });
     });
 
+    // Get route for retrieving a single post
+    app.get("/create", function(req, res) {
+        var curricId = req.params.id;
+        var compiledCurriculaObj = {};
+        var similarList = {}
+
+        CurriculaDetails.findAll({
+            where: {
+                CurriculaId: curricId
+            }
+        }).then(function(curriculaDetailsData) {
+            Curricula.findById(curricId).then(function(curriculaData) {
+                Curricula.findAll({
+                    where: {
+                        submited_status: {
+                            $eq: true
+                        }
+                    }
+                }).then(function(allCurr) {
+                    compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
+                    compiledCurriculaObj.curricula = curriculaData;
+                    compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
+                    res.render('createCurricula', compiledCurriculaObj);
+                });
+            });
+        });
+    });
+
+
+
+
     // POST route for saving a new post
-    app.post("/api/posts", function(req, res) {
+    app.post("/api/posts", isLoggedIn, function(req, res) {
         console.log(req.body);
         var curricula = req.body.curricula;
         var curriculaDetails = req.body.curriculaDetails;
@@ -256,9 +290,7 @@ module.exports = function(app, passport) {
     });
 
 
-
-
-    app.post("/api/posts/:id", function(req, res) {
+    app.post("/api/posts/:id", isLoggedIn, function(req, res) { //Vannucci: Added 'isLoggedIn'
         var idData = req.params.id;
         Curricula.update({
             status: 'update'
@@ -273,27 +305,64 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/profile', isLoggedIn, function(req, res) {
+    app.get('/profile/:id', isLoggedIn, function(req, res) {
         res.render('profile.handlebars', {
             user: req.user //Get the user out of session and pass to the template
         });
     });
+
+    app.get('/userview', isLoggedIn, function(req, res) {
+        var username = req.session.passport.user.username;
+
+
+        res.render('userview.handlebars', {username: username});
+    });
+
 
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
     });
 
+    app.get('/user/signup', function(req, res) {
+        res.render('usersignup.handlebars');
+    })
+
+    app.post('/user/signup', passport.authenticate('local.signup', {
+        successRedirect: '/userview',
+        failureRedirect: '/user/signup',
+        failureFlash: true
+    
+    }));
+
+    app.get('/user/signin', function(req, res) {
+        res.render('usersignin.handlebars');
+
+    });
+
+    app.post('/user/signin', passport.authenticate('local.signin', {
+        successRedirect: '/userview',
+        failureRedirect: '/user/signin',
+        failureFlash: true
+    
+    }));
+
+    app.get('/user/logout', function(req,res, next) {
+        req.logout();
+        res.redirect('/');
+    })
+
+
     app.all('*', function(req, res, next) {
         res.send("Error 404");
     });
-};
 
-function isLoggedIn(req, res, next) {
+    function isLoggedIn(req, res, next) {
+        if (req.isAuthenticated())
+            return next();
 
-    if (req.isAuthenticated())
-        return next();
+        //If they aren't authenticated, return to homepage
+        res.redirect('/');
+    };
 
-    //If they aren't authenticated, return to homepage
-    res.redirect('/');
 };

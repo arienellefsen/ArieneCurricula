@@ -7,7 +7,10 @@ var configAuth     = require('./auth');
 module.exports = function(passport) {
 
 	passport.serializeUser(function(user, done) { //How passport will store the user in the session
-        	done(null, user);
+        user = user.dataValues;
+
+        console.log("#####NEWSERIALIZE ",user);
+        done(null, user);
 	});
 
 	passport.deserializeUser(function(user, done) {
@@ -72,7 +75,7 @@ module.exports = function(passport) {
             if (user && password !== user.dataValues.password) { //If data exists AND the password does not equal
                 return done(null, false, {message: "Invalid password"});
             }
-            return done(null, true, user);
+            return done(null, user);
 
         }).catch(function(err) {
             console.log("Failed to find user or create user");

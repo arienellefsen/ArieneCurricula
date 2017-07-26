@@ -119,4 +119,11 @@
     };
     //Call save function
     $("#save").on("click", save);
+
+
+    //Lazy load function
+    $(function() {
+        $("div.lazy").lazyload();
+    });
+
 }());

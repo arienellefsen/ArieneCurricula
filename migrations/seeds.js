@@ -143,6 +143,42 @@ module.exports = function (db) {
     }).catch(function (err){
       console.log(err);
     });
+
+    // ID7
+    db.Curricula.create({
+      curricula_name: 'How to use Passport',
+      category: 'Programming',
+      sub_category: 'Javascript',
+      search_tags: 'javascript passport authentication',
+      votes: 90,
+      description: 'Learn to authenticate users with Passport.',
+      submited_status: true,
+      authorId: 2
+    }).then((data) => {
+      console.log('Seeded curricula on learning to use passport');
+      createSteakDetails(data.id);
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    // ID8
+    db.Curricula.create({
+      curricula_name: 'How to use Passport',
+      category: 'Programming',
+      sub_category: 'Javascript',
+      search_tags: 'javascript passport authentication',
+      votes: 90,
+      description: 'Learn to authenticate users with Passport.',
+      submited_status: true,
+      authorId: 2
+    }).then((data) => {
+      console.log('Seeded curricula on learning to use passport');
+      createSteakDetails(data.id);
+    }).catch(function (err){
+      console.log(err);
+    });
+
+
   }
 
   function createJavaDetails(id) {

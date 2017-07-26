@@ -4,7 +4,7 @@ var User = require('../models').User;
 var helpers = require('../helpers/helpers.js');
 var Sequelize = require('sequelize');
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, sessionMW) {
 
     // Get the landing page content
     app.get("/", function(req, res) {

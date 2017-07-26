@@ -172,6 +172,20 @@ button.search {
 #dialog {
   display: none; }
 
+h1.user {
+  font-size: 25px;
+  color: #4568DC;
+  padding-left: 16px;
+  margin-bottom: 40px;
+  padding-top: 10px; }
+
+.profile-pic {
+  margin-top: -53px;
+  padding: 16px; }
+
+p.user-profile-text {
+  margin-top: 10px; }
+
 .card-home {
   margin-bottom: 30px; }
   .card-home .card-title {

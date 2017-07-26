@@ -174,22 +174,26 @@ function makeCategoryObject(curriculaObject) {
   var catObj = {};
   var curCat = "";
   var curSubCat = "";
+  var curCatInSub = "";
 
   // Iterate each category
   Object.keys(curriculaObject).forEach(function(item) {
-    curCat = curriculaObject[item].category
+    curCat = curriculaObject[item].category.toLowerCase().trim();
     // If the category hasn't been seen already (or is unique)
     if (catArr.indexOf(curCat) === -1){
       catArr.push(curCat); // Add it to the seen list
       Object.keys(curriculaObject).forEach(function(item2) { // Iterate all the sub_categories
-        curSubCat = curriculaObject[item2].sub_category;
+        curSubCat = curriculaObject[item2].sub_category.toLowerCase().trim();
+        curCatInSub = curriculaObject[item2].category.toLowerCase().trim();
         // If the subcategory hasn't been seen yet and the category is 
         // equal to the current category being iterated then
-        if (subCatArr.indexOf(curSubCat) === -1 && curriculaObject[item2].category === curCat){ 
+        if (subCatArr.indexOf(curSubCat) === -1 && curCatInSub === curCat){ 
           subCatArr.push(curSubCat); // Add the subcategory to the array that will be aligned to the category
         }
       });
-      catObj[curCat] = subCatArr; // Add the subcategories mapped to that parent category to the cat Object
+      // Add the subcategories mapped to that parent category to the cat Object
+      // Capitalize the first letter of each word
+      catObj[capsTheFirstLetterAfterSpace(curCat)] = capsTheFirstLetterAfterSpace(subCatArr.join(", ")).split(", "); 
       subCatArr = []; // Reset the subcategory array
     }
   });
@@ -201,9 +205,34 @@ function makeCategoryObject(curriculaObject) {
   return catObj;
 }
 
+// Take a string and returns the string with capitalized first
+// letter and first character after every space. Multiple 
+// Example input of 'qweTy in DA    hous45[[e' will return
+// value of 'QweTy In DA    Hous45[[e'
+function capsTheFirstLetterAfterSpace(str) {
+  if (typeof str === 'string' & str.length > 0) {
+    var stringArr = [];
+    stringArr = str.split('');
+    var fixedString = stringArr.map(function(char, i, arr){
+      if (i === 0){
+        return char.toUpperCase();
+      }
+
+      if (arr[i - 1] === ' '){
+        return char.toUpperCase();
+      }
+
+      return char;
+    });
+    return fixedString.join('');
+  }
+  throw Error('Must pass a string and must be longer then 0 characters.');
+}
+
 exports.getRelatedByCategory = getRelatedByCategory;
 exports.getUniqueCategories = getUniqueCategories;
 exports.limiter = limiter;
 exports.cleanString = cleanString;
 exports.search = search;
 exports.makeCategoryObject = makeCategoryObject;
+exports.capsTheFirstLetterAfterSpace = capsTheFirstLetterAfterSpace;

@@ -3,6 +3,7 @@
     //alert("username = " + localStorage.getItem("author"));
     var author = localStorage.getItem("Author");
     var authorId = localStorage.getItem("id-Author");
+    var categories = {};
     //var user = document.getElementById("#username").value;
     //console.log('name: ' + user);
     var count = 0;
@@ -131,6 +132,25 @@
     //Lazy load function
     $(function() {
         $("div.lazy").lazyload();
+    });
+
+    // Populate sub-categories based on category selection
+    $("#category-curricula").change(function(event) {
+        event.preventDefault();
+        $('#sub-category').empty();
+        var cat = $("#category-curricula").val().trim();
+
+        if (cat.length !== 0 && cat.toLowerCase() !== 'add new category' ){
+            categories[cat].forEach(function (subCat){
+                $('#sub-category').append(
+                    "<option value='" + subCat + "'>" + subCat + "</option>"
+                );
+            });
+        }
+    });
+
+    $.get('/api/cats', function(categoriesObject) {
+        categories = categoriesObject;
     });
 
 }());

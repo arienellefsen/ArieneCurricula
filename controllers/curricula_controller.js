@@ -124,7 +124,7 @@ module.exports = function(app, passport, sessionMW) {
     // Adding a vote to a curricula and user history
     app.post('/api/vote/:id/:userid', isLoggedIn, function (req, res) {
         var curriculaId = req.params.id;
-        var userId = req.session.passport.user.username;
+        var userId = req.session.passport.user.id;
         var voteHistory = '';
 
         // First Increment the vote in the curricula table
@@ -190,7 +190,9 @@ module.exports = function(app, passport, sessionMW) {
     app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res){
         var userId = req.session.passport.user.id;
         var currId = req.params.curId;
-        if (userId.length >= 1 && currId.length >= 1){
+        console.log('####### userid: ', userId)
+        console.log('####### currid: ', currId)
+        if (userId !== 'undefined' && currId !== 'undefined'){
             User.findById(userId).then(function(userData){
                 var votesArr = userData.votes_cast.split(',');
                 var voted = votesArr.indexOf(currId);

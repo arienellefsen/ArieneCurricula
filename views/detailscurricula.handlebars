@@ -8,7 +8,7 @@
              
             
         <h4 class="category-details" id="currId" curTag="{{curricula.id}}"> Category: <a href="/category/{{curricula.category}}">{{curricula.category}}</a> > <a href="/category/su_{{curricula.sub_category}}">{{curricula.sub_category}}</a> </h4>
-        <p> <i class="fa fa-certificate icon-details" aria-hidden="true"></i> Votes: {{curricula.votes}}<span> <i class="fa fa-user-circle-o icon-details" aria-hidden="true"></i> Author: {{curricula.authorId}}</span></p>
+        <p> <i class="fa fa-certificate icon-details" aria-hidden="true"></i> Votes: {{curricula.votes}}<span> <i class="fa fa-user-circle-o icon-details" aria-hidden="true"></i> Author: {{curricula.authName}}</span></p>
 
         {{#each curriculaDetails}}
             <h4 class="details-step">  Step: {{this.step_number}} </h4>

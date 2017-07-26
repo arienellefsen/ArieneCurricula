@@ -16,8 +16,11 @@ module.exports = function(app, passport, sessionMW) {
                 }
             }
         }).then(function(curricula) {
-            rangeToShow = helpers.limiter(curricula, 0, 9);
-            res.render('landingpage', { curriculaInstance: rangeToShow });
+            User.findAll({}).then(function(userData) {
+                rangeToShow = helpers.limiter(curricula, 0, 9);
+                rangeToShow = helpers.matchAuthorsById(rangeToShow, userData);
+                res.render('landingpage', { curriculaInstance: rangeToShow });
+            });
         }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
@@ -44,10 +47,12 @@ module.exports = function(app, passport, sessionMW) {
                             CurriculaId: curricId
                         }
                     }).then(function(curriculaDetailsData) {
-                        compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
-                        compiledCurriculaObj.curricula = curriculaData;
-                        compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
-                        res.render('detailscurricula', compiledCurriculaObj);
+                        User.findAll({}).then(function(userData) {
+                            compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
+                            compiledCurriculaObj.curricula = helpers.matchAuthorsById(curriculaData, userData);
+                            compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
+                            res.render('detailscurricula', compiledCurriculaObj);
+                        });
                     });
                 })
             } else {
@@ -230,7 +235,6 @@ module.exports = function(app, passport, sessionMW) {
         Curricula.findAll({
             attributes: ['category', 'sub_category']
         }).then(function(curData) {
-            console.log(helpers.makeCategoryObject(curData));
             res.json(helpers.makeCategoryObject(curData));
         });
     });
@@ -258,7 +262,6 @@ module.exports = function(app, passport, sessionMW) {
             });
         }
     });
-
 
     app.post("/api/posts/:id", isLoggedIn, function(req, res) { //Vannucci: Added 'isLoggedIn'
         var idData = req.params.id;

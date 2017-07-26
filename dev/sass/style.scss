@@ -21,3 +21,12 @@ body {
     margin: 0 auto -30px;
     padding: 0 0 30px;
 }
+
+#voteArea {
+    border-width: 0;
+    float: right;
+}
+
+#vote {
+    display: none;
+}

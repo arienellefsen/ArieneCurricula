@@ -29,13 +29,15 @@
       route = '/api/vote/' + id + '/' + user;
       formatToUnvote();
     } else {
-      $('.alert-msg').html('You must be signed in to vote.')
+      $('.alert-msg').html('Log-in to vote.')
     }
     makePost(route, id);
   });
 
   // Get the inital vote status on page load
   if (user) {
+    console.log(user, id)
+
     $.get('/checkvote/' + user + '/' + id, function(data){
       votedStatus = data.status
       if (votedStatus === true) {
@@ -43,7 +45,7 @@
       } else if(votedStatus === false) {
         formatToVote();
       } else {
-        $('.alert-msg').html('There was an error seeing your vote status.')
+        $('.alert-msg').html('Log-in to Vote')
         return;
       }
       $('#vote').show();

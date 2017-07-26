@@ -2,44 +2,44 @@
 // curricula table and returns up to 5 related
 // by category
 function getRelatedByCategory(obj, categoryToMatch, excludeId) {
-  var matchObj = {};
-  var currentObj = {};
-  Object.keys(obj).forEach(function (item) {
-    currentObj = obj[item];
-    if ((currentObj.category === categoryToMatch) && (currentObj.id !== excludeId)) {
-      matchObj[item] = currentObj;
-    }
-  });
+    var matchObj = {};
+    var currentObj = {};
+    Object.keys(obj).forEach(function(item) {
+        currentObj = obj[item];
+        if ((currentObj.category === categoryToMatch) && (currentObj.id !== excludeId)) {
+            matchObj[item] = currentObj;
+        }
+    });
 
-  return matchObj;
+    return matchObj;
 }
 
 // This function returns an array of unique categories
 // derived from the database object of curricula
 function getUniqueCategories(obj) {
-  var arrOfUniqueCategories = [];
-  var uniqCatObj = {};
-  var thisCategory;
-  if (typeof obj === 'object') {
-    Object.keys(obj).forEach(function (item) {
-      thisCategory = obj[item].category;
-      if (arrOfUniqueCategories.indexOf(thisCategory) === -1) {
-        arrOfUniqueCategories.push(thisCategory)
-      }
-    });
-  }
-
-  arrOfUniqueCategories.forEach(function (item,i) {
-    // Convert to Object
-    uniqCatObj['category' + i] = {
-      items: item
+    var arrOfUniqueCategories = [];
+    var uniqCatObj = {};
+    var thisCategory;
+    if (typeof obj === 'object') {
+        Object.keys(obj).forEach(function(item) {
+            thisCategory = obj[item].category;
+            if (arrOfUniqueCategories.indexOf(thisCategory) === -1) {
+                arrOfUniqueCategories.push(thisCategory)
+            }
+        });
     }
-  });
 
-  if (arrOfUniqueCategories.length === 0) {
-    return null;
-  } 
-  return uniqCatObj;
+    arrOfUniqueCategories.forEach(function(item, i) {
+        // Convert to Object
+        uniqCatObj['category' + i] = {
+            items: item
+        }
+    });
+
+    if (arrOfUniqueCategories.length === 0) {
+        return null;
+    }
+    return uniqCatObj;
 }
 
 // Accepts an object of query results and returns the results
@@ -48,39 +48,39 @@ function getUniqueCategories(obj) {
 // object and limiter specifies start of 2 and end of 5 it will 
 // return an object only containing results 2 through 5
 function limiter(obj, start, end) {
-  if (start < end && typeof start === 'number' && typeof end === 'number') {
-    if (typeof obj === 'object') {
-      var tempObj = {};
-      var currentObj = {};
-      Object.keys(obj).forEach(function (item, i) {
-        currentObj = obj[item];
-        if (currentObj.submited_status === true){ 
-          if (i >= start && i <= end) {
-            tempObj[item] =currentObj;
-          }
+    if (start < end && typeof start === 'number' && typeof end === 'number') {
+        if (typeof obj === 'object') {
+            var tempObj = {};
+            var currentObj = {};
+            Object.keys(obj).forEach(function(item, i) {
+                currentObj = obj[item];
+                if (currentObj.submited_status === true) {
+                    if (i >= start && i <= end) {
+                        tempObj[item] = currentObj;
+                    }
+                } else {
+                    end += 1;
+                }
+            });
+            return tempObj;
         } else {
-          end += 1;
+            throw Error('Did not pass an object to the funtion.')
         }
-      });
-      return tempObj;
     } else {
-      throw Error('Did not pass an object to the funtion.')
+        throw Error('The start and end points are invalid!');
     }
-  } else {
-    throw Error('The start and end points are invalid!');
-  }
 }
 
 // Accepts a string and removes special characters
 // extra spaces and returns the new string in
 // lower case
 function cleanString(str) {
-  var cleanStr = str;
-  cleanStr = str.replace(/[^\w\s]/gi, ' ') // Remove non-alpha characters
-    .replace(/\n/g, " ") // Change new lines to spaces
-    .replace(/\s\s+/g, ' ') // Remove duplicate spaces
-    .toLowerCase(); // Move all to lower case
-  return cleanStr
+    var cleanStr = str;
+    cleanStr = str.replace(/[^\w\s]/gi, ' ') // Remove non-alpha characters
+        .replace(/\n/g, " ") // Change new lines to spaces
+        .replace(/\s\s+/g, ' ') // Remove duplicate spaces
+        .toLowerCase(); // Move all to lower case
+    return cleanStr
 }
 
 // Accepts the query result object from database and 
@@ -89,81 +89,81 @@ function cleanString(str) {
 // return an object with matching search results
 // in a ranked order of most match to least
 function search(obj, arrOfTerms) {
-  var resultObj = {};
-  var curItem = {};
-  var resultStor = [];
-  var matchScore = 0;
-  var searchString = arrOfTerms.join(" ");
-  arrOfTerms.push(searchString);
+    var resultObj = {};
+    var curItem = {};
+    var resultStor = [];
+    var matchScore = 0;
+    var searchString = arrOfTerms.join(" ");
+    arrOfTerms.push(searchString);
 
-  Object.keys(obj).forEach(function (item) {
-    // The following variable-setting extracts the fields to
-    // be searched by the function
-    curItem = obj[item];
-    name = curItem.curricula_name.toLowerCase();
-    cat = curItem.category.toLowerCase();
-    subCat = curItem.sub_category.toLowerCase();
-    tags = curItem.search_tags.toLowerCase();
-    desc = curItem.description.toLowerCase();
-    matchScore = 0;
-    
-    // Iterate the fields to be searched for each
-    // search term in teh array
-    arrOfTerms.forEach(function(term) {
-      // Checks the curricula name fields for match
-      if(name.indexOf(term) > -1) {
-        matchScore += 5
-        // If the search term matches a large portion
-        // of the name field then give a higher match score
-        if ((term.length / name.length) > .33) {
-          matchScore += 5;
+    Object.keys(obj).forEach(function(item) {
+        // The following variable-setting extracts the fields to
+        // be searched by the function
+        curItem = obj[item];
+        name = curItem.curricula_name.toLowerCase();
+        cat = curItem.category.toLowerCase();
+        subCat = curItem.sub_category.toLowerCase();
+        tags = curItem.search_tags.toLowerCase();
+        desc = curItem.description.toLowerCase();
+        matchScore = 0;
+
+        // Iterate the fields to be searched for each
+        // search term in teh array
+        arrOfTerms.forEach(function(term) {
+            // Checks the curricula name fields for match
+            if (name.indexOf(term) > -1) {
+                matchScore += 5
+                    // If the search term matches a large portion
+                    // of the name field then give a higher match score
+                if ((term.length / name.length) > .33) {
+                    matchScore += 5;
+                }
+            }
+
+            // Checks the category for a match
+            if (cat.indexOf(term) > -1) {
+                matchScore += 7
+            }
+
+            // Checks the sub-category for match
+            if (subCat.indexOf(term) > -1) {
+                matchScore += 8
+            }
+
+            // Checks search tags for matches
+            if (tags.indexOf(term) > -1) {
+                matchScore += 4
+            }
+
+            // Checks the description for matches
+            if (desc.indexOf(term) > -1) {
+                matchScore += 3
+                    // if a large percentage of the description is
+                    // matched then give it more weight in results
+                if ((term.length / desc.length) > .33) {
+                    matchScore += 5;
+                }
+            }
+        });
+
+        // If any matches were made then add the object to 
+        // the running list of results
+        if (matchScore > 0) {
+            resultStor.push([matchScore, obj[item]]);
         }
-      }
-
-      // Checks the category for a match
-      if(cat.indexOf(term) > -1) {
-        matchScore += 7
-      }
-
-      // Checks the sub-category for match
-      if(subCat.indexOf(term) > -1) {
-        matchScore += 8
-      }
-
-      // Checks search tags for matches
-      if(tags.indexOf(term) > -1) {
-        matchScore += 4
-      }
-
-      // Checks the description for matches
-      if(desc.indexOf(term) > -1) {
-        matchScore += 3
-        // if a large percentage of the description is
-        // matched then give it more weight in results
-        if ((term.length / desc.length) > .33) {
-          matchScore += 5;
-        }
-      }
     });
 
-    // If any matches were made then add the object to 
-    // the running list of results
-    if (matchScore > 0) {
-      resultStor.push([matchScore, obj[item]]);
-    }
-  });
+    // Sort the results by their match-score
+    resultStor.sort(function(a, b) {
+        return a[0] < b[0] ? 1 : -1;
+    });
 
-  // Sort the results by their match-score
-  resultStor.sort(function(a, b) { 
-    return a[0] < b[0] ? 1 : -1;
-  });
+    resultStor.forEach(function(item, i) {
+        console.log(item)
+        resultObj['match' + i] = item[1];
+    });
 
-  resultStor.forEach(function (item, i) {
-    console.log(item)
-    resultObj['match' + i] = item[1];
-  });
-
-  return resultObj;
+    return resultObj;
 }
 
 exports.getRelatedByCategory = getRelatedByCategory;

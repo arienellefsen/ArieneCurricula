@@ -7,7 +7,7 @@ var configAuth     = require('./auth');
 module.exports = function(passport) {
 
 	passport.serializeUser(function(user, done) { //How passport will store the user in the session
-        user = user.dataValues;
+        // user = user.dataValues;
 
         console.log("#####NEWSERIALIZE ",user);
         done(null, user);

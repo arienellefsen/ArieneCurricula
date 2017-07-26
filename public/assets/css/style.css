@@ -231,9 +231,6 @@ h4.details-step {
 .details {
   padding-bottom: 10px; }
 
-#vote {
-  display: none; }
-
 html,
 body {
   height: 100%;
@@ -247,3 +244,10 @@ body {
   height: 100%;
   margin: 0 auto -30px;
   padding: 0 0 30px; }
+
+#voteArea {
+  border-width: 0;
+  float: right; }
+
+#vote {
+  display: none; }

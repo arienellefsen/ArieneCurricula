@@ -246,17 +246,18 @@ function capsTheFirstLetterAfterSpace(str) {
 //   authorId: 1
 //   authName: someUsername
 // }
-function matchAuthorsById(currData, usrData) {
+function matchAuthorsById(currData, usrData, from) {
   var revisedCurrData = currData;
 
   Object.keys(currData).forEach(function(curr) {
     Object.keys(usrData).forEach(function(usr) {
       if (usrData[usr].id === currData[curr].authorId) {
-        console.log(usrData[usr].id, currData[curr].authorId, usrData[usr].username);
+        console.log(usrData[usr].id, currData[curr].authorId, usrData[usr].username, from);
         revisedCurrData[curr].authName = usrData[usr].username;
       }
     });
   });
+  console.log('********** rev cur',revisedCurrData);
   return revisedCurrData;
 }
 

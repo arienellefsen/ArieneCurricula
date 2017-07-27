@@ -18,7 +18,7 @@ module.exports = function(app, passport, sessionMW) {
         }).then(function(curricula) {
             User.findAll({}).then(function(userData) {
                 rangeToShow = helpers.limiter(curricula, 0, 9);
-                rangeToShow = helpers.matchAuthorsById(rangeToShow, userData);
+                rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'landing');
                 res.render('landingpage', { curriculaInstance: rangeToShow });
             });
         }).catch(function(err) {
@@ -47,9 +47,11 @@ module.exports = function(app, passport, sessionMW) {
                             CurriculaId: curricId
                         }
                     }).then(function(curriculaDetailsData) {
-                        User.findAll({}).then(function(userData) {
+                        User.findById(curriculaData.authorId).then(function(userData) {
                             compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
-                            compiledCurriculaObj.curricula = helpers.matchAuthorsById(curriculaData, userData);
+                            compiledCurriculaObj.curricula = curriculaData;
+                            compiledCurriculaObj.author = {authName: userData.username};
+                            console.log('********: compiledCurriculaObj.author: ' ,compiledCurriculaObj.author);
                             compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
                             res.render('detailscurricula', compiledCurriculaObj);
                         });
@@ -210,14 +212,14 @@ module.exports = function(app, passport, sessionMW) {
         }
     })
 
-    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+    // app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: '/create',
-            failureRedirect: '/'
-        })
-    );
+    // app.get('/auth/google/callback',
+    //     passport.authenticate('google', {
+    //         successRedirect: '/create',
+    //         failureRedirect: '/'
+    //     })
+    // );
 
     // Runs when user goes to the create view
     app.get("/create", isLoggedIn, function(req, res) {
@@ -338,7 +340,7 @@ module.exports = function(app, passport, sessionMW) {
             return next();
 
         //If they aren't authenticated, return to homepage
-        res.redirect('/');
+        // res.redirect('/');
     };
 
 };

@@ -16,8 +16,11 @@ module.exports = function(app, passport, sessionMW) {
                 }
             }
         }).then(function(curricula) {
-            rangeToShow = helpers.limiter(curricula, 0, 9);
-            res.render('landingpage', { curriculaInstance: rangeToShow });
+            User.findAll({}).then(function(userData) {
+                rangeToShow = helpers.limiter(curricula, 0, 9);
+                rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'landing');
+                res.render('landingpage', { curriculaInstance: rangeToShow });
+            });
         }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
@@ -44,10 +47,13 @@ module.exports = function(app, passport, sessionMW) {
                             CurriculaId: curricId
                         }
                     }).then(function(curriculaDetailsData) {
-                        compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
-                        compiledCurriculaObj.curricula = curriculaData;
-                        compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
-                        res.render('detailscurricula', compiledCurriculaObj);
+                        User.findById(curriculaData.authorId).then(function(userData) {
+                            compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
+                            compiledCurriculaObj.curricula = curriculaData;
+                            compiledCurriculaObj.author = {authName: userData.username};
+                            compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
+                            res.render('detailscurricula', compiledCurriculaObj);
+                        });
                     });
                 })
             } else {
@@ -62,6 +68,8 @@ module.exports = function(app, passport, sessionMW) {
         if (typeof rawSearch === 'string' && rawSearch.length >= 1) {
             var searchTerms = helpers.cleanString(rawSearch).split(" ");
             var searchResults = {};
+            var rangeToShow = {};
+            var displayObj = {};
             if (searchTerms.length > 0) {
                 Curricula.findAll({
                     where: {
@@ -70,19 +78,23 @@ module.exports = function(app, passport, sessionMW) {
                         }
                     }
                 }).then(function(curricula) {
-                    searchResults = helpers.search(curricula, searchTerms);
-                    rangeToShow = {
-                        flag: true,
-                        display: helpers.limiter(searchResults, 0, 9)
-                    }
-                    if (Object.keys(rangeToShow.display).length === 0) {
-                        rangeToShow.flag = false;
-                    }
-                    res.render('searchresults', { curriculaInstance: rangeToShow });
-
+                    User.findAll({}).then(function(userData){
+                        searchResults = helpers.search(curricula, searchTerms);
+                        rangeToShow = helpers.limiter(searchResults, 0, 9);
+                        rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'search');
+                        displayObj = {
+                            flag: true,
+                            display: rangeToShow
+                        }
+                        // Determine if there were any results to display
+                        if (Object.keys(displayObj.display).length === 0) {
+                            displayObj.flag = false;
+                        }
+                        res.render('searchresults', { curriculaInstance: displayObj });
+                    });
                 });
             } else {
-                console.log('Invalid Search Terms Were sent - no search results after cleaning.')
+                console.log('Invalid Search Terms Were sent - no search results after cleaning.');
                 res.json('Invalid Search Terms', {});
             }
         } else {
@@ -113,8 +125,10 @@ module.exports = function(app, passport, sessionMW) {
         }
 
         Curricula.findAll(catObj).then(function(curricula) {
-            rangeToShow = helpers.limiter(curricula, 0, 9);
-            res.render('category', { curriculaInstance: rangeToShow });
+            User.findAll({}).then(function(userData) {
+                rangeToShow = helpers.matchAuthorsById(helpers.limiter(curricula, 0, 9), userData, 'category');
+                res.render('category', { curriculaInstance: rangeToShow });
+            });
         }).catch(function(err) {
             res.send('Ooops something happened... Please come back later.')
             console.log(err);
@@ -205,14 +219,14 @@ module.exports = function(app, passport, sessionMW) {
         }
     })
 
-    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+    // app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: '/create',
-            failureRedirect: '/'
-        })
-    );
+    // app.get('/auth/google/callback',
+    //     passport.authenticate('google', {
+    //         successRedirect: '/create',
+    //         failureRedirect: '/'
+    //     })
+    // );
 
     // Runs when user goes to the create view
     app.get("/create", isLoggedIn, function(req, res) {
@@ -230,7 +244,6 @@ module.exports = function(app, passport, sessionMW) {
         Curricula.findAll({
             attributes: ['category', 'sub_category']
         }).then(function(curData) {
-            console.log(helpers.makeCategoryObject(curData));
             res.json(helpers.makeCategoryObject(curData));
         });
     });
@@ -258,7 +271,6 @@ module.exports = function(app, passport, sessionMW) {
             });
         }
     });
-
 
     app.post("/api/posts/:id", isLoggedIn, function(req, res) { //Vannucci: Added 'isLoggedIn'
         var idData = req.params.id;
@@ -335,7 +347,7 @@ module.exports = function(app, passport, sessionMW) {
             return next();
 
         //If they aren't authenticated, return to homepage
-        res.redirect('/');
+        // res.redirect('/');
     };
 
 };

@@ -155,7 +155,6 @@ function search(obj, arrOfTerms) {
     });
 
     resultStor.forEach(function(item, i) {
-        console.log(item)
         resultObj['match' + i] = item[1];
     });
 
@@ -229,6 +228,37 @@ function capsTheFirstLetterAfterSpace(str) {
   throw Error('Must pass a string and must be longer then 0 characters.');
 }
 
+// Function accepts the curricula or curricula details data and the 
+// user data and matches the author username to the userID then
+// stores the username in a new curricula object and returns the new object
+// Example passing in:
+// {
+//   curricula_name: ...,
+//   category: ...,
+//   ...
+//   authorId: 1
+// }
+// will return:
+// {
+//   curricula_name: ...,
+//   category: ...,
+//   ...
+//   authorId: 1
+//   authName: someUsername
+// }
+function matchAuthorsById(currData, usrData, from) {
+  var revisedCurrData = currData;
+
+  Object.keys(currData).forEach(function(curr) {
+    Object.keys(usrData).forEach(function(usr) {
+      if (usrData[usr].id === currData[curr].authorId) {
+        revisedCurrData[curr].authName = usrData[usr].username;
+      }
+    });
+  });
+  return revisedCurrData;
+}
+
 exports.getRelatedByCategory = getRelatedByCategory;
 exports.getUniqueCategories = getUniqueCategories;
 exports.limiter = limiter;
@@ -236,3 +266,5 @@ exports.cleanString = cleanString;
 exports.search = search;
 exports.makeCategoryObject = makeCategoryObject;
 exports.capsTheFirstLetterAfterSpace = capsTheFirstLetterAfterSpace;
+exports.matchAuthorsById = matchAuthorsById;
+

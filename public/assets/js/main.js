@@ -26,7 +26,7 @@
 
 
     var obj = {};
-    var countField = 0;
+    var countField = 1;
 
     function save() {
         var title = $('#curricula_name').val();

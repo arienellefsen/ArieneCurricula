@@ -50,7 +50,7 @@ module.exports = function(app, passport, sessionMW) {
                         User.findById(curriculaData.authorId).then(function(userData) {
                             compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
                             compiledCurriculaObj.curricula = curriculaData;
-                            compiledCurriculaObj.author = {authName: userData.username};
+                            compiledCurriculaObj.author = { authName: userData.username };
                             compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
                             res.render('detailscurricula', compiledCurriculaObj);
                         });
@@ -78,15 +78,15 @@ module.exports = function(app, passport, sessionMW) {
                         }
                     }
                 }).then(function(curricula) {
-                    User.findAll({}).then(function(userData){
+                    User.findAll({}).then(function(userData) {
                         searchResults = helpers.search(curricula, searchTerms);
                         rangeToShow = helpers.limiter(searchResults, 0, 9);
                         rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'search');
                         displayObj = {
-                            flag: true,
-                            display: rangeToShow
-                        }
-                        // Determine if there were any results to display
+                                flag: true,
+                                display: rangeToShow
+                            }
+                            // Determine if there were any results to display
                         if (Object.keys(displayObj.display).length === 0) {
                             displayObj.flag = false;
                         }
@@ -204,8 +204,8 @@ module.exports = function(app, passport, sessionMW) {
     app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res) {
         var userId = req.session.passport.user.id;
         var currId = req.params.curId;
-        if (userId !== 'undefined' && currId !== 'undefined'){
-            User.findById(userId).then(function(userData){
+        if (userId !== 'undefined' && currId !== 'undefined') {
+            User.findById(userId).then(function(userData) {
                 var votesArr = userData.votes_cast.split(',');
                 var voted = votesArr.indexOf(currId);
                 if (voted > -1) {
@@ -240,7 +240,7 @@ module.exports = function(app, passport, sessionMW) {
 
     // Responds to front-end API call for a JSON object 
     // of the category>subcatgory mapping
-    app.get("/api/cats",  function(req, res) {
+    app.get("/api/cats", function(req, res) {
         Curricula.findAll({
             attributes: ['category', 'sub_category']
         }).then(function(curData) {
@@ -294,13 +294,27 @@ module.exports = function(app, passport, sessionMW) {
     });
 
     app.get('/userview', isLoggedIn, function(req, res) {
-
         var userObj = {
             username: req.session.passport.user.username,
             userId: req.session.passport.user.id
         };
-        res.render('userview.handlebars', userObj);
+        var userDeviceId = 4;
 
+        var device = Curricula.findById(userDeviceId).then(function(device) {
+            if (!device) {
+                return 'not find';
+            }
+            return device.curricula_name;
+        });
+
+        //Curricula.findById(userObj.userId, { where: { userId: userObj.userId } });
+
+        var userCur = {};
+        userCur.username = req.session.passport.user.username;
+        userCur.id = req.session.passport.user.id;
+        userCur.curricula_name = device;
+        console.log("user data: " + userCur);
+        res.render('userview.handlebars', userCur);
     });
 
 

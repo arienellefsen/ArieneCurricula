@@ -17,9 +17,7 @@ module.exports = function(app, passport, sessionMW) {
             }
         }).then(function(curricula) {
             User.findAll({}).then(function(userData) {
-                //////////////////////////////////////////////////
-                rangeToShow = helpers.limiter(curricula, 0, 100); // <-- increase to 100 or something
-                /////////////////////////////////////////////////
+                rangeToShow = helpers.limiter(curricula, 0, 100);
                 rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'landing');
                 res.render('landingpage', { curriculaInstance: rangeToShow });
             });

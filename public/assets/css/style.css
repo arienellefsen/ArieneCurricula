@@ -268,3 +268,8 @@ body {
 
 #vote {
   display: none; }
+
+.curriculacardHidden {
+  visibility: hidden;
+}
+

@@ -252,12 +252,10 @@ function matchAuthorsById(currData, usrData, from) {
   Object.keys(currData).forEach(function(curr) {
     Object.keys(usrData).forEach(function(usr) {
       if (usrData[usr].id === currData[curr].authorId) {
-        console.log(usrData[usr].id, currData[curr].authorId, usrData[usr].username, from);
         revisedCurrData[curr].authName = usrData[usr].username;
       }
     });
   });
-  console.log('********** rev cur',revisedCurrData);
   return revisedCurrData;
 }
 

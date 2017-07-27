@@ -139,21 +139,18 @@
 
         if($wt<=ob && $wb >= ot){
          card.removeClass("curriculacardHidden");
-         console.log("Removed class!");
         }
 
     }
 
     $(document).ready(function() {
        $(".curriculacardHidden").each(function(){
-            console.log("Checking card visibility...");
             checkVisibility($(this));
         });
     })
 
     $(window).scroll(function() {
        $(".curriculacardHidden").each(function(){
-            console.log("Checking card visibility...");
             checkVisibility($(this));
         });
     });

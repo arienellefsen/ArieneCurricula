@@ -128,11 +128,23 @@
     //Call save function
     $("#save").on("click", save);
 
-
+/*
     //Lazy load function
-    $(function() {
-        $("div.lazy").lazyload();
-    });
+   $(window).scroll(function() {
+       var wt = $(window).scrollTop();    //* top of the window
+       var wb = wt + $(window).height();  //* bottom of the window
+
+       $(".curriculacard").each(function(){
+          var ot = $(this).offset().top;  //* top of object (i.e. curicula card div)
+          var ob = ot + $(this).height(); //* bottom of object
+
+          if(!$(this).attr("loaded") && wt<=ob && wb >= ot){
+             $(this).html("here goes the iframe definition");
+             $(this).attr("loaded",true);
+          }
+       });
+   });
+*/
 
     // Populate sub-categories based on category selection
     $("#category-curricula").change(function(event) {

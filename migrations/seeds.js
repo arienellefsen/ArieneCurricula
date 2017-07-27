@@ -150,7 +150,7 @@ module.exports = function (db) {
       category: 'Programming',
       sub_category: 'Javascript',
       search_tags: 'javascript passport authentication',
-      votes: 90,
+      votes: 0,
       description: 'Learn to authenticate users with Passport.',
       submited_status: true,
       authorId: 2
@@ -163,12 +163,12 @@ module.exports = function (db) {
 
     // ID8
     db.Curricula.create({
-      curricula_name: 'How to use Passport',
-      category: 'Programming',
-      sub_category: 'Javascript',
-      search_tags: 'javascript passport authentication',
-      votes: 90,
-      description: 'Learn to authenticate users with Passport.',
+      curricula_name: 'How to get in shape',
+      category: 'Fitness',
+      sub_category: 'Weight loss',
+      search_tags: 'lose weight exercise fitness',
+      votes: 0,
+      description: 'Get in shape for the summer!',
       submited_status: true,
       authorId: 2
     }).then((data) => {
@@ -177,6 +177,76 @@ module.exports = function (db) {
     }).catch(function (err){
       console.log(err);
     });
+
+    //ID9
+    db.Curricula.create({
+      curricula_name: 'How to ride a motorcycle',
+      category: 'Driving',
+      sub_category: 'Motorcycle',
+      search_tags: 'bike motorcycle cycling motorcycles',
+      votes: 0,
+      description: 'Become a badass biker!',
+      submited_status: true,
+      authorId: 2
+    }).then((data) => {
+      console.log('Seeded curricula on motorcycles');
+      createSteakDetails(data.id);
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    //ID10
+    db.Curricula.create({
+      curricula_name: 'How to build an SPA with Angular',
+      category: 'Programming',
+      sub_category: 'Angular',
+      search_tags: 'angular spa single page app javascript',
+      votes: 0,
+      description: 'Learn to write an SPA using Angular!',
+      submited_status: true,
+      authorId: 2
+    }).then((data) => {
+      console.log('Seeded curricula on Angular');
+      createSteakDetails(data.id);
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    //ID11
+    db.Curricula.create({
+      curricula_name: 'How do I balance my checkbook',
+      category: 'Finance',
+      sub_category: 'Banking',
+      search_tags: 'banking checking checkbook',
+      votes: 0,
+      description: 'How do I balance my checkbook?',
+      submited_status: true,
+      authorId: 2
+    }).then((data) => {
+      console.log('Seeded curricula on checkbook');
+      createSteakDetails(data.id);
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    //ID12
+    db.Curricula.create({
+      curricula_name: 'How to surf',
+      category: 'Fitness',
+      sub_category: 'Surfing',
+      search_tags: 'ocean beach surfing fitness',
+      votes: 0,
+      description: 'Learn to ride a surfboard!',
+      submited_status: true,
+      authorId: 2
+    }).then((data) => {
+      console.log('Seeded curricula on surfboard');
+      createSteakDetails(data.id);
+    }).catch(function (err){
+      console.log(err);
+    });
+
+
 
 
   }
@@ -421,6 +491,257 @@ module.exports = function (db) {
       console.log(err);
     });
   }
+
+    function createPassportDetails(id){
+    // Passport Cur#7 Details
+    db.CurriculaDetails.create({
+      step_number: 1,
+      step_type: "text",
+      step_content: "Watch this video on javascript",
+      step_url: null,
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Passport step 1');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 2,
+      step_type: "text",
+      step_content: "Watch this video on passport authentication",
+      step_url: "https://www.youtube.com/watch?v=GHNLWHGCBEc&index=8&list=PL55RiY5tL51rajp7Xr_zk-fCFtzdlGKUp",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Passport step 2');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 3,
+      step_type: "text",
+      step_content: "Implement validation",
+      step_url: "https://www.youtube.com/watch?v=js5hI2moBY4&index=9&list=PL55RiY5tL51rajp7Xr_zk-fCFtzdlGKUp",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Passport step 3');
+    }).catch(function (err){
+      console.log(err);
+    });
+  }
+
+    function createInShapeDetails(id){
+    // Get in shape Cur#8 Details
+    db.CurriculaDetails.create({
+      step_number: 1,
+      step_type: "text",
+      step_content: "Watch this video on diet",
+      step_url: "https://www.youtube.com/watch?v=YPl0naO6GR0",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Fitness step 1');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 2,
+      step_type: "text",
+      step_content: "Watch this video on losing weight",
+      step_url: "https://www.youtube.com/watch?v=bTffztrhgWc",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Fitness step 2');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 3,
+      step_type: "text",
+      step_content: "Go for a run!",
+      step_url: null,
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Fitness step 3');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    function createMotorcycleDetails(id){
+    // Motorcycles Cur#9 Details
+    db.CurriculaDetails.create({
+      step_number: 1,
+      step_type: "text",
+      step_content: "Watch this video on motorcycles",
+      step_url: "https://www.youtube.com/watch?v=kTQ02P4R3TM",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Motorcycle step 1');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 2,
+      step_type: "text",
+      step_content: "Read this guide",
+      step_url: "http://www.wikihow.com/Ride-a-Motorcycle-(Beginners)",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Motorcycle step 2');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 3,
+      step_type: "text",
+      step_content: "Take the Motorcycle Safety Foundation Course!",
+      step_url: "https://www.msf-usa.org/",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Motorcycle step 3');
+    }).catch(function (err){
+      console.log(err);
+    });
+  }
+
+    function createAngularDetails(id){
+    // Angular Cur#10 Details
+    db.CurriculaDetails.create({
+      step_number: 1,
+      step_type: "text",
+      step_content: "Read documentation on Angular JS",
+      step_url: "https://docs.angularjs.org/api",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Angular step 1');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 2,
+      step_type: "text",
+      step_content: "Take a course",
+      step_url: "https://www.youtube.com/watch?v=wYhl0gZjG2I",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Angular step 2');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 3,
+      step_type: "text",
+      step_content: "Build a to do app in angular!",
+      step_url: null,
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Angular step 3');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+        function createCheckbookDetails(id){
+    // Checkbook Cur#11 Details
+    db.CurriculaDetails.create({
+      step_number: 1,
+      step_type: "text",
+      step_content: "What does balance a checkbook mean?",
+      step_url: "https://www.capitalone.com/financial-education/money-basics/balancing-budget/balance-your-checkbook/",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded checkbook step 1');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 2,
+      step_type: "text",
+      step_content: "Explain the process in detail",
+      step_url: "http://www.dummies.com/personal-finance/how-to-balance-a-checkbook/",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded checkbook step 2');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 3,
+      step_type: "text",
+      step_content: "Try this at home on your own checking account!",
+      step_url: null,
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded Angular step 3');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+        function createSurfingDetails(id){
+    // Surfing Cur#12 Details
+    db.CurriculaDetails.create({
+      step_number: 1,
+      step_type: "text",
+      step_content: "Read a guide about surfing",
+      step_url: "http://www.thesurfingsite.com/How-to-Surf.html",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded surfing step 1');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 2,
+      step_type: "text",
+      step_content: "How do you stand up?",
+      step_url: "https://www.youtube.com/watch?v=Ts4ZVpajims",
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded surfing step 2');
+    }).catch(function (err){
+      console.log(err);
+    });
+
+    db.CurriculaDetails.create({
+      step_number: 3,
+      step_type: "text",
+      step_content: "Take a course at your local beach!",
+      step_url: null,
+      authorId: 2,
+      CurriculaId: id
+    }).then(() => {
+      console.log('Seeded surfing step 3');
+    }).catch(function (err){
+      console.log(err);
+    });
+  }
+
+
   createUsers()
   createCurriucla()
 }

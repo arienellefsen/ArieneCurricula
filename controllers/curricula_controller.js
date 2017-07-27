@@ -17,9 +17,7 @@ module.exports = function(app, passport, sessionMW) {
             }
         }).then(function(curricula) {
             User.findAll({}).then(function(userData) {
-                //////////////////////////////////////////////////
-                rangeToShow = helpers.limiter(curricula, 0, 100); // <-- increase to 100 or something
-                /////////////////////////////////////////////////
+                rangeToShow = helpers.limiter(curricula, 0, 100);
                 rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'landing');
                 res.render('landingpage', { curriculaInstance: rangeToShow });
             });
@@ -252,10 +250,10 @@ module.exports = function(app, passport, sessionMW) {
 
     // POST route for saving a new post
     app.post("/api/posts", isLoggedIn, function(req, res) {
-        console.log(req.body);
         var curricula = req.body.curricula;
         var curriculaDetails = req.body.curriculaDetails;
         var username = req.session.passport.user.username;
+        var userId = req.session.passport.user.id;
 
         if (curricula && curriculaDetails) {
             Curricula.create(curricula).then(function(dbPost) {
@@ -263,9 +261,9 @@ module.exports = function(app, passport, sessionMW) {
                 Object.keys(curriculaDetails).forEach(function(item) {
                     curriculaDetails[item].CurriculaId = dbPost.id;
                     CurriculaDetails.create(curriculaDetails[item]).then(function(dbPost) {
-                        //res.redirect("/");
-                        console.log(dbPost);
+                        res.json(true);
                     }).catch(function(err) {
+                        res.json(false);
                         // print the error details
                         console.log(err);
                     });
@@ -349,7 +347,7 @@ module.exports = function(app, passport, sessionMW) {
             return next();
 
         //If they aren't authenticated, return to homepage
-        // res.redirect('/');
+        res.redirect('/');
     };
 
 };

@@ -36,8 +36,6 @@
 
   // Get the inital vote status on page load
   if (user) {
-    console.log(user, id)
-
     $.get('/checkvote/' + user + '/' + id, function(data){
       votedStatus = data.status
       if (votedStatus === true) {

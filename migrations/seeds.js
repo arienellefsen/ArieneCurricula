@@ -478,6 +478,7 @@ module.exports = function (db) {
       console.log(err);
     });
 
+
     db.CurriculaDetails.create({
       step_number: 3,
       step_type: "text",
@@ -574,7 +575,7 @@ module.exports = function (db) {
     }).catch(function (err){
       console.log(err);
     });
-
+  }
     function createMotorcycleDetails(id){
     // Motorcycles Cur#9 Details
     db.CurriculaDetails.create({
@@ -657,8 +658,8 @@ module.exports = function (db) {
     }).catch(function (err){
       console.log(err);
     });
-
-        function createCheckbookDetails(id){
+  }
+    function createCheckbookDetails(id){
     // Checkbook Cur#11 Details
     db.CurriculaDetails.create({
       step_number: 1,
@@ -698,8 +699,8 @@ module.exports = function (db) {
     }).catch(function (err){
       console.log(err);
     });
-
-        function createSurfingDetails(id){
+  }
+    function createSurfingDetails(id){
     // Surfing Cur#12 Details
     db.CurriculaDetails.create({
       step_number: 1,

@@ -30,6 +30,8 @@
     "sequelize": "^3.30.4"
   },
   "devDependencies": {
+    "bcrypt": "^1.0.2",
+    "bcrypt-nodejs": "0.0.3",
     "browser-sync": "^2.18.12",
     "chai": "^3.5.0",
     "connect-session-sequelize": "^4.1.0",

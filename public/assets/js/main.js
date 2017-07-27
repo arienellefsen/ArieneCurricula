@@ -128,23 +128,35 @@
     //Call save function
     $("#save").on("click", save);
 
-/*
     //Lazy load function
-   $(window).scroll(function() {
-       var wt = $(window).scrollTop();    //* top of the window
-       var wb = wt + $(window).height();  //* bottom of the window
 
-       $(".curriculacard").each(function(){
-          var ot = $(this).offset().top;  //* top of object (i.e. curicula card div)
-          var ob = ot + $(this).height(); //* bottom of object
+    function checkVisibility(card) {
+        var $wt = $(window).scrollTop();    //* top of the window
+        var $wb = $wt + $(window).height();  //* bottom of the window
 
-          if(!$(this).attr("loaded") && wt<=ob && wb >= ot){
-             $(this).html("here goes the iframe definition");
-             $(this).attr("loaded",true);
-          }
-       });
-   });
-*/
+        var ot = card.offset().top;  //* top of card (i.e. curicula card div)
+        var ob = ot + card.height(); //* bottom of card
+
+        if($wt<=ob && $wb >= ot){
+         card.removeClass("curriculacardHidden");
+         console.log("Removed class!");
+        }
+
+    }
+
+    $(document).ready(function() {
+       $(".curriculacardHidden").each(function(){
+            console.log("Checking card visibility...");
+            checkVisibility($(this));
+        });
+    })
+
+    $(window).scroll(function() {
+       $(".curriculacardHidden").each(function(){
+            console.log("Checking card visibility...");
+            checkVisibility($(this));
+        });
+    });
 
     // Populate sub-categories based on category selection
     $("#category-curricula").change(function(event) {

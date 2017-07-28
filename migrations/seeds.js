@@ -1,3 +1,5 @@
+var bcrypt = require('bcrypt-nodejs');
+
 
 module.exports = function (db) {
 
@@ -5,7 +7,7 @@ module.exports = function (db) {
   // Create dummy users
     db.User.create({
       user_email: 'testPerson1@gmail.com', 
-      password: 'password1',
+      password: bcrypt.hashSync('password1', bcrypt.genSaltSync(8),null),
       user_type: 'user',
       username:'testP1',
       votes_cast: '1,4'
@@ -17,7 +19,7 @@ module.exports = function (db) {
 
     db.User.create({
       user_email: 'testPerson2@gmail.com', 
-      password: 'password2',
+      password: bcrypt.hashSync('password2', bcrypt.genSaltSync(8),null),
       user_type: 'author', // Is an author
       username:'testP2',
       votes_cast: '2,3'
@@ -29,7 +31,7 @@ module.exports = function (db) {
 
     db.User.create({
       user_email: 'testPerson3@gmail.com', 
-      password: 'password3',
+      password: bcrypt.hashSync('password3', bcrypt.genSaltSync(8),null),
       user_type: 'user',
       username:'testP3',
       votes_cast: '1,5,3'

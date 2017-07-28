@@ -8,7 +8,6 @@ $('.scroll').jscroll();
     var authorId = localStorage.getItem("id-Author");
     var categories = {};
     //var user = document.getElementById("#username").value;
-    //console.log('name: ' + user);
     var count = 0;
 
     $('.loading').hide();
@@ -70,7 +69,6 @@ $('.scroll').jscroll();
             for (var i = 0; i < 5; i++) {
                 var fieldForm = $('input[name=link' + i + ']').val();
                 var descField = $('textarea[name=desclink' + i + ']').val();
-                //console.log(fieldForm);
                 if (fieldForm != '') {
                     // obj['step1'].step_url = fieldForm;
                     //obj['step1'].step_url = 'link1';
@@ -97,6 +95,7 @@ $('.scroll').jscroll();
                 },
                 curriculaDetails: obj
             };
+
             // process the form
             $('#field-status').text('Published');
 
@@ -106,31 +105,31 @@ $('.scroll').jscroll();
                     $('.loading').show();
                 },
                 url: '/api/posts',
-                data: formDataCreate,
-                complete: function() {
-                    console.log('complete');
-
-                },
-                success: function(data) {
-
-                    alert('yes!');
-                    // $('.loading').hide();
-                    console.log('sucess');
+                data: formDataCreate
+            }).done(function(data){
+                if(data === true){
+                    sessionStorage.setItem('msg', "Success Uploading Curricula:\n" + $('#curricula_name').val() + "!");
+                    window.location.href='/userview' 
+                } else {
+                    $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.')
                 }
-
+            }).fail(function( jqXHR, textStatus, errorThrown ) {
+                $('.loading').delay(1000).fadeOut('slow');
+                $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.');
+                console.log(err);
             });
+
             $('.loading').delay(1000).fadeOut('slow');
-
-
         }
-
 
         // Stop form from submitting normally
         event.preventDefault();
     };
+
     //Call save function
     $("#save").on("click", save);
 
+<<<<<<< HEAD
     /*
         //Lazy load function
        $(window).scroll(function() {
@@ -148,6 +147,34 @@ $('.scroll').jscroll();
            });
        });
     */
+=======
+    //Lazy load function
+
+    function checkVisibility(card) {
+        var $wt = $(window).scrollTop();    //* top of the window
+        var $wb = $wt + $(window).height();  //* bottom of the window
+
+        var ot = card.offset().top;  //* top of card (i.e. curicula card div)
+        var ob = ot + card.height(); //* bottom of card
+
+        if($wt<=ob && $wb >= ot){
+         card.removeClass("curriculacardHidden");
+        }
+
+    }
+
+    $(document).ready(function() {
+       $(".curriculacardHidden").each(function(){
+            checkVisibility($(this));
+        });
+    })
+
+    $(window).scroll(function() {
+       $(".curriculacardHidden").each(function(){
+            checkVisibility($(this));
+        });
+    });
+>>>>>>> 7162692e8906c60b6235a690c53bc0871371b1a5
 
     // Populate sub-categories based on category selection
     $("#category-curricula").change(function(event) {

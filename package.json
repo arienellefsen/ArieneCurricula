@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "curricula",
     "version": "0.1.0",
     "description": "App Curricula",
@@ -45,3 +46,59 @@
         "passport-local": "^1.0.0"
     }
 }
+=======
+  "name": "curricula",
+  "version": "0.1.0",
+  "description": "App Curricula",
+  "main": "app.js",
+  "start": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arienellefsen/ArieneCurricula.git"
+  },
+  "author": "Ariene, Mark, Michael",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arienellefsen/ArieneCurricula/issues"
+  },
+  "homepage": "https://github.com/arienellefsen/ArieneCurricula#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.4",
+    "method-override": "^2.3.9",
+    "mysql": "^2.13.0",
+    "passport": "^0.3.2",
+    "sequelize": "^3.30.4",
+    "bcrypt": "^1.0.2",
+    "bcrypt-nodejs": "0.0.3",
+    "connect-session-sequelize": "^4.1.0",
+    "express-mysql-session": "^1.2.1",
+    "passport-local": "^1.0.0"
+
+  },
+  "devDependencies": {
+    "bcrypt": "^1.0.2",
+    "bcrypt-nodejs": "0.0.3",
+    "browser-sync": "^2.18.12",
+    "chai": "^3.5.0",
+    "connect-session-sequelize": "^4.1.0",
+    "csurf": "^1.9.0",
+    "eslint": "^4.2.0",
+    "express-mysql-session": "^1.2.1",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "mocha": "^3.3.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0"
+  }
+}
+>>>>>>> 7162692e8906c60b6235a690c53bc0871371b1a5

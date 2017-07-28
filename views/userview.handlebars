@@ -23,19 +23,20 @@
             <div class="card card-2">
                 <div class="bio-header">Your Curriculas</div>
                 {{#each curriculaName}}
-                <div class="link-curricula">
-               <img src="/assets/images/icon-logo.png" class="icon-curricula"> <a href="curricula/{{this.id}}" class="curricula-link">
-                    {{this.curricula_name}}</a>                   
+                    {{#if this.submited_status}}
+                        <div class="link-curricula">
+                       <img src="/assets/images/icon-logo.png" class="icon-curricula"> <a href="curricula/{{this.id}}" class="curricula-link">
+                            {{this.curricula_name}}</a>                   
 
-               <div class="btn-container">
-                    <a href="curricula/{{this.id}}"><button class="btn btn-edit">View</button></a>
-                    <a href="/api/edit/{{this.id}}"><button class="btn btn-edit">Edit</button></a>
-                    <a href="/api/delete/{{this.id}}"><button class="btn btn-edit">Delete</button></a>
+                       <div class="btn-container">
+                            <a href="curricula/{{this.id}}"><button class="btn btn-edit">View</button></a>
+                            <a href="/api/edit/{{this.id}}"><button class="btn btn-edit">Edit</button></a>
+                            <a href="/api/delete/{{this.id}}"><button class="btn btn-edit">Delete</button></a>
 
-                    </div>
+                            </div>
 
-                </div>
-                
+                        </div>
+                    {{/if}}
                 {{/each}}
             </div>
         </div>

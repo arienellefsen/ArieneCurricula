@@ -11,6 +11,8 @@
 
   function getSearch() {
     var searchBarVal = $('#searchBar').val().trim().toLowerCase();
-    window.location.href='/search?q=' + searchBarVal;
+    if (searchBarVal.length > 0) {
+      window.location.href='/search?q=' + searchBarVal;
+    }
   }
 })();

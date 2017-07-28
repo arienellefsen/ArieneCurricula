@@ -1,3 +1,4 @@
+var bcrypt = require('bcrypt-nodejs');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User            = require("../models").User;
@@ -28,6 +29,10 @@ module.exports = function(passport) {
         password: 'password',
         passReqToCallback: true
     }, function(req, username, password, done) {
+        var generateHash = function(password) {
+            return bcrypt.hashSync(password, bcrypt.genSaltSync(8),null);
+        }
+
         User.findOne({where:{username: username}})
         .then(function(data) {
             data = data; //This I do not understand, why do I have to write this??? Question for Keith
@@ -40,9 +45,11 @@ module.exports = function(passport) {
             if (data && username === data.dataValues.username) { //If data exists AND the username equals what we have
                 return done(null, false, {message: "Username already exists"});
             }
+            var hashedPassword = generateHash(password);
+
             var newUser = {
                 user_email: "example@noemail.com",
-                password: password,
+                password: hashedPassword,
                 user_type: "user",
                 username: username
             }
@@ -69,10 +76,13 @@ module.exports = function(passport) {
         User.findOne({where:{username: username}})
         .then(function(user) {
             user = user; //This I do not understand, why do I have to initialize this??? Question for Keith
+            var isValidPassword = function(userpass,password) {
+                return bcrypt.compareSync(password,userpass);
+            }
             if(!user) {
                 return done(null, false, {message: "User not found"});
             }
-            if (user && password !== user.dataValues.password) { //If data exists AND the password does not equal
+            if (!isValidPassword(user.dataValues.password,password)) { //If data exists AND the password does not equal
                 return done(null, false, {message: "Invalid password"});
             }
             return done(null, user);

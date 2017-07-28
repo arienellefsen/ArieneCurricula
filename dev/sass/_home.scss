@@ -1,10 +1,9 @@
 .card-home {
     margin-bottom: 30px;
     .card-title {
-        color: $white;
-        background: $blue;
         margin-top: -20px;
         padding: 20px;
+        @include header-title($white, $blue, 100%, 100%);
     }
     .caption {
         padding: 20px;

@@ -73,11 +73,13 @@
                 button.save {
                     width: 250px;
                     height: 70px;
-                    margin-bottom: 30px;
-                    margin-top: 30px;
-                    background: $blue;
                     border: none;
+                    background: $blue;
                     color: $white;
+                    margin-bottom: 40px;
+                    &:hover {
+                        @include transition(1s, #1f3fa7, $white);
+                    }
                 }
                 
                 .form-status {
@@ -168,10 +170,71 @@
                 }
                 
                 .profile-pic {
-                    margin-top: -53px;
-                    padding: 16px;
+                    padding-left: 20px;
+                    margin-left: 22px;
+                    margin-top: 44px;
+                    width: 80%;
+                    height: 259px;
                 }
                 
                 p.user-profile-text {
-                    margin-top: 10px;
+                    margin-top: -15px;
+                    padding: 20px;
+                    text-align: left;
+                }
+                
+                .space {
+                    margin-right: 40px;
+                }
+                
+                .background-profile {
+                    background: $blue;
+                    width: 100%;
+                    height: 278px;
+                    margin-top: -20px;
+                }
+                
+                .user-bio {
+                    font-size: 25px;
+                    margin-top: 44px;
+                    text-align: center;
+                    color: #494848;
+                }
+                
+                .bio-header {
+                    @include header-title($white, $blue, 80px, 100%);
+                    margin-top: -20px;
+                    color: $white;
+                    font-size: 22px;
+                }
+                
+                .link-curricula {
+                    background: #e6ebf6;
+                    height: 82px;
+                    width: 100%;
+                    padding-left: 30px;
+                    padding-top: 20px;
+                    border-bottom: 1px solid $blue;
+                }
+                
+                img.icon-curricula {
+                    width: 40px;
+                    height: 27px;
+                }
+                
+                a.curricula-link:link {
+                    font-size: 18px;
+                    padding-left: 10px;
+                    padding-right: 30px;
+                    color: #494848;
+                }
+                
+                .btn-container {
+                    float: right;
+                    padding-right: 30px;
+                    .btn-edit {
+                        background: $blue;
+                        color: $white;
+                        margin-right: 10px;
+                    }
                 }

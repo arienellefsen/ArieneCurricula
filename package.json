@@ -27,8 +27,13 @@
     "method-override": "^2.3.9",
     "mysql": "^2.13.0",
     "passport": "^0.3.2",
-    "passport-google-oauth": "^1.0.0",
-    "sequelize": "^3.30.4"
+    "sequelize": "^3.30.4",
+    "bcrypt": "^1.0.2",
+    "bcrypt-nodejs": "0.0.3",
+    "connect-session-sequelize": "^4.1.0",
+    "express-mysql-session": "^1.2.1",
+    "passport-local": "^1.0.0"
+
   },
   "devDependencies": {
     "bcrypt": "^1.0.2",

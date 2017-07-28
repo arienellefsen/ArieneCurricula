@@ -308,6 +308,21 @@ module.exports = function(app, passport, sessionMW) {
         });
     });
 
+    //Route to delete Curricula
+    app.get("/api/delete/:id", isLoggedIn, function(req, res) {
+        var idData = req.params.id;
+        console.log("########################IDdata " , idData);
+        Curricula.update({
+            submited_status:0
+        }, {
+            where: { id: idData }
+        })
+        .then(function(results) {
+            res.redirect('/userview');
+        });
+    });
+
+
     app.get('/profile/:id', isLoggedIn, function(req, res) {
         res.render('profile.handlebars', {
             user: req.user //Get the user out of session and pass to the template
@@ -329,7 +344,7 @@ module.exports = function(app, passport, sessionMW) {
             var userObj = {
                 username: req.session.passport.user.username,
                 userId: req.session.passport.user.id,
-                curriculaName: userData
+                curriculaName: userData,
             };
 
             // userObj.curriculaName.forEach(function(item) {

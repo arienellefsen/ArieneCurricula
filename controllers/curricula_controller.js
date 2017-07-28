@@ -321,6 +321,7 @@ module.exports = function(app, passport, sessionMW) {
     }));
 
     app.get('/user/signin', function(req, res) {
+
         res.render('usersignin.handlebars');
 
     });

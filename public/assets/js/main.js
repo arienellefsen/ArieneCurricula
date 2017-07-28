@@ -1,4 +1,7 @@
+$('.scroll').jscroll();
+
 (function() {
+
 
     //alert("username = " + localStorage.getItem("author"));
     var author = localStorage.getItem("Author");
@@ -126,7 +129,7 @@
     //Call save function
     $("#save").on("click", save);
 
-    //Lazy load function
+
 
     function checkVisibility(card) {
         var $wt = $(window).scrollTop();    //* top of the window
@@ -159,8 +162,8 @@
         $('#sub-category').empty();
         var cat = $("#category-curricula").val().trim();
 
-        if (cat.length !== 0 && cat.toLowerCase() !== 'add new category' ){
-            categories[cat].forEach(function (subCat){
+        if (cat.length !== 0 && cat.toLowerCase() !== 'add new category') {
+            categories[cat].forEach(function(subCat) {
                 $('#sub-category').append(
                     "<option value='" + subCat + "'>" + subCat + "</option>"
                 );

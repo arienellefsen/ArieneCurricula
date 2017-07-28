@@ -3,7 +3,8 @@
   
     <div class="row scroll" id="landing-content">
         {{#each curriculaInstance}}
-            {{#if this.submited_status}}
+            {{#if this.submited_status}} 
+            
                 <div class="col-xs-12 col-sm-3 col-lg-3 card-home">
                     <div class="card card-2 curriculacard curriculacardHidden">
                         <a href="curricula/{{this.id}}">
@@ -25,6 +26,8 @@
                 </div>
             {{/if}}
         {{/each}}
+
+
     </div>
 </div>
 

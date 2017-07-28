@@ -130,6 +130,7 @@ $('.scroll').jscroll();
     $("#save").on("click", save);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /*
         //Lazy load function
        $(window).scroll(function() {
@@ -149,6 +150,9 @@ $('.scroll').jscroll();
     */
 =======
     //Lazy load function
+=======
+
+>>>>>>> c488ae4fb95ed873f83d53d358c037299b1fbb54
 
     function checkVisibility(card) {
         var $wt = $(window).scrollTop();    //* top of the window
@@ -174,7 +178,10 @@ $('.scroll').jscroll();
             checkVisibility($(this));
         });
     });
+<<<<<<< HEAD
 >>>>>>> 7162692e8906c60b6235a690c53bc0871371b1a5
+=======
+>>>>>>> c488ae4fb95ed873f83d53d358c037299b1fbb54
 
     // Populate sub-categories based on category selection
     $("#category-curricula").change(function(event) {

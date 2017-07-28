@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 <<<<<<< HEAD
     "name": "curricula",
@@ -47,6 +48,10 @@
     }
 }
 =======
+=======
+
+}
+>>>>>>> c488ae4fb95ed873f83d53d358c037299b1fbb54
   "name": "curricula",
   "version": "0.1.0",
   "description": "App Curricula",
@@ -101,4 +106,7 @@
     "passport-local": "^1.0.0"
   }
 }
+<<<<<<< HEAD
 >>>>>>> 7162692e8906c60b6235a690c53bc0871371b1a5
+=======
+>>>>>>> c488ae4fb95ed873f83d53d358c037299b1fbb54

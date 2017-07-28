@@ -72,11 +72,16 @@ function limiter(obj, start, end) {
 // lower case
 function cleanString(str) {
     var cleanStr = str;
-    cleanStr = str.replace(/[^\w\s]/gi, ' ') // Remove non-alpha characters
-        .replace(/\n/g, " ") // Change new lines to spaces
-        .replace(/\s\s+/g, ' ') // Remove duplicate spaces
-        .toLowerCase(); // Move all to lower case
-    return cleanStr
+    var filtered;
+    cleanStr = str.replace(/"q":/g," ").replace(/\W+/g, " ").toLowerCase().split(' ');
+    filtered = cleanStr.filter(function(item) {
+        return item !== '';
+    });
+    cleanStr = filtered.join(' ').trim();
+    if(cleanStr.length === 0) {
+        return null;
+    }
+    return cleanStr;
 }
 
 // Accepts the query result object from database and 

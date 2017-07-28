@@ -101,11 +101,17 @@ textarea {
 button.save {
   width: 250px;
   height: 70px;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  background: #4568DC;
   border: none;
-  color: #fff; }
+  background: #4568DC;
+  color: #fff;
+  margin-bottom: 40px; }
+  button.save:hover {
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
+    transition: 1s;
+    background-color: #1f3fa7;
+    color: #fff; }
 
 .form-status {
   height: 85px;
@@ -183,19 +189,78 @@ h1.user {
   padding-top: 10px; }
 
 .profile-pic {
-  margin-top: -53px;
-  padding: 16px; }
+  padding-left: 20px;
+  margin-left: 22px;
+  margin-top: 44px;
+  width: 80%;
+  height: 259px; }
 
 p.user-profile-text {
-  margin-top: 10px; }
+  margin-top: -15px;
+  padding: 20px;
+  text-align: left; }
+
+.space {
+  margin-right: 40px; }
+
+.background-profile {
+  background: #4568DC;
+  width: 100%;
+  height: 278px;
+  margin-top: -20px; }
+
+.user-bio {
+  font-size: 25px;
+  margin-top: 44px;
+  text-align: center;
+  color: #494848; }
+
+.bio-header {
+  color: color;
+  background: #4568DC;
+  padding: 20px;
+  width: 100%;
+  height: 80px;
+  margin-top: -20px;
+  color: #fff;
+  font-size: 22px; }
+
+.link-curricula {
+  background: #e6ebf6;
+  height: 82px;
+  width: 100%;
+  padding-left: 30px;
+  padding-top: 20px;
+  border-bottom: 1px solid #4568DC; }
+
+img.icon-curricula {
+  width: 40px;
+  height: 27px; }
+
+a.curricula-link:link {
+  font-size: 18px;
+  padding-left: 10px;
+  padding-right: 30px;
+  color: #494848; }
+
+.btn-container {
+  float: right;
+  padding-right: 30px; }
+  .btn-container .btn-edit {
+    background: #4568DC;
+    color: #fff;
+    margin-right: 10px; }
 
 .card-home {
   margin-bottom: 30px; }
   .card-home .card-title {
-    color: #fff;
-    background: #4568DC;
     margin-top: -20px;
-    padding: 20px; }
+    padding: 20px;
+    color: color;
+    background: #4568DC;
+    padding: 20px;
+    width: 100%;
+    height: 100%; }
   .card-home .caption {
     padding: 20px; }
   .card-home .icon-home {

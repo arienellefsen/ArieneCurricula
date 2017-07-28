@@ -5,7 +5,6 @@
     var authorId = localStorage.getItem("id-Author");
     var categories = {};
     //var user = document.getElementById("#username").value;
-    //console.log('name: ' + user);
     var count = 0;
 
     $('.loading').hide();
@@ -67,7 +66,6 @@
             for (var i = 0; i < 5; i++) {
                 var fieldForm = $('input[name=link' + i + ']').val();
                 var descField = $('textarea[name=desclink' + i + ']').val();
-                //console.log(fieldForm);
                 if (fieldForm != '') {
                     // obj['step1'].step_url = fieldForm;
                     //obj['step1'].step_url = 'link1';
@@ -94,6 +92,7 @@
                 },
                 curriculaDetails: obj
             };
+
             // process the form
             $('#field-status').text('Published');
 
@@ -103,28 +102,27 @@
                     $('.loading').show();
                 },
                 url: '/api/posts',
-                data: formDataCreate,
-                complete: function() {
-                    console.log('complete');
-
-                },
-                success: function(data) {
-
-                    alert('yes!');
-                    // $('.loading').hide();
-                    console.log('sucess');
+                data: formDataCreate
+            }).done(function(data){
+                if(data === true){
+                    sessionStorage.setItem('msg', "Success Uploading Curricula:\n" + $('#curricula_name').val() + "!");
+                    window.location.href='/userview' 
+                } else {
+                    $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.')
                 }
-
+            }).fail(function( jqXHR, textStatus, errorThrown ) {
+                $('.loading').delay(1000).fadeOut('slow');
+                $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.');
+                console.log(err);
             });
+
             $('.loading').delay(1000).fadeOut('slow');
-
-
         }
-
 
         // Stop form from submitting normally
         event.preventDefault();
     };
+
     //Call save function
     $("#save").on("click", save);
 

@@ -30,3 +30,20 @@ body {
 #vote {
     display: none;
 }
+
+#alert-msgs,
+#resultsBox {
+    font-weight: bolder;
+    text-align: center;
+}
+
+.colorGreen {
+    color: green;
+}
+
+.colorRed {
+    color: red;
+}
+.curriculacardHidden {
+  visibility: hidden;
+}

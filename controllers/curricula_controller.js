@@ -66,13 +66,13 @@ module.exports = function(app, passport, sessionMW) {
 
     // Get route for search results
     app.get("/search", function(req, res) {
-        var rawSearch = req.query.q;
+        var rawSearch = JSON.stringify(req.query);
         if (typeof rawSearch === 'string' && rawSearch.length >= 1) {
-            var searchTerms = helpers.cleanString(rawSearch).split(" ");
+            var searchTerms = helpers.cleanString(rawSearch)
             var searchResults = {};
             var rangeToShow = {};
             var displayObj = {};
-            if (searchTerms.length > 0) {
+            if (searchTerms) {
                 Curricula.findAll({
                     where: {
                         submited_status: {
@@ -81,7 +81,7 @@ module.exports = function(app, passport, sessionMW) {
                     }
                 }).then(function(curricula) {
                     User.findAll({}).then(function(userData) {
-                        searchResults = helpers.search(curricula, searchTerms);
+                        searchResults = helpers.search(curricula, searchTerms.split(' '));
                         rangeToShow = helpers.limiter(searchResults, 0, 9);
                         rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'search');
                         displayObj = {
@@ -89,7 +89,7 @@ module.exports = function(app, passport, sessionMW) {
                                 display: rangeToShow
                             }
                             // Determine if there were any results to display
-                        if (Object.keys(displayObj.display).length === 0) {
+                        if (Object.keys(displayObj.display).length === 0 || searchTerms.length === 0) {
                             displayObj.flag = false;
                         }
                         res.render('searchresults', { curriculaInstance: displayObj });
@@ -97,7 +97,11 @@ module.exports = function(app, passport, sessionMW) {
                 });
             } else {
                 console.log('Invalid Search Terms Were sent - no search results after cleaning.');
-                res.json('Invalid Search Terms', {});
+                displayObj = {
+                    flag: false,
+                    display: {}
+                }
+                res.render('searchresults', { curriculaInstance: displayObj });
             }
         } else {
             console.log('req.query is either not a string or doesn\'t exist');

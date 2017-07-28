@@ -2,18 +2,23 @@
     <div class="row">
         <div class="col-sm-6 col-md-3 col-lg-3">
             <input type="text" name="fname" value="{{this.username}}" id="Author" hidden>
-            <br>
-            <input type="text" name="id" value="{{this.id}}" id="id-Author" hidden>
-            <br>
+            <input type="text" name="id" value="{{this.userId}}" id="id-Author" hidden>
+       <h1 class="user">{{this.username}}</h1>
             <img class="img-responsive img-rounded profile-pic" src="/assets/images/blankprofile.png" alt="profile pic" width="220" height="220">
-            <h1 class="user">{{this.username}}</h1>
         </div>
-        <div class="col-sm-6 col-md-9 col-lg-9">
+        <div class="col-sm-6 col-md-4 col-lg-4">
+                   <h1 class="user">Bio</h1>
             <p class="user-profile-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus leo justo, rutrum vitae placerat in, posuere at magna. Mauris quis porttitor felis. In vel ligula neque. Curabitur suscipit ante et eros consectetur pulvinar. Nunc egestas sodales arcu non congue. Sed pretium ullamcorper tincidunt. Ut ut egestas arcu, vel luctus velit. Suspendisse aliquam nunc ornare aliquet consectetur. F usce gravida luctus fermentum. Fusce efficitur posuere ligula ac dapibus. Nunc lacinia odio eget augue rhoncus dictum.
             </p>
-             <h1 class="user">{{this.username}}</h1>
-             <h1 class="user">{{this.id}}</h1>
-               <h1 class="user">name:{{this.curricula_name}}</h1>
         </div>
+<div class="col-sm-6 col-md-5 col-lg-5">
+     <h1 class="user">Your Curricula</h1>
+ {{#each curriculaName}}
+ <a href="curricula/{{this.id}}">
+{{this.curricula_name}}</a>
+<br>
+ {{/each}}
+    </div>
+
     </div>
 </div>

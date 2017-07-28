@@ -4,6 +4,8 @@ var User = require('../models').User;
 var helpers = require('../helpers/helpers.js');
 var Sequelize = require('sequelize');
 
+CurriculaDetails.belongsTo(Curricula, { foreignKey: 'CurriculaId' });
+
 module.exports = function(app, passport, sessionMW) {
 
     // Get the landing page content
@@ -272,18 +274,37 @@ module.exports = function(app, passport, sessionMW) {
         }
     });
 
-    app.post("/api/posts/:id", isLoggedIn, function(req, res) { //Vannucci: Added 'isLoggedIn'
+    //Route to edit Curricula
+    app.get("/api/view/:id", isLoggedIn, function(req, res) {
         var idData = req.params.id;
-        Curricula.update({
-            status: 'update'
-        }, {
+        CurriculaDetails.findAll({
+            include: [{
+                model: Curricula,
+                where: { authorId: idData }
+            }]
+        }).then(function(results) {
+            var CurriculData = results;
+            res.render('edit.handlebars', { "curriculas": CurriculData });
+            // res.json(CurriculData);
+
+        });
+    });
+
+    //Route to edit Curricula
+    app.get("/api/edit/:id", isLoggedIn, function(req, res) {
+        var idData = req.params.id;
+        CurriculaDetails.findOne({
             where: {
-                id: {
-                    $eq: idData
-                }
-            }
-        }).then(function(data) {
-            res.redirect("/");
+                id: idData
+            },
+            include: [{
+                model: Curricula
+            }]
+        }).then(function(results) {
+            var CurriculData = results;
+            res.render('edit.handlebars', { "curriculas": CurriculData });
+            //res.json(CurriculData);
+
         });
     });
 
@@ -294,27 +315,40 @@ module.exports = function(app, passport, sessionMW) {
     });
 
     app.get('/userview', isLoggedIn, function(req, res) {
-        var userObj = {
-            username: req.session.passport.user.username,
-            userId: req.session.passport.user.id
-        };
-        var userDeviceId = 4;
+        var testObj = {};
+        console.log("++++++++++++++++++++++++++++++++\n\n\n");
+        var authorId = req.session.passport.user.id;
+        console.log(authorId);
 
-        var device = Curricula.findById(userDeviceId).then(function(device) {
-            if (!device) {
-                return 'not find';
+        Curricula.findAll({
+            where: {
+                'authorId': authorId
             }
-            return device.curricula_name;
+        }).then(function(userData) {
+            console.log(userData);
+            var userObj = {
+                username: req.session.passport.user.username,
+                userId: req.session.passport.user.id,
+                curriculaName: userData
+            };
+
+            // userObj.curriculaName.forEach(function(item) {
+
+            //     console.log("++++++++++++++++++++++++++" + item);
+            //     //console.log("++++++++++++++++++++++++++" + index);
+
+            //     //return item;
+
+            // });
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------" + typeof userData);
+
+
+            res.render('userview.handlebars', userObj);
+
+
         });
 
-        //Curricula.findById(userObj.userId, { where: { userId: userObj.userId } });
 
-        var userCur = {};
-        userCur.username = req.session.passport.user.username;
-        userCur.id = req.session.passport.user.id;
-        userCur.curricula_name = device;
-        console.log("user data: " + userCur);
-        res.render('userview.handlebars', userCur);
     });
 
 

@@ -67,7 +67,7 @@
     require('./controllers/curricula_controller.js')(app, passport); //load in our routes and pass the app and passport
     // Syncing our sequelize models and then starting our Express app
     // =============================================================
-    db.sequelize.sync({}).then(function() {
+    db.sequelize.sync({force:true}).then(function() {
         require('./migrations/seeds.js')(db);
         app.listen(PORT, function() {
             console.log("App listening on PORT " + PORT);

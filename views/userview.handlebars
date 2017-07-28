@@ -22,7 +22,6 @@
         <div class="col-sm-8 col-md-8 col-lg-8">
             <div class="card card-2">
                 <div class="bio-header">Your Curriculas</div>
-                
                 {{#each curriculaName}}
                 <div class="link-curricula">
                <img src="/assets/images/icon-logo.png" class="icon-curricula"> <a href="curricula/{{this.id}}" class="curricula-link">
@@ -31,15 +30,13 @@
                <div class="btn-container">
                     <a href="curricula/{{this.id}}"><button class="btn btn-edit">View</button></a>
                     <a href="/api/edit/{{this.id}}"><button class="btn btn-edit">Edit</button></a>
-                    <a href=""><button class="btn btn-edit">Delete</button></a>
+                    <a href="/api/delete/{{this.id}}"><button class="btn btn-edit">Delete</button></a>
 
                     </div>
 
                 </div>
                 
-                    
                 {{/each}}
-
             </div>
         </div>
 

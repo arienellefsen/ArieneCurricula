@@ -1,5 +1,3 @@
-$('.scroll').jscroll();
-
 (function() {
 
 
@@ -106,14 +104,14 @@ $('.scroll').jscroll();
                 },
                 url: '/api/posts',
                 data: formDataCreate
-            }).done(function(data){
-                if(data === true){
+            }).done(function(data) {
+                if (data === true) {
                     sessionStorage.setItem('msg', "Success Uploading Curricula:\n" + $('#curricula_name').val() + "!");
-                    window.location.href='/userview' 
+                    window.location.href = '/userview'
                 } else {
                     $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.')
                 }
-            }).fail(function( jqXHR, textStatus, errorThrown ) {
+            }).fail(function(jqXHR, textStatus, errorThrown) {
                 $('.loading').delay(1000).fadeOut('slow');
                 $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.');
                 console.log(err);
@@ -129,59 +127,34 @@ $('.scroll').jscroll();
     //Call save function
     $("#save").on("click", save);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    /*
-        //Lazy load function
-       $(window).scroll(function() {
-           var wt = $(window).scrollTop();    //* top of the window
-           var wb = wt + $(window).height();  //* bottom of the window
 
-           $(".curriculacard").each(function(){
-              var ot = $(this).offset().top;  //* top of object (i.e. curicula card div)
-              var ob = ot + $(this).height(); //* bottom of object
 
-              if(!$(this).attr("loaded") && wt<=ob && wb >= ot){
-                 $(this).html("here goes the iframe definition");
-                 $(this).attr("loaded",true);
-              }
-           });
-       });
-    */
-=======
-    //Lazy load function
-=======
-
->>>>>>> c488ae4fb95ed873f83d53d358c037299b1fbb54
 
     function checkVisibility(card) {
-        var $wt = $(window).scrollTop();    //* top of the window
-        var $wb = $wt + $(window).height();  //* bottom of the window
+        var $wt = $(window).scrollTop(); //* top of the window
+        var $wb = $wt + $(window).height(); //* bottom of the window
 
-        var ot = card.offset().top;  //* top of card (i.e. curicula card div)
+        var ot = card.offset().top; //* top of card (i.e. curicula card div)
         var ob = ot + card.height(); //* bottom of card
 
-        if($wt<=ob && $wb >= ot){
-         card.removeClass("curriculacardHidden");
+        if ($wt <= ob && $wb >= ot) {
+            card.removeClass("curriculacardHidden");
         }
 
     }
 
     $(document).ready(function() {
-       $(".curriculacardHidden").each(function(){
+        $(".curriculacardHidden").each(function() {
             checkVisibility($(this));
         });
     })
 
     $(window).scroll(function() {
-       $(".curriculacardHidden").each(function(){
+        $(".curriculacardHidden").each(function() {
             checkVisibility($(this));
         });
     });
-<<<<<<< HEAD
->>>>>>> 7162692e8906c60b6235a690c53bc0871371b1a5
-=======
->>>>>>> c488ae4fb95ed873f83d53d358c037299b1fbb54
+
 
     // Populate sub-categories based on category selection
     $("#category-curricula").change(function(event) {

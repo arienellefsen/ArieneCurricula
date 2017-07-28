@@ -4,6 +4,8 @@ var User = require('../models').User;
 var helpers = require('../helpers/helpers.js');
 var Sequelize = require('sequelize');
 
+CurriculaDetails.belongsTo(Curricula, { foreignKey: 'CurriculaId' });
+
 module.exports = function(app, passport, sessionMW) {
 
     // Get the landing page content
@@ -50,7 +52,7 @@ module.exports = function(app, passport, sessionMW) {
                         User.findById(curriculaData.authorId).then(function(userData) {
                             compiledCurriculaObj.allCurricula = helpers.getRelatedByCategory(allCurr, curriculaData.category, curriculaData.id);
                             compiledCurriculaObj.curricula = curriculaData;
-                            compiledCurriculaObj.author = {authName: userData.username};
+                            compiledCurriculaObj.author = { authName: userData.username };
                             compiledCurriculaObj.curriculaDetails = curriculaDetailsData;
                             res.render('detailscurricula', compiledCurriculaObj);
                         });
@@ -78,15 +80,15 @@ module.exports = function(app, passport, sessionMW) {
                         }
                     }
                 }).then(function(curricula) {
-                    User.findAll({}).then(function(userData){
+                    User.findAll({}).then(function(userData) {
                         searchResults = helpers.search(curricula, searchTerms);
                         rangeToShow = helpers.limiter(searchResults, 0, 9);
                         rangeToShow = helpers.matchAuthorsById(rangeToShow, userData, 'search');
                         displayObj = {
-                            flag: true,
-                            display: rangeToShow
-                        }
-                        // Determine if there were any results to display
+                                flag: true,
+                                display: rangeToShow
+                            }
+                            // Determine if there were any results to display
                         if (Object.keys(displayObj.display).length === 0) {
                             displayObj.flag = false;
                         }
@@ -204,8 +206,8 @@ module.exports = function(app, passport, sessionMW) {
     app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res) {
         var userId = req.session.passport.user.id;
         var currId = req.params.curId;
-        if (userId !== 'undefined' && currId !== 'undefined'){
-            User.findById(userId).then(function(userData){
+        if (userId !== 'undefined' && currId !== 'undefined') {
+            User.findById(userId).then(function(userData) {
                 var votesArr = userData.votes_cast.split(',');
                 var voted = votesArr.indexOf(currId);
                 if (voted > -1) {
@@ -240,7 +242,7 @@ module.exports = function(app, passport, sessionMW) {
 
     // Responds to front-end API call for a JSON object 
     // of the category>subcatgory mapping
-    app.get("/api/cats",  function(req, res) {
+    app.get("/api/cats", function(req, res) {
         Curricula.findAll({
             attributes: ['category', 'sub_category']
         }).then(function(curData) {
@@ -272,18 +274,37 @@ module.exports = function(app, passport, sessionMW) {
         }
     });
 
-    app.post("/api/posts/:id", isLoggedIn, function(req, res) { //Vannucci: Added 'isLoggedIn'
+    //Route to edit Curricula
+    app.get("/api/view/:id", isLoggedIn, function(req, res) {
         var idData = req.params.id;
-        Curricula.update({
-            status: 'update'
-        }, {
+        CurriculaDetails.findAll({
+            include: [{
+                model: Curricula,
+                where: { authorId: idData }
+            }]
+        }).then(function(results) {
+            var CurriculData = results;
+            res.render('edit.handlebars', { "curriculas": CurriculData });
+            // res.json(CurriculData);
+
+        });
+    });
+
+    //Route to edit Curricula
+    app.get("/api/edit/:id", isLoggedIn, function(req, res) {
+        var idData = req.params.id;
+        CurriculaDetails.findOne({
             where: {
-                id: {
-                    $eq: idData
-                }
-            }
-        }).then(function(data) {
-            res.redirect("/");
+                id: idData
+            },
+            include: [{
+                model: Curricula
+            }]
+        }).then(function(results) {
+            var CurriculData = results;
+            res.render('edit.handlebars', { "curriculas": CurriculData });
+            //res.json(CurriculData);
+
         });
     });
 
@@ -294,12 +315,39 @@ module.exports = function(app, passport, sessionMW) {
     });
 
     app.get('/userview', isLoggedIn, function(req, res) {
+        var testObj = {};
+        console.log("++++++++++++++++++++++++++++++++\n\n\n");
+        var authorId = req.session.passport.user.id;
+        console.log(authorId);
 
-        var userObj = {
-            username: req.session.passport.user.username,
-            userId: req.session.passport.user.id
-        };
-        res.render('userview.handlebars', userObj);
+        Curricula.findAll({
+            where: {
+                'authorId': authorId
+            }
+        }).then(function(userData) {
+            console.log(userData);
+            var userObj = {
+                username: req.session.passport.user.username,
+                userId: req.session.passport.user.id,
+                curriculaName: userData
+            };
+
+            // userObj.curriculaName.forEach(function(item) {
+
+            //     console.log("++++++++++++++++++++++++++" + item);
+            //     //console.log("++++++++++++++++++++++++++" + index);
+
+            //     //return item;
+
+            // });
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------" + typeof userData);
+
+
+            res.render('userview.handlebars', userObj);
+
+
+        });
+
 
     });
 

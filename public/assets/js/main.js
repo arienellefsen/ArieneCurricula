@@ -1,5 +1,6 @@
 (function() {
 
+
     //alert("username = " + localStorage.getItem("author"));
     var author = localStorage.getItem("Author");
     var authorId = localStorage.getItem("id-Author");
@@ -103,14 +104,14 @@
                 },
                 url: '/api/posts',
                 data: formDataCreate
-            }).done(function(data){
-                if(data === true){
+            }).done(function(data) {
+                if (data === true) {
                     sessionStorage.setItem('msg', "Success Uploading Curricula:\n" + $('#curricula_name').val() + "!");
-                    window.location.href='/userview' 
+                    window.location.href = '/userview'
                 } else {
                     $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.')
                 }
-            }).fail(function( jqXHR, textStatus, errorThrown ) {
+            }).fail(function(jqXHR, textStatus, errorThrown) {
                 $('.loading').delay(1000).fadeOut('slow');
                 $('#resultsBox').html('Sorry there was an issue submitting.\nPlease try again later.');
                 console.log(err);
@@ -126,32 +127,34 @@
     //Call save function
     $("#save").on("click", save);
 
-    //Lazy load function
+
+
 
     function checkVisibility(card) {
-        var $wt = $(window).scrollTop();    //* top of the window
-        var $wb = $wt + $(window).height();  //* bottom of the window
+        var $wt = $(window).scrollTop(); //* top of the window
+        var $wb = $wt + $(window).height(); //* bottom of the window
 
-        var ot = card.offset().top;  //* top of card (i.e. curicula card div)
+        var ot = card.offset().top; //* top of card (i.e. curicula card div)
         var ob = ot + card.height(); //* bottom of card
 
-        if($wt<=ob && $wb >= ot){
-         card.removeClass("curriculacardHidden");
+        if ($wt <= ob && $wb >= ot) {
+            card.removeClass("curriculacardHidden");
         }
 
     }
 
     $(document).ready(function() {
-       $(".curriculacardHidden").each(function(){
+        $(".curriculacardHidden").each(function() {
             checkVisibility($(this));
         });
     })
 
     $(window).scroll(function() {
-       $(".curriculacardHidden").each(function(){
+        $(".curriculacardHidden").each(function() {
             checkVisibility($(this));
         });
     });
+
 
     // Populate sub-categories based on category selection
     $("#category-curricula").change(function(event) {
@@ -159,8 +162,8 @@
         $('#sub-category').empty();
         var cat = $("#category-curricula").val().trim();
 
-        if (cat.length !== 0 && cat.toLowerCase() !== 'add new category' ){
-            categories[cat].forEach(function (subCat){
+        if (cat.length !== 0 && cat.toLowerCase() !== 'add new category') {
+            categories[cat].forEach(function(subCat) {
                 $('#sub-category').append(
                     "<option value='" + subCat + "'>" + subCat + "</option>"
                 );

@@ -4,7 +4,9 @@
     //alert("username = " + localStorage.getItem("author"));
     var author = localStorage.getItem("Author");
     var authorId = localStorage.getItem("id-Author");
+    var catExists = $("#category-curricula").attr('id');
     var categories = {};
+    
     //var user = document.getElementById("#username").value;
     var count = 0;
 
@@ -15,7 +17,7 @@
         for (var i = 0; i < 5; i++) {
             var fieldLink = "<input type='text' name='link' placeholder='Add a link' class='link'> ";
             var detailLink = "<textarea rows='4' cols='50' name='link-description' placeholder='Add link description' class='descritpion'></textarea>",
-                idLink = 'link' + count;
+            idLink = 'link' + count;
             var fields = $(fieldLink).attr("name", idLink).appendTo($("#fields-form"));
             var description = $(detailLink).attr("name", 'desc' + idLink).appendTo($("#fields-form"));
             count++;
@@ -34,8 +36,10 @@
         var desc = $('#curricula_description').text();
         var form = $("#create-form");
         var statusForm = $('input[name=status]').val();
+        var onEdit = sessionStorage.getItem('isEdit');
+        var priorId = sessionStorage.getItem('editId');
         statusForm = true;
-
+        
 
         if (title == '') {
             event.preventDefault();
@@ -91,12 +95,18 @@
                     'search_tags': $('#curricula_tag').val(),
                     'authorId': authorId
                 },
-                curriculaDetails: obj
+                curriculaDetails: obj,
+                'isEdit': {
+                    'status': onEdit
+                },
+                'priorIdToDelete': {
+                    'id': priorId
+                }
             };
 
             // process the form
             $('#field-status').text('Published');
-
+            // Window.alert(onEdit, oldCurrId)
             $.ajax({
                 type: 'POST',
                 beforeSend: function() {
@@ -127,9 +137,6 @@
     //Call save function
     $("#save").on("click", save);
 
-
-
-
     function checkVisibility(card) {
         var $wt = $(window).scrollTop(); //* top of the window
         var $wb = $wt + $(window).height(); //* bottom of the window
@@ -155,6 +162,15 @@
         });
     });
 
+    // Function accepts a dropdown id selector and an array
+    // function will iterate the array and add items to the dropdown
+    function populateDropDown(dropDownName, arrOfVals){
+        arrOfVals.forEach(function(item) {
+            $(dropDownName).append(
+                "<option value='" + item + "'>" + item + "</option>"
+            );
+        });
+    }
 
     // Populate sub-categories based on category selection
     $("#category-curricula").change(function(event) {
@@ -163,16 +179,18 @@
         var cat = $("#category-curricula").val().trim();
 
         if (cat.length !== 0 && cat.toLowerCase() !== 'add new category') {
-            categories[cat].forEach(function(subCat) {
-                $('#sub-category').append(
-                    "<option value='" + subCat + "'>" + subCat + "</option>"
-                );
-            });
+            populateDropDown('#sub-category', categories[cat]);
         }
     });
 
-    $.get('/api/cats', function(categoriesObject) {
-        categories = categoriesObject;
-    });
+    // If user on a page with category then populate the category dropdowns
+    if (catExists !== undefined) {
+        $.get('/api/cats', function(categoriesObject) {
+            categories = categoriesObject;
+            var catKeys = Object.keys(categories);
+            populateDropDown('#category-curricula', catKeys);
+            populateDropDown('#sub-category', categories[catKeys[0]]);
+        });
+    }
 
-}());
+}(window));

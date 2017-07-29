@@ -60,8 +60,6 @@
 
     require('./config/passport.js')(passport); // pass passport for configuration
 
-    require('./controllers/curricula_controller.js')(app, passport); //load in our routes and pass the app and passport
-
     // Routes
     // =============================================================
     require('./controllers/curricula_controller.js')(app, passport); //load in our routes and pass the app and passport

@@ -207,6 +207,7 @@ module.exports = function(app, passport, sessionMW) {
         });
     })
 
+    // Checks whether the current user has voted on a curricula
     app.get('/checkvote/:user/:curId', isLoggedIn, function(req, res) {
         var userId = req.session.passport.user.id;
         var currId = req.params.curId;
@@ -225,23 +226,9 @@ module.exports = function(app, passport, sessionMW) {
         }
     })
 
-    // app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-    // app.get('/auth/google/callback',
-    //     passport.authenticate('google', {
-    //         successRedirect: '/create',
-    //         failureRedirect: '/'
-    //     })
-    // );
-
     // Runs when user goes to the create view
     app.get("/create", isLoggedIn, function(req, res) {
-        Curricula.findAll({}).then(function(result) {
-            var dbCurricula = {
-                showCurricula: helpers.getUniqueCategories(result)
-            };
-            res.render('createCurricula', dbCurricula);
-        });
+        res.render('createCurricula', null);
     });
 
     // Responds to front-end API call for a JSON object 
@@ -255,67 +242,86 @@ module.exports = function(app, passport, sessionMW) {
     });
 
     // POST route for saving a new post
-    app.post("/api/posts", isLoggedIn, function(req, res) {
+    app.post("/api/posts", isLoggedIn, function(req, res) { // add is logged in
         var curricula = req.body.curricula;
         var curriculaDetails = req.body.curriculaDetails;
         var username = req.session.passport.user.username;
         var userId = req.session.passport.user.id;
+        var priorCurricId = parseInt(req.body.priorIdToDelete.id);
+        var isEdit = req.body.isEdit.status;
+        console.log('>>>>>>>>#################\n', isEdit, priorCurricId);
+        console.log('\n>>>>>>>>#################');
+        // If this post was to update an existing post then
+        // soft-delete the old post
+        if (isEdit) {
+            console.log('********************got here')
+            Curricula.update({
+                submited_status:0
+            }, {
+                where: { id: priorCurricId }
+            }).then(function(results) {
+                console.log('############### Curricula ' + priorCurricId + ' soft delted.');
+            }).catch(function(err){
+                console.log(err);
+            });
+        } 
+
 
         if (curricula && curriculaDetails) {
             Curricula.create(curricula).then(function(dbPost) {
-
                 Object.keys(curriculaDetails).forEach(function(item) {
                     curriculaDetails[item].CurriculaId = dbPost.id;
                     CurriculaDetails.create(curriculaDetails[item]).then(function(dbPost) {
                         res.json(true);
                     }).catch(function(err) {
-                        res.json(false);
                         // print the error details
                         console.log(err);
+                        res.json(false);
                     });
                 });
             });
         }
     });
 
-    //Route to edit Curricula
-    app.get("/api/view/:id", isLoggedIn, function(req, res) {
+    // Response to api request for JSON of a given 
+    // curricula details and categories
+    app.get("/api/edit/:id", isLoggedIn, function(req, res) {
         var idData = req.params.id;
         CurriculaDetails.findAll({
+            where: {
+                curriculaId: idData
+            },
             include: [{
                 model: Curricula,
-                where: { authorId: idData }
+                where: { 
+                    id: idData 
+                }
             }]
         }).then(function(results) {
-            var CurriculData = results;
-            res.render('edit.handlebars', { "curriculas": CurriculData });
-            // res.json(CurriculData);
-
+            var CurriculaData = {
+                cat: results[0].Curricula.category,
+                subCat: results[0].Curricula.sub_category,
+                steps: results
+            }
+            res.json(CurriculaData);
         });
     });
 
-    //Route to edit Curricula
-    app.get("/api/edit/:id", isLoggedIn, function(req, res) {
-        var idData = req.params.id;
-        CurriculaDetails.findOne({
-            where: {
-                id: idData
-            },
-            include: [{
-                model: Curricula
-            }]
-        }).then(function(results) {
-            var CurriculData = results;
-            res.render('edit.handlebars', { "curriculas": CurriculData });
-            //res.json(CurriculData);
-
-        });
+    //Route to display the edit Curricula page
+    app.get("/edit/:id", isLoggedIn, function(req, res) {
+        var idData = parseInt(req.params.id);
+        if (!isNaN(idData)) {
+            Curricula.findById(idData).then(function(results) {
+                res.render('edit.handlebars', { "curriculas": results });
+            });
+        } else {
+            res.redirect('/userview/');
+        }
     });
 
     //Route to delete Curricula
     app.get("/api/delete/:id", isLoggedIn, function(req, res) {
         var idData = req.params.id;
-        console.log("########################IDdata " , idData);
         Curricula.update({
             submited_status:0
         }, {
@@ -327,47 +333,33 @@ module.exports = function(app, passport, sessionMW) {
     });
 
 
-    app.get('/profile/:id', isLoggedIn, function(req, res) {
-        res.render('profile.handlebars', {
-            user: req.user //Get the user out of session and pass to the template
-        });
-    });
+    // app.get('/profile/:id', isLoggedIn, function(req, res) {
+    //     res.render('profile.handlebars', {
+    //         user: req.user //Get the user out of session and pass to the template
+    //     });
+    // });
 
     app.get('/userview', isLoggedIn, function(req, res) {
         var testObj = {};
-        console.log("++++++++++++++++++++++++++++++++\n\n\n");
+        // console.log("++++++++++++++++++++++++++++++++\n\n\n");
         var authorId = req.session.passport.user.id;
-        console.log(authorId);
+        // console.log(authorId);
 
         Curricula.findAll({
             where: {
                 'authorId': authorId
             }
         }).then(function(userData) {
-            console.log(userData);
+            // console.log(userData);
             var userObj = {
                 username: req.session.passport.user.username,
                 userId: req.session.passport.user.id,
                 curriculaName: userData,
             };
 
-            // userObj.curriculaName.forEach(function(item) {
-
-            //     console.log("++++++++++++++++++++++++++" + item);
-            //     //console.log("++++++++++++++++++++++++++" + index);
-
-            //     //return item;
-
-            // });
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------" + typeof userData);
-
-
+            // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------" + typeof userData);
             res.render('userview.handlebars', userObj);
-
-
         });
-
-
     });
 
 

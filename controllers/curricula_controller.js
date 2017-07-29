@@ -258,7 +258,7 @@ module.exports = function(app, passport, sessionMW) {
             }, {
                 where: { id: priorCurricId }
             }).then(function(results) {
-                console.log('############### Curricula ' + priorCurricId + ' soft delted.');
+                console.log('Curricula ' + priorCurricId + ' soft delted.');
             }).catch(function(err){
                 console.log(err);
             });
@@ -331,31 +331,21 @@ module.exports = function(app, passport, sessionMW) {
     });
 
 
-    // app.get('/profile/:id', isLoggedIn, function(req, res) {
-    //     res.render('profile.handlebars', {
-    //         user: req.user //Get the user out of session and pass to the template
-    //     });
-    // });
-
     app.get('/userview', isLoggedIn, function(req, res) {
         var testObj = {};
-        // console.log("++++++++++++++++++++++++++++++++\n\n\n");
         var authorId = req.session.passport.user.id;
-        // console.log(authorId);
 
         Curricula.findAll({
             where: {
                 'authorId': authorId
             }
         }).then(function(userData) {
-            // console.log(userData);
             var userObj = {
                 username: req.session.passport.user.username,
                 userId: req.session.passport.user.id,
                 curriculaName: userData,
             };
 
-            // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------" + typeof userData);
             res.render('userview.handlebars', userObj);
         });
     });

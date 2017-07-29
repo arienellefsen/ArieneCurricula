@@ -8,11 +8,11 @@
     var cookieParser = require('cookie-parser');
     var methodOverride = require('method-override');
     var path = require('path');
-    var session = require('express-session'); //session middleware
+    var session = require('express-session');
     var flash = require('connect-flash');
     var passport = require('passport');
-    var db = require("./models"); //Silly git hack
-    var SequelizeStore = require('connect-session-sequelize')(session.Store); //Silly git hack
+    var db = require("./models"); 
+    var SequelizeStore = require('connect-session-sequelize')(session.Store); 
 
     // Sets up the Express App
     // =============================================================
@@ -62,7 +62,7 @@
 
     // Routes
     // =============================================================
-    require('./controllers/curricula_controller.js')(app, passport); //load in our routes and pass the app and passport
+    require('./controllers/curricula_controller.js')(app, passport);
     // Syncing our sequelize models and then starting our Express app
     // =============================================================
     db.sequelize.sync({force:true}).then(function() {

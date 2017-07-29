@@ -13,7 +13,6 @@ module.exports = function (db) {
       username:'mike',
       votes_cast: '1,4'
     }).then(() => {
-      console.log('Seeded user testPerson1@gmail.com');
       createUser2();
     }).catch(function (err){
       console.log(err);
@@ -27,7 +26,6 @@ module.exports = function (db) {
         username:'mark',
         votes_cast: '2,3'
       }).then(() => {
-        console.log('Seeded user testPerson2@gmail.com');
         createUser3();
       }).catch(function (err){
         console.log(err);
@@ -43,7 +41,6 @@ module.exports = function (db) {
         votes_cast: '1,5,3'
       }).then(() => {
         createCurriucla();
-        console.log('Seeded user testPerson3@gmail.com');
       }).catch(function (err){
         console.log(err);
       });
@@ -63,7 +60,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 1
     }).then((data) => {
-      console.log('Seeded curricula on learning Javascript');
       createJavaDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -80,7 +76,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 1
     }).then((data) => {
-      console.log('Seeded curricula on cupcakes');
       createCupcakeDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -97,7 +92,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 1
     }).then((data) => {
-      console.log('Seeded curricula on Python');
       createPythonDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -114,7 +108,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 1
     }).then((data) => {
-      console.log('Seeded curricula on Algorithms');
       createAlgoDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -131,7 +124,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 3
     }).then((data) => {
-      console.log('Seeded curricula on Economics');
       createEconDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -148,7 +140,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 3
     }).then((data) => {
-      console.log('Seeded curricula on learning to cook streak');
       createSteakDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -165,7 +156,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 2
     }).then((data) => {
-      console.log('Seeded curricula on learning to use passport');
       createPassportDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -182,7 +172,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 2
     }).then((data) => {
-      console.log('Seeded curricula on learning to use passport');
       createInShapeDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -199,7 +188,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 2
     }).then((data) => {
-      console.log('Seeded curricula on motorcycles');
       createMotorcycleDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -216,7 +204,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 2
     }).then((data) => {
-      console.log('Seeded curricula on Angular');
       createAngularDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -233,7 +220,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 3
     }).then((data) => {
-      console.log('Seeded curricula on checkbook');
       createCheckbookDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -250,7 +236,6 @@ module.exports = function (db) {
       submited_status: true,
       authorId: 1
     }).then((data) => {
-      console.log('Seeded curricula on surfboard');
       createSurfingDetails(data.id);
     }).catch(function (err){
       console.log(err);
@@ -269,7 +254,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded JS step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -282,7 +266,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded JS step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -295,7 +278,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded JS step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -308,7 +290,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded JS step 4');
     }).catch(function (err){
       console.log(err);
     });
@@ -324,7 +305,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Cupcake step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -337,7 +317,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Cupcake step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -353,7 +332,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Python step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -369,7 +347,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Algo step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -382,7 +359,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Algo step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -395,7 +371,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Algo step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -408,7 +383,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Algo step 4');
     }).catch(function (err){
       console.log(err);
     });
@@ -421,7 +395,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Algo step 5');
     }).catch(function (err){
       console.log(err);
     });
@@ -437,7 +410,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Econ step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -450,7 +422,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Econ step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -466,7 +437,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Steak step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -479,7 +449,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Steak step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -493,7 +462,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Steak step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -509,7 +477,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Passport step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -522,7 +489,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Passport step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -535,7 +501,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Passport step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -551,7 +516,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Fitness step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -564,7 +528,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Fitness step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -577,7 +540,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Fitness step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -592,7 +554,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Motorcycle step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -605,7 +566,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Motorcycle step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -618,7 +578,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Motorcycle step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -634,7 +593,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Angular step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -647,7 +605,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Angular step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -660,7 +617,6 @@ module.exports = function (db) {
       authorId: 2,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Angular step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -675,7 +631,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded checkbook step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -688,7 +643,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded checkbook step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -701,7 +655,6 @@ module.exports = function (db) {
       authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded checkbook step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -716,7 +669,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded surfing step 1');
     }).catch(function (err){
       console.log(err);
     });
@@ -729,7 +681,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded surfing step 2');
     }).catch(function (err){
       console.log(err);
     });
@@ -742,7 +693,6 @@ module.exports = function (db) {
       authorId: 1,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded surfing step 3');
     }).catch(function (err){
       console.log(err);
     });

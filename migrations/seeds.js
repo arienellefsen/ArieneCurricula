@@ -5,41 +5,49 @@ module.exports = function (db) {
 
   function createUsers() {
   // Create dummy users
+
     db.User.create({
       user_email: 'testPerson1@gmail.com', 
-      password: bcrypt.hashSync('password1', bcrypt.genSaltSync(8),null),
+      password: bcrypt.hashSync('mike', bcrypt.genSaltSync(8),null),
       user_type: 'user',
-      username:'testP1',
+      username:'mike',
       votes_cast: '1,4'
     }).then(() => {
       console.log('Seeded user testPerson1@gmail.com');
+      createUser2();
     }).catch(function (err){
       console.log(err);
     });
+    
+    function createUser2(){
+      db.User.create({
+        user_email: 'testPerson2@gmail.com', 
+        password: bcrypt.hashSync('mark', bcrypt.genSaltSync(8),null),
+        user_type: 'author', // Is an author
+        username:'mark',
+        votes_cast: '2,3'
+      }).then(() => {
+        console.log('Seeded user testPerson2@gmail.com');
+        createUser3();
+      }).catch(function (err){
+        console.log(err);
+      });
+    }
 
-    db.User.create({
-      user_email: 'testPerson2@gmail.com', 
-      password: bcrypt.hashSync('password2', bcrypt.genSaltSync(8),null),
-      user_type: 'author', // Is an author
-      username:'testP2',
-      votes_cast: '2,3'
-    }).then(() => {
-      console.log('Seeded user testPerson2@gmail.com');
-    }).catch(function (err){
-      console.log(err);
-    });
-
-    db.User.create({
-      user_email: 'testPerson3@gmail.com', 
-      password: bcrypt.hashSync('password3', bcrypt.genSaltSync(8),null),
-      user_type: 'user',
-      username:'testP3',
-      votes_cast: '1,5,3'
-    }).then(() => {
-      console.log('Seeded user testPerson3@gmail.com');
-    }).catch(function (err){
-      console.log(err);
-    });
+    function createUser3(){
+      db.User.create({
+        user_email: 'testPerson3@gmail.com', 
+        password: bcrypt.hashSync('ariene', bcrypt.genSaltSync(8),null),
+        user_type: 'user',
+        username:'ariene',
+        votes_cast: '1,5,3'
+      }).then(() => {
+        createCurriucla();
+        console.log('Seeded user testPerson3@gmail.com');
+      }).catch(function (err){
+        console.log(err);
+      });
+    }
   }
 
   function createCurriucla() {
@@ -52,8 +60,8 @@ module.exports = function (db) {
       search_tags: 'javascript programming web development',
       votes: 10,
       description: 'Learn to program with the language of the internet.',
-      submited_status: false,
-      authorId: 2
+      submited_status: true,
+      authorId: 1
     }).then((data) => {
       console.log('Seeded curricula on learning Javascript');
       createJavaDetails(data.id);
@@ -70,7 +78,7 @@ module.exports = function (db) {
       votes: 12,
       description: 'Learn how to make delicious cupcakes.',
       submited_status: true,
-      authorId: 2
+      authorId: 1
     }).then((data) => {
       console.log('Seeded curricula on cupcakes');
       createCupcakeDetails(data.id);
@@ -87,7 +95,7 @@ module.exports = function (db) {
       votes: 25,
       description: 'Code in python to make awesome things happen',
       submited_status: true,
-      authorId: 2
+      authorId: 1
     }).then((data) => {
       console.log('Seeded curricula on Python');
       createPythonDetails(data.id);
@@ -104,7 +112,7 @@ module.exports = function (db) {
       votes: 27,
       description: 'These 5 algorithms will improve your code and make your boss love you.',
       submited_status: true,
-      authorId: 2
+      authorId: 1
     }).then((data) => {
       console.log('Seeded curricula on Algorithms');
       createAlgoDetails(data.id);
@@ -121,7 +129,7 @@ module.exports = function (db) {
       votes: 17,
       description: 'Learn some of the basic principles of macroeconomics and understand what you hear on the news',
       submited_status: true,
-      authorId: 2
+      authorId: 3
     }).then((data) => {
       console.log('Seeded curricula on Economics');
       createEconDetails(data.id);
@@ -138,7 +146,7 @@ module.exports = function (db) {
       votes: 90,
       description: 'Learn to cook steaks perfectly every time.',
       submited_status: true,
-      authorId: 2
+      authorId: 3
     }).then((data) => {
       console.log('Seeded curricula on learning to cook streak');
       createSteakDetails(data.id);
@@ -152,13 +160,13 @@ module.exports = function (db) {
       category: 'Programming',
       sub_category: 'Javascript',
       search_tags: 'javascript passport authentication',
-      votes: 0,
+      votes: 10,
       description: 'Learn to authenticate users with Passport.',
       submited_status: true,
       authorId: 2
     }).then((data) => {
       console.log('Seeded curricula on learning to use passport');
-      createSteakDetails(data.id);
+      createPassportDetails(data.id);
     }).catch(function (err){
       console.log(err);
     });
@@ -169,13 +177,13 @@ module.exports = function (db) {
       category: 'Fitness',
       sub_category: 'Weight loss',
       search_tags: 'lose weight exercise fitness',
-      votes: 0,
+      votes: 47,
       description: 'Get in shape for the summer!',
       submited_status: true,
       authorId: 2
     }).then((data) => {
       console.log('Seeded curricula on learning to use passport');
-      createSteakDetails(data.id);
+      createInShapeDetails(data.id);
     }).catch(function (err){
       console.log(err);
     });
@@ -186,30 +194,30 @@ module.exports = function (db) {
       category: 'Driving',
       sub_category: 'Motorcycle',
       search_tags: 'bike motorcycle cycling motorcycles',
-      votes: 0,
+      votes: 9,
       description: 'Become a badass biker!',
       submited_status: true,
       authorId: 2
     }).then((data) => {
       console.log('Seeded curricula on motorcycles');
-      createSteakDetails(data.id);
+      createMotorcycleDetails(data.id);
     }).catch(function (err){
       console.log(err);
     });
 
     //ID10
     db.Curricula.create({
-      curricula_name: 'How to build an SPA with Angular',
+      curricula_name: 'How to build a SPA with Angular',
       category: 'Programming',
       sub_category: 'Angular',
       search_tags: 'angular spa single page app javascript',
-      votes: 0,
+      votes: 1000,
       description: 'Learn to write an SPA using Angular!',
       submited_status: true,
       authorId: 2
     }).then((data) => {
       console.log('Seeded curricula on Angular');
-      createSteakDetails(data.id);
+      createAngularDetails(data.id);
     }).catch(function (err){
       console.log(err);
     });
@@ -220,13 +228,13 @@ module.exports = function (db) {
       category: 'Finance',
       sub_category: 'Banking',
       search_tags: 'banking checking checkbook',
-      votes: 0,
+      votes: 100,
       description: 'How do I balance my checkbook?',
       submited_status: true,
-      authorId: 2
+      authorId: 3
     }).then((data) => {
       console.log('Seeded curricula on checkbook');
-      createSteakDetails(data.id);
+      createCheckbookDetails(data.id);
     }).catch(function (err){
       console.log(err);
     });
@@ -237,20 +245,16 @@ module.exports = function (db) {
       category: 'Fitness',
       sub_category: 'Surfing',
       search_tags: 'ocean beach surfing fitness',
-      votes: 0,
+      votes: 11,
       description: 'Learn to ride a surfboard!',
       submited_status: true,
-      authorId: 2
+      authorId: 1
     }).then((data) => {
       console.log('Seeded curricula on surfboard');
-      createSteakDetails(data.id);
+      createSurfingDetails(data.id);
     }).catch(function (err){
       console.log(err);
     });
-
-
-
-
   }
 
   function createJavaDetails(id) {
@@ -262,7 +266,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Read the book Eloquent Javascript.",
       step_url: null,
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded JS step 1');
@@ -275,7 +279,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Try the practice problems in the book.",
       step_url: null,
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded JS step 2');
@@ -288,7 +292,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Build a todo list.",
       step_url: null,
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded JS step 3');
@@ -301,7 +305,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Watch some you-tube videos",
       step_url: null,
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded JS step 4');
@@ -317,7 +321,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Watch this video on how to bake cupcakes",
       step_url: "https://youtu.be/AmC9SmCBUj4",
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Cupcake step 1');
@@ -330,7 +334,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Practice, Practice, and taste test...",
       step_url: null,
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Cupcake step 2');
@@ -345,8 +349,8 @@ module.exports = function (db) {
       step_number: 1,
       step_type: "text",
       step_content: "Read the book 'Learn Python the hard way.",
-      step_url: "",
-      authorId: 2,
+      step_url: "http://a.co/fZ01mVn",
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Python step 1');
@@ -362,7 +366,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Watch this on algorithms thinking",
       step_url: 'https://youtu.be/HtSuA80QTyo?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Algo step 1');
@@ -375,7 +379,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Sorting, insert sort, merge sort",
       step_url: "https://youtu.be/Kg4bqzAqRBM?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb",
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Algo step 2');
@@ -388,7 +392,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Heaps and Heap Sort",
       step_url: 'https://youtu.be/B7hVxCmfPtM?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Algo step 3');
@@ -401,7 +405,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Binary search trees",
       step_url: 'https://youtu.be/9Jry5-82I68?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Algo step 4');
@@ -414,7 +418,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Hashing and chaining",
       step_url: 'https://youtu.be/0M_kIqhwbFo?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb',
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Algo step 5');
@@ -430,7 +434,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "This video will familiarize you with absolute basics",
       step_url: 'https://youtu.be/nQXD5Mhv5Q8',
-      authorId: 2,
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Econ step 1');
@@ -443,7 +447,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "This non-typical economics explanation on the economy",
       step_url: "https://youtu.be/PHe0bXAIuk0",
-      authorId: 2,
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Econ step 2');
@@ -458,8 +462,8 @@ module.exports = function (db) {
       step_number: 1,
       step_type: "text",
       step_content: "Watch this video on cuts of meat",
-      step_url: null,
-      authorId: 2,
+      step_url: "https://youtu.be/WrOzwoMKzH4",
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Steak step 1');
@@ -472,7 +476,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Watch this video on how to cook a steak",
       step_url: "https://youtu.be/AmC9SmCBUj4",
-      authorId: 2,
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Steak step 2');
@@ -485,8 +489,8 @@ module.exports = function (db) {
       step_number: 3,
       step_type: "text",
       step_content: "Practice, Practice, Practice...",
-      step_url: null,
-      authorId: 2,
+      step_url: 'No video!',
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded Steak step 3');
@@ -501,7 +505,7 @@ module.exports = function (db) {
       step_number: 1,
       step_type: "text",
       step_content: "Watch this video on javascript",
-      step_url: null,
+      step_url: "https://youtu.be/vZBCTc9zHtI",
       authorId: 2,
       CurriculaId: id
     }).then(() => {
@@ -668,7 +672,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "What does balance a checkbook mean?",
       step_url: "https://www.capitalone.com/financial-education/money-basics/balancing-budget/balance-your-checkbook/",
-      authorId: 2,
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded checkbook step 1');
@@ -681,7 +685,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Explain the process in detail",
       step_url: "http://www.dummies.com/personal-finance/how-to-balance-a-checkbook/",
-      authorId: 2,
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded checkbook step 2');
@@ -694,10 +698,10 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Try this at home on your own checking account!",
       step_url: null,
-      authorId: 2,
+      authorId: 3,
       CurriculaId: id
     }).then(() => {
-      console.log('Seeded Angular step 3');
+      console.log('Seeded checkbook step 3');
     }).catch(function (err){
       console.log(err);
     });
@@ -709,7 +713,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Read a guide about surfing",
       step_url: "http://www.thesurfingsite.com/How-to-Surf.html",
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded surfing step 1');
@@ -722,7 +726,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "How do you stand up?",
       step_url: "https://www.youtube.com/watch?v=Ts4ZVpajims",
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded surfing step 2');
@@ -735,7 +739,7 @@ module.exports = function (db) {
       step_type: "text",
       step_content: "Take a course at your local beach!",
       step_url: null,
-      authorId: 2,
+      authorId: 1,
       CurriculaId: id
     }).then(() => {
       console.log('Seeded surfing step 3');
@@ -744,7 +748,5 @@ module.exports = function (db) {
     });
   }
 
-
   createUsers()
-  createCurriucla()
 }

@@ -1,19 +1,11 @@
 (function() {
-
-
-    //alert("username = " + localStorage.getItem("author"));
     var author = localStorage.getItem("Author");
     var authorId = localStorage.getItem("id-Author");
-    var catExists = $("#category-curricula").attr('id');
-    var categories = {};
-    
-    //var user = document.getElementById("#username").value;
     var count = 0;
 
     $('.loading').hide();
 
     function addFields() {
-
         for (var i = 0; i < 5; i++) {
             var fieldLink = "<input type='text' name='link' placeholder='Add a link' class='link'> ";
             var detailLink = "<textarea rows='4' cols='50' name='link-description' placeholder='Add link description' class='descritpion'></textarea>",
@@ -25,7 +17,6 @@
     };
 
     addFields();
-
 
     var obj = {};
     var countField = 1;
@@ -140,21 +131,13 @@
     function checkVisibility(card) {
         var $wt = $(window).scrollTop(); //* top of the window
         var $wb = $wt + $(window).height(); //* bottom of the window
-
         var ot = card.offset().top; //* top of card (i.e. curicula card div)
         var ob = ot + card.height(); //* bottom of card
 
         if ($wt <= ob && $wb >= ot) {
             card.removeClass("curriculacardHidden");
         }
-
     }
-
-    $(document).ready(function() {
-        $(".curriculacardHidden").each(function() {
-            checkVisibility($(this));
-        });
-    })
 
     $(window).scroll(function() {
         $(".curriculacardHidden").each(function() {
@@ -162,35 +145,12 @@
         });
     });
 
-    // Function accepts a dropdown id selector and an array
-    // function will iterate the array and add items to the dropdown
-    function populateDropDown(dropDownName, arrOfVals){
-        arrOfVals.forEach(function(item) {
-            $(dropDownName).append(
-                "<option value='" + item + "'>" + item + "</option>"
-            );
+    $(document).ready(function() {
+        $(".curriculacardHidden").each(function() {
+            checkVisibility($(this));
         });
-    }
+        
 
-    // Populate sub-categories based on category selection
-    $("#category-curricula").change(function(event) {
-        event.preventDefault();
-        $('#sub-category').empty();
-        var cat = $("#category-curricula").val().trim();
-
-        if (cat.length !== 0 && cat.toLowerCase() !== 'add new category') {
-            populateDropDown('#sub-category', categories[cat]);
-        }
-    });
-
-    // If user on a page with category then populate the category dropdowns
-    if (catExists !== undefined) {
-        $.get('/api/cats', function(categoriesObject) {
-            categories = categoriesObject;
-            var catKeys = Object.keys(categories);
-            populateDropDown('#category-curricula', catKeys);
-            populateDropDown('#sub-category', categories[catKeys[0]]);
-        });
-    }
+    })
 
 }(window));

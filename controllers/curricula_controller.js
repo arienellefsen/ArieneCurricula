@@ -248,13 +248,11 @@ module.exports = function(app, passport, sessionMW) {
         var username = req.session.passport.user.username;
         var userId = req.session.passport.user.id;
         var priorCurricId = parseInt(req.body.priorIdToDelete.id);
-        var isEdit = req.body.isEdit.status;
-        console.log('>>>>>>>>#################\n', isEdit, priorCurricId);
-        console.log('\n>>>>>>>>#################');
+        var isEdit = JSON.parse(req.body.isEdit.status);
+
         // If this post was to update an existing post then
         // soft-delete the old post
         if (isEdit) {
-            console.log('********************got here')
             Curricula.update({
                 submited_status:0
             }, {
@@ -266,7 +264,7 @@ module.exports = function(app, passport, sessionMW) {
             });
         } 
 
-
+        // Create a new record in the curricula/details for user submission
         if (curricula && curriculaDetails) {
             Curricula.create(curricula).then(function(dbPost) {
                 Object.keys(curriculaDetails).forEach(function(item) {

@@ -1,6 +1,6 @@
 <section class="form-status card-2">
     <div class="loading">
-        <img src="./assets/img/25.gif" alt="{{this.curricula_name}}">
+        <img src="./assets/img/25.gif" alt="{{curriculas.curricula_title}}">
     </div>
     
     <div class="container">
@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-12">
                 <div class="header-form">
-                    <h1>Create a Curricula</h1>
+                    <h1 id="editExists_curricula" data-curric="{{curriculas.id}}">Edit a Curricula</h1>
                     <div id="field-status">Status: In Progress</div>
                 </div>
             </div>
@@ -25,11 +25,9 @@
             <div class="col-xs-12 col-sm-6">
 
                 <div class="title-step">1: Add a Title and Description:</div>
-                <input type="text" name="curricula_name" class='field-title' id="curricula_name" value="{{curriculas.Curricula.curricula_name}}" placeholder="Add a title for your curricula" required>
+                <input type="text" name="curricula_name" class='field-title' id="curricula_name" value="{{curriculas.curricula_name}}" placeholder="Add a title for your curricula" required>
                 <br>
-                <textarea rows='4' cols='50' class='field-description12' id="curricula_description" placeholder="Add a description for you curricula" required>
-
-{{curriculas.Curricula.description}}
+                <textarea rows='4' cols='50' class='field-description12' id="curricula_description" placeholder="Add a description for you curricula" required>{{curriculas.description}}
                 </textarea>
 
 
@@ -38,10 +36,10 @@
                 <section id="category">
                     Category:
                     <select id="category-curricula">
-                        <option value="add">Add New Category</option>
-                        {{#each showCurricula}}
+                        {{!--<option value="add">Add New Category</option>--}}
+                        {{!--{{#each showCurricula}}
                         <option value="{{cat}}">{{cat}}</option>
-                        {{/each}}
+                        {{/each}}--}}
                     </select>
                 </section>
 
@@ -51,13 +49,13 @@
                         {{!--{{#each showCurricula}}
                         <option value="{{this.sub_category}}">{{this.sub_category}}</option>
                         {{/each}}--}}
-                        <option value="add">Add New SubCategory</option>
+                        {{!--<option value="add">Add New SubCategory</option>--}}
                     </select>
                 </section>
 
                 <section id="tags">
                     <div class="title-step">3: Add Tags:</div>
-                    <input type="text" name="curricula_tags" class='field-tags' id="curricula_tag" value="{{curriculas.Curricula.search_tags}}
+                    <input type="text" name="curricula_tags" class='field-tags' id="curricula_tag" value="{{curriculas.search_tags}}
 " placeholder="Click here to add a Tags, separated by commas" required>
                     <input type="hidden" name="status" value="" id="status">
                 </section>
@@ -67,8 +65,8 @@
                 <div class="title-step">4: Add Steps:</div>
                 <div id="fields-form">
                 </div>
-                <br>
-                <button class="btn-form save" id="save">Publish</button>
+                <p id="resultsBox" class="colorRed"></p>
+                <button class="btn-form save" id="save">Update</button>
             </div>
 
         </div>
